@@ -1,0 +1,21 @@
+<!doctype html>
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-cookies.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="indexJS"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+</head>
+<body ng-app="AWIAPP" ng-controller="index" class="index">
+    <h1>Bienvenue sur AHNON application...</h1>
+    <div class="indexForm">
+        <form name="loginForm">
+            <div class="form-group">
+                <button name="login" class="btn btn-success" ng-click="login()">Sign in</button>
+                <button name="createPerson" class="btn btn-success" ng-click="createPerson()">Sign up</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

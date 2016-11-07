@@ -1,0 +1,107 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+####################
+#       TASK       #
+####################
+# Create one task
+POST    /task                       controllers.HomeController.taskCreate
+# Get All task
+GET     /tasks                      controllers.HomeController.tasks
+# Get just one task
+GET     /task/:id                   controllers.HomeController.task(id: Long)
+# Update one task
+PUT     /task/:id                   controllers.HomeController.taskUpdate(id: Long)
+# Delete one task
+DELETE  /task/:id                   controllers.HomeController.taskDelete(id: Long)
+
+
+#######################
+#       PERSON        #
+#######################
+# Create on person
+POST    /person                     controllers.PersonController.personCreate
+# Get All person
+GET     /persons                    controllers.PersonController.persons
+# Get just one person
+GET     /person/:id                 controllers.PersonController.person(id: Long)
+# Update one person
+PUT     /person/:id                 controllers.PersonController.personUpdate(id: Long)
+# Delete one person
+DELETE  /person/:id                 controllers.PersonController.personDelete(id: Long)
+# Check if the user exist to connect
+POST    /login                      controllers.PersonController.login
+# Logout the person
+POST    /logout                     controllers.PersonController.logout
+# Check if the user is already connect or not
+GET     /isConnected/:id/:token      controllers.PersonController.isConnected(id: Int, token: String)
+
+
+#######################
+#         Lib         #
+#######################
+GET /lib/smart-table               controllers.Assets.at(path="/public", file="lib/smart-table.js")
+
+
+# A SUPPR
+GET /test                           controllers.Assets.at(path="/public", file="html/testCreatePerson.html")
+# A SUPPR
+GET /personJS                       controllers.Assets.at(path="/public", file="javascripts/person.js")
+
+
+# PAGE HTML
+# Index
+GET /                               controllers.Assets.at(path="/public", file="html/index.html")
+GET /indexJS                        controllers.Assets.at(path="/public", file="javascripts/index.js")
+
+# Create a person
+GET /createPerson                   controllers.Assets.at(path="/public", file="html/createPerson.html")
+GET /createPersonJS                 controllers.Assets.at(path="/public", file="javascripts/createPerson.js")
+
+# Login a person
+GET /login                          controllers.Assets.at(path="/public", file="html/login.html")
+GET /loginJS                        controllers.Assets.at(path="/public", file="javascripts/login.js")
+
+# Home for SU when connect
+#GET /SU/home                        controllers.Assets.at(path="/public", file="html/homeSU.html")
+#GET /SU/homeSUJS                    controllers.Assets.at(path="/public", file="javascripts/homeSU.js")
+
+# Home for SC when connect
+#GET /SC/home                        controllers.Assets.at(path="/public", file="html/homeSC.html")
+#GET /SC/homeSCJS                    controllers.Assets.at(path="/public", file="javascripts/homeSC.js")
+
+# Home for Admin when connect
+#GET /Admin/home                     controllers.Assets.at(path="/public", file="html/homeAdmin.html")
+#GET /Admin/homeAdminJS              controllers.Assets.at(path="/public", file="javascripts/homeAdmin.js")
+
+# A DELETE
+# TEST DE FAIRE QUE UN /XX/HOME
+GET /SU/home                         controllers.Assets.at(path="/public", file="html/home.html")
+GET /SU/homeJS                       controllers.Assets.at(path="/public", file="javascripts/home.js")
+
+GET /SC/home                         controllers.Assets.at(path="/public", file="html/home.html")
+GET /SC/homeJS                       controllers.Assets.at(path="/public", file="javascripts/home.js")
+
+GET /Admin/home                      controllers.Assets.at(path="/public", file="html/home.html")
+GET /Admin/homeJS                    controllers.Assets.at(path="/public", file="javascripts/home.js")
+# A DELETE
+
+# Update an SU account
+GET /SU/myaccount                    controllers.Assets.at(path="/public", file="html/myaccount.html")
+GET /SU/myaccountJS                  controllers.Assets.at(path="/public", file="javascripts/myaccount.js")
+
+# Update an SC account
+GET /SC/myaccount                    controllers.Assets.at(path="/public", file="html/myaccount.html")
+GET /SC/myaccountJS                  controllers.Assets.at(path="/public", file="javascripts/myaccount.js")
+
+# Update an Admin account
+GET /Admin/myaccount                 controllers.Assets.at(path="/public", file="html/myaccount.html")
+GET /Admin/myaccountJS               controllers.Assets.at(path="/public", file="javascripts/myaccount.js")
+
+# Manage account by Admin
+GET /Admin/manageAccount             controllers.Assets.at(path="/public", file="html/manageAccountAdmin.html")
+GET /Admin/manageAccountJS           controllers.Assets.at(path="/public", file="javascripts/manageAccountAdmin.js")
+
+# Manage product for a SC
+GET /SC/myProduct                   controllers.Assets.at(path="/public", file="html/myProduct.html")

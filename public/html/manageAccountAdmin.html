@@ -1,0 +1,154 @@
+<!doctype html>
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-cookies.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="manageAccountJS"></script>
+    <script src="/lib/smart-table"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+</head>
+<body ng-app="AWIAPP" ng-controller="manageAccountAdmin" class="manageAccountAdmin">
+    <div class="all">
+        <h1>Manage account</h1>
+        <div ng-hide="hideSuccess" class="alert alert-success"> <strong>Success! </strong>{{titleSuccess}} </div>
+        <div class="isChoice" ng-show="isChoiceShow">
+            <button class="btn btn-success" ng-click="showUpdateTable()">Update a Person</button>
+            <button class="btn btn-success" ng-click="showFormCreateSU()">Create a SU</button>
+            <button class="btn btn-success" ng-click="showFormCreateSC()">Create a SC</button>
+            <button class="btn btn-success" ng-click="showFormCreateAdmin()">Create an Admin</button>
+        </div>
+        <div class="isTable" ng-show="isTableShow">
+            <table st-table="myTablePerson" st-safe-src="allPerson" class="table table-striped">
+                <thead>
+                <tr>
+                    <th st-sort="name">Name</th>
+                    <th st-sort="email">Email</th>
+                    <th st-sort="pseudo">Pseudo</th>
+                    <th st-sort="role">Type of Account</th>
+                    <th>Update</th>
+                    <th>Delete</th>
+                </tr>
+                <tr>
+                    <th colspan="5"><input st-search="" class="form-control" placeholder="Search in the table" type="text"/></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="person in myTablePerson">
+                    <td>{{person.name}}</td>
+                    <td>{{person.email}}</td>
+                    <td>{{person.pseudo}}</td>
+                    <td>{{person.role}}</td>
+                    <td> <button type="button" ng-click="showUpdateFormPerson(person)" class="btn btn-default">Update</button> </td>
+                    <td> <button type="button" ng-click="deletePerson(person)" class="btn btn-sm btn-danger">
+                        <i class="glyphicon glyphicon-remove-circle">
+                        </i>
+                    </button> </td>
+                </tr>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <td colspan="5" class="text-center">
+                        <div st-pagination="" st-items-by-page="10" st-displayed-pages="5"></div>
+                    </td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+        <div class="isFormCreatePerson" ng-show="isFormCreatePersonShow">
+            <div class="createPersonForm">
+                <h3>Fill the information below to create the {{typeAccount}} account !</h3>
+                <form name="createPersonForm" ng-submit="createPerson(name, pseudo, email, siret, password, admin)">
+                    <div class="form-group">
+                        <label class="control-label">Name *</label>
+                        <div>
+                            <input type="text" class="form-control" ng-model="name" placeholder="Enter your name here" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Pseudo *</label>
+                        <div>
+                            <input type="text" class="form-control" ng-model="pseudo" placeholder="Enter your pseudo here" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Email *</label>
+                        <div>
+                            <input type="email" class="form-control" ng-model="email" placeholder="Enter your email here" required>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-show="isNotNullSiret">
+                        <label class="control-label">SIRET number (length = 14) *</label>
+                        <div>
+                            <input ng-minlength="14" type="number" class="form-control" ng-model="siret" placeholder="Enter your SIRET number here" ng-required="isNotNullSiret">
+                        </div>
+                    </div>
+                    <div class="form-group"> <label class="control-label">Password (length >= 8) *</label>
+                        <div>
+                            <input ng-minlength="8" type="password" class="form-control" ng-model="password" placeholder="Enter your password here" required>
+                        </div>
+                    </div>
+                    <div class="form-group"> <label class="control-label">Confirm Password (length >= 8) *</label>
+                        <div>
+                            <input ng-minlength="8" type="password" class="form-control" name="confirm_password" ng-pattern="getPattern()" ng-model="password_verify" placeholder="Enter your confirm password here" required>
+                            <small ng-show="createPersonForm.confirm_password.$error.pattern">
+                                Password are not equals...
+                            </small>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-show="isAdminAccount">
+                        <label class="control-label">is Admin account ? *</label>
+                        <div>
+                            <input type="radio" ng-model="admin" value="yes" name="yes">Yes <br>
+                            <input type="radio" ng-model="admin" value="no" name="no">No
+                        </div>
+
+                    </div>
+                    <div ngIf="isAdminAccount" ng-show="isAdminAccount">
+                        <button ng-disabled="createPersonForm.$invalid || !admin" class="btn btn-success">Create Admin</button>
+                    </div>
+                    <div ngIf="!isAdminAccount" ng-show="!isAdminAccount">
+                        <button ng-disabled="createPersonForm.$invalid" class="btn btn-success">Create {{typeAccount}}</button>
+                    </div>
+                </form>
+                <button type="button" class="btn warning" ng-click="cancelCreateAccount()">Cancel</button>
+                <div ng-hide="hideError" class="alert alert-danger"> <strong>Error! </strong>{{titleError}} </div>
+            </div>
+        </div>
+        <div class="isFormUpdate" ng-show="isFormUpdateShow">
+            <div class="updateForm">
+                <h3>Fill the field of what you would update...</h3>
+                <form name="updateForm" ng-submit="updatePerson(nameToUpdate, pseudoToUpdate, siretToUpdate, passwordToUpdate)">
+                    <div class="form-group">
+                        <label class="control-label">Name</label>
+                        <div>
+                            <input type="text" class="form-control" ng-model="nameToUpdate" placeholder="Enter your new name here">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Pseudo</label>
+                        <div>
+                            <input type="text" class="form-control" ng-model="pseudoToUpdate" placeholder="Enter your new pseudo here">
+                        </div>
+                    </div>
+                    <div ng-show="isSiretNotNull" class="form-group">
+                        <label class="control-label">N° SIRET (length = 14)</label>
+                        <div>
+                            <input type="text" class="form-control" ng-model="siretToUpdate" placeholder="Enter your new siret here">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Password (length >= 8) *</label>
+                        <div>
+                            <input ng-minlength="8" type="password" class="form-control" ng-model="passwordToUpdate" placeholder="Enter your password here">
+                        </div>
+                    </div>
+                    <button class="btn btn-success">Update</button>
+                </form>
+                <button class="btn btn-danger" ng-click="cancelFormUpdate()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

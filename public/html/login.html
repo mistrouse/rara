@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-cookies.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="loginJS"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+</head>
+<body ng-app="AWIAPP" ng-controller="login" class="login">
+<div class="loginForm">
+    <h1>Log In</h1>
+    <form name="loginForm" ng-submit="login(email, password)">
+        <div class="form-group">
+            <label class="control-label">Email</label>
+            <div>
+                <input type="email" class="form-control" ng-model="email" placeholder="Enter your email here" required>
+            </div>
+        </div>
+        <div class="form-group"> <label class="control-label">Password</label>
+            <div>
+                <input ng-minlength="8" type="password" class="form-control" ng-model="password" placeholder="Enter your password here" required>
+            </div>
+        </div>
+        <button ng-disabled="loginForm.$invalid" class="btn btn-success">Log In</button>
+    </form>
+    <button type="button" class="btn btn-danger" ng-click="back()">Cancel</button>
+    <div ng-hide="hideError" class="alert alert-danger"> <strong>Error! </strong>{{titleError}} </div>
+
+</div>
+
+</body>
+</html>

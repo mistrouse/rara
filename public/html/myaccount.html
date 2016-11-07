@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-cookies.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="myaccountJS"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+</head>
+<body ng-app="AWIAPP" ng-controller="myaccount" class="myaccount">
+    <div class="all">
+        <h1>{{pseudo}} information account:</h1>
+        <div class="isValue" ng-show="isValueShow">
+            <div class="valueName">
+                Name : {{name}} <br>
+            </div>
+            <div class="valuePseudo">
+                Pseudo : {{pseudo}} <br>
+            </div>
+            <div class="valueEmail">
+                Email : {{email}} <br>
+            </div>
+            <div ng-show="siret != null" class="valueSiret">
+                <div>N° SIRET : {{siret}}</div>
+            </div>
+            <div class="valueTypeAccount">
+                Type of account : {{typeAccount}} <br>
+            </div>
+            <div class="valuePassword">
+                Password : {{password}} <br>
+            </div>
+            <button class="btn btn-success" ng-click="showFormUpdate()">Show update possibility</button>
+        </div>
+        <div class="form" ng-show="isFormShow">
+            <div class="updateForm">
+                <h3>Fill the field of what you would update...</h3>
+                <form name="updateForm" ng-submit="update(name, pseudo, siret, password)">
+                    <div class="form-group">
+                        <label class="control-label">Name</label>
+                        <div>
+                            <input type="text" class="form-control" ng-model="name" placeholder="Enter your new name here">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Pseudo</label>
+                        <div>
+                            <input type="text" class="form-control" ng-model="pseudo" placeholder="Enter your new pseudo here">
+                        </div>
+                    </div>
+                    <div ng-show="siret != null" class="form-group">
+                        <label class="control-label">N° SIRET (length = 14)</label>
+                        <div>
+                            <input type="text" class="form-control" ng-model="siret" placeholder="Enter your new siret here">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Password (length >= 8) *</label>
+                        <div>
+                            <input ng-minlength="8" type="password" class="form-control" ng-model="password" placeholder="Enter your password here">
+                        </div>
+                    </div>
+                    <!--<div class="form-group"> <label class="control-label">Confirm Password (length >= 8) *</label>
+                        <div>
+                            <input ng-minlength="8" type="password" class="form-control" name="confirm_password" ng-pattern="getPattern()" ng-model="password_verify" placeholder="Enter your confirm password here">
+                            <small ng-show="updateForm.confirm_password.$error.pattern">
+                                Password are not equals...
+                            </small>
+                        </div>
+                    </div>-->
+                    <button class="btn btn-success">Update</button>
+                </form>
+                <button class="btn btn-danger" ng-click="cancel()">Cancel</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

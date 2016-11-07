@@ -1,0 +1,148 @@
+<!doctype html>
+<html ng-app="AWIAPP">
+<head>
+    <script
+            src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="personJS"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="xxx.css"> -->
+</head>
+<body>
+<h2>Create/Delete a person</h2>
+<div ng-controller="testCreateAccount as testCreateAccount">
+    <ul class="unstyled">
+        <li ng-repeat="person in allPerson">
+            <label class="checkbox">
+                <input type="checkbox" ng-model="person.done"> <span
+                    class="done-{{person.done}}"><button type="button" ng-click="getPerson(person)"  class=" btn btn-default">{{person.name}}</button></span>
+            </label>
+        </li>
+    </ul>
+    <div class="signUpForm">
+        <form name="signUpForm" ng-submit="createPerson(name, pseudo, email, password)">
+
+            <div class="form-group">
+                <label class="control-label">Name</label>
+                <div>
+                    <input type="text" class="form-control" ng-model="name" placeholder="Enter your name here" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Pseudo</label>
+                <div>
+                    <input type="text" class="form-control" ng-model="pseudo" placeholder="Enter your pseudo here" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Email</label>
+                <div>
+                    <input type="email" class="form-control" ng-model="email" placeholder="Enter your email here" required>
+                </div>
+            </div>
+            <div class="form-group"> <label class="control-label">Mot de passe</label>
+                <div>
+                    <input type="password" required class="form-control" ng-model="password">
+                </div>
+            </div>
+            <div class="form-group"> <label class="control-label">Confirmation du mot de passe</label>
+                <div> <input type="password" required class="form-control" name="confirm_password" ng-pattern="getPattern()" ng-model="password_verify"> <small ng-show="signUpForm.confirm_password.$error.pattern">
+                    Password are not the same...
+                </small> </div>
+            </div>
+
+            <button ng-disabled="signUpForm.$invalid" class="btn btn-success">Create</button>
+        </form>
+    </div>
+
+
+
+    <div ng-hide="moreInfo">
+        <h1>Vous avez cliquez sur la tache : {{moreInfoData.name}}</h1>
+        <h2>Que voulez-vous faire ?</h2>
+        <button class="btn btn-success" ng-click="deletePerson(moreInfoData.id)">Supprimer</button>
+    </div>
+
+
+
+    <div class="updateForm">
+        <h1>Update a Person</h1>
+        <form name="updateForm" ng-submit="updatePerson(person, name, pseudo, email, password)">
+            <div class="form-group">
+                <label class="control-label">Choose a person name</label>
+                <div>
+                    <select ng-model="person" ng-options="person as person.name for person in allPerson"></select> <br>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label">New name</label>
+                <div>
+                    <input type="text" class="form-control" ng-model="name" placeholder="Enter your new name here">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label">New pseudo</label>
+                <div>
+                    <input type="text" class="form-control" ng-model="pseudo" placeholder="Enter your new pseudo here">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label">New email</label>
+                <div>
+                    <input type="email" class="form-control" ng-model="email" placeholder="Enter your new email here">
+                </div>
+            </div>
+            <div class="form-group"> <label class="control-label">New mot de passe</label>
+                <div>
+                    <input type="password" class="form-control" ng-model="password">
+                </div>
+            </div>
+            <div class="form-group"> <label class="control-label">New confirmation du mot de passe</label>
+                <div> <input type="password" class="form-control" name="confirm_password" ng-pattern="getPattern()" ng-model="password_verify"> <small ng-show="updateForm.confirm_password.$error.pattern">
+                    Password are not the same...
+                </small> </div>
+            </div>
+
+            <button ng-disabled="updateForm.$invalid" class="btn btn-success">Update</button>
+        </form>
+    </div>
+
+    <div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <h2>Create TASK:</h2>
+        <ul class="unstyled">
+            <li ng-repeat="task in allTask">
+                <label class="checkbox">
+                    <input type="checkbox" ng-model="task.done"> <span
+                        class="done-{{task.done}}"><button type="button" ng-click="getTask(task)"  class=" btn btn-default">{{task.name}}</button></span>
+                </label>
+            </li>
+        </ul>
+        <form name="formTask" ng-submit="addTask(nameTask)">
+            Name : <input required type="text" ng-model="nameTask" size="30"
+                          placeholder="Enter the name here"> <br>
+            <button ng-disabled="formTask.$invalid" class="btn btn-success">Créer</button>
+        </form>
+
+        <div ng-hide="moreInfo">
+            <h1>Vous avez cliquez sur la tache : {{moreInfoData.name}}</h1>
+            <h2>Que voulez-vous faire ?</h2>
+            <button type="button" ng-click="deleteTask(moreInfoData.id)">Supprimer</button>
+        </div>
+
+        <h2>Update a task:</h2>
+        <form ng-submit="updateTask(taskChosen, newName)">
+            Choose an account name: <select ng-model="taskChosen" ng-options="task as task.name for task in allTask"></select> <br>
+            Enter his new name : <input type="text" ng-model="newName" size="30"
+                                        placeholder="Enter the new name here"> <br>
+            <button class="btn btn-success">Update</button>
+        </form>
+
+    </div>
+
+</div>
+</body>
+</html>

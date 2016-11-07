@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-cookies.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="createPersonJS"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+</head>
+<body ng-app="AWIAPP" ng-controller="createPerson" class="createPerson">
+    <div class="all">
+        <h1>Create your {{typeAccount}} account</h1>
+        <div class="choicePerson" ng-show="choicePersonShow">
+            <h3>What type of account do you want create ?</h3>
+            <div class="simpleUserPerson">
+                <button class="btn btn-success" ng-click="createSimpleUser()">Simple User</button>
+                <span>A simple user can create diarys, post comments, search and buy products.</span>
+            </div>
+            <div class="simpleSellerPerson">
+                <button class="btn btn-success" ng-click="createSimpleSeller()">Simpler Seller</button>
+                <span>A simple seller can search and sell products.</span>
+            </div>
+            <div class="backPerson">
+                <button type="button" class="btn btn-danger" ng-click="back()">Back</button>
+            </div>
+        </div>
+
+        <div class="signUpForm" ng-show="signUpFormShow">
+            <h3>Fill the information below to create your account !</h3>
+            <form name="signUpForm" ng-submit="createPerson(name, pseudo, email, siret, password)">
+                <div class="form-group">
+                    <label class="control-label">Name *</label>
+                    <div>
+                        <input type="text" class="form-control" ng-model="name" placeholder="Enter your name here" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Pseudo *</label>
+                    <div>
+                        <input type="text" class="form-control" ng-model="pseudo" placeholder="Enter your pseudo here" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Email *</label>
+                    <div>
+                        <input type="email" class="form-control" ng-model="email" placeholder="Enter your email here" required>
+                    </div>
+                </div>
+                <div class="form-group" ng-show="isNotNullSiret == 'isNotNull'">
+                    <label class="control-label">SIRET number (length = 14)</label>
+                    <div>
+                        <input ng-minlength="14" type="number" class="form-control" ng-model="siret" placeholder="Enter your SIRET number here" ng-required="isNotNullSiret == 'isNotNull'">
+                    </div>
+                </div>
+                <div class="form-group"> <label class="control-label">Password (length >= 8) *</label>
+                    <div>
+                        <input ng-minlength="8" type="password" class="form-control" ng-model="password" placeholder="Enter your password here" required>
+                    </div>
+                </div>
+                <div class="form-group"> <label class="control-label">Confirm Password (length >= 8) *</label>
+                    <div>
+                        <input ng-minlength="8" type="password" class="form-control" name="confirm_password" ng-pattern="getPattern()" ng-model="password_verify" placeholder="Enter your confirm password here" required>
+                        <small ng-show="signUpForm.confirm_password.$error.pattern">
+                            Password are not equals...
+                        </small>
+                    </div>
+                </div>
+                <button ng-disabled="signUpForm.$invalid" class="btn btn-success">Create</button>
+            </form>
+            <button type="button" class="btn warning" ng-click="cancelCreateAccount()">Cancel</button>
+            <div ng-hide="hideError" class="alert alert-danger"> <strong>Error! </strong>{{titleError}} </div>
+        </div>
+    </div>
+</body>
+</html>
