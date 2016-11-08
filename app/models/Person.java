@@ -2,6 +2,8 @@ package models;
 
 import com.avaje.ebean.Model;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.sun.org.apache.bcel.internal.classfile.Code;
+import play.api.libs.Codecs;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -25,6 +27,10 @@ public class Person extends Model {
     String siret;
     String password;
     int role;
+    String numberAddress;
+    String streetAddress;
+    String cityAddress;
+    String postCodeAddress;
     String token;
     @OneToMany(mappedBy = "creator")
     @JsonManagedReference
@@ -32,6 +38,7 @@ public class Person extends Model {
 
     public Person() {
     }
+
 
     /**
      * Constructor of a Person who save a person in the database
@@ -43,9 +50,13 @@ public class Person extends Model {
      * @param password The password of the Person
      * @param role The role of the Person (0=SU; 1=SC; 2=Admin)
      * @param token The token of the Person
+     * @param numberAddress The number of the adress
+     * @param streetAddress The street adress
+     * @param cityAddress The city adress
+     * @param postCodeAddress The post code for the adress
      * @param taskRealised List of the task realised by a Person
      */
-    public Person(Long id, String name, String email, String pseudo, String siret, String password, int role, String token, List<Task> taskRealised) {
+    public Person(Long id, String name, String email, String pseudo, String siret, String password, int role, String numberAddress, String streetAddress, String cityAddress, String postCodeAddress, String token, List<Task> taskRealised) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -53,9 +64,13 @@ public class Person extends Model {
         this.siret = siret;
         this.password = password;
         this.role = role;
+        this.numberAddress = numberAddress;
+        this.streetAddress = streetAddress;
+        this.cityAddress = cityAddress;
+        this.postCodeAddress = postCodeAddress;
         this.token = token;
         this.taskRealised = taskRealised;
-        super.save();
+        this.save();
     }
 
     public Long getId() {
@@ -94,6 +109,22 @@ public class Person extends Model {
         return token;
     }
 
+    public String getNumberAddress() {
+        return numberAddress;
+    }
+
+    public String getStreetAddress() {
+        return streetAddress;
+    }
+
+    public String getCityAddress() {
+        return cityAddress;
+    }
+
+    public String getPostCodeAddress() {
+        return postCodeAddress;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -115,7 +146,7 @@ public class Person extends Model {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password = Codecs.sha1(password);
     }
 
     public void setSiret(String siret) {
@@ -130,6 +161,22 @@ public class Person extends Model {
         this.token = token;
     }
 
+    public void setNumberAddress(String numberAddress) {
+        this.numberAddress = numberAddress;
+    }
+
+    public void setStreetAddress(String streetAddress) {
+        this.streetAddress = streetAddress;
+    }
+
+    public void setCityAddress(String cityAddress) {
+        this.cityAddress = cityAddress;
+    }
+
+    public void setPostCodeAddress(String postCodeAddress) {
+        this.postCodeAddress = postCodeAddress;
+    }
+
     @Override
     public String toString() {
         return "Person{" +
@@ -139,8 +186,12 @@ public class Person extends Model {
                 ", pseudo='" + pseudo + '\'' +
                 ", siret='" + siret + '\'' +
                 ", password='" + password + '\'' +
-                ", token='" + token + '\'' +
                 ", role=" + role +
+                ", numberAddress='" + numberAddress + '\'' +
+                ", streetAddress='" + streetAddress + '\'' +
+                ", cityAddress='" + cityAddress + '\'' +
+                ", postCodeAddress='" + postCodeAddress + '\'' +
+                ", token='" + token + '\'' +
                 ", taskRealised=" + taskRealised +
                 '}';
     }

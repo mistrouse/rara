@@ -98,7 +98,10 @@ angular.module('AWIAPP', ['ngCookies', 'smart-table'])
         }
         $scope.nameToUpdate = valuePerson["name"];
         $scope.pseudoToUpdate = valuePerson["pseudo"];
-        $scope.passwordToUpdate = valuePerson["password"];
+        $scope.numberAddressToUpdate = parseInt(valuePerson["numberAddress"]);
+        $scope.streetAddressToUpdate = valuePerson["streetAddress"];
+        $scope.postCodeAddressToUpdate = parseInt(valuePerson["postCodeAddress"]);
+        $scope.cityAddressToUpdate = valuePerson["cityAddress"];
     };
 
     // Delete automatically the user when the admin click on the delete button and refresh the table
@@ -146,11 +149,11 @@ angular.module('AWIAPP', ['ngCookies', 'smart-table'])
     };
 
     // Create a person with the value of the form
-    $scope.createPerson = function(name, pseudo, email, siret, password, admin) {
+    $scope.createPerson = function(name, pseudo, email, numberAddress, streetAddress, postCodeAddress, cityAddress, siret, password, admin) {
         var rqt = {
             method : 'POST',
             url : '/person',
-            data : $.param({name: name, pseudo : pseudo, email: email, siret: siret, password: password, admin: admin}),
+            data : $.param({name: name, pseudo : pseudo, email: email, numberAddress: numberAddress, streetAddress: streetAddress, cityAddress: cityAddress, postCodeAddress: postCodeAddress, siret: siret, password: password, admin: admin}),
             headers : { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' }
         };
         $http(rqt).success(function(data){
@@ -173,11 +176,11 @@ angular.module('AWIAPP', ['ngCookies', 'smart-table'])
    }
 
     // Update the person with the value of the form, reload the table with the new information and hide the form for update
-   $scope.updatePerson = function(name, pseudo, siret, password){
+   $scope.updatePerson = function(name, pseudo, siret, numberAddress, streetAddress, postCodeAddress, cityAddress, password){
         var rqt = {
             method : 'PUT',
             url : '/person/' + $scope.person["id"],
-            data : $.param({newName: name, newPseudo: pseudo, newSiret: siret, newPassword: password}),
+            data : $.param({newName: name, newPseudo: pseudo, newNumberAddress: numberAddress, newStreetAddress: streetAddress, newPostCodeAddress: postCodeAddress, newCityAddress: cityAddress, newSiret: siret, newPassword: password}),
             headers : { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' }
         };
         $http(rqt).success(function(data){

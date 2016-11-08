@@ -30,6 +30,10 @@ angular.module('AWIAPP', ['ngCookies'])
                 $scope.typeAccount = "Admin";
             }
             $scope.password = person["password"];
+            $scope.numberAddress = parseInt(person["numberAddress"]);
+            $scope.streetAddress = person["streetAddress"];
+            $scope.cityAddress = person["cityAddress"];
+            $scope.postCodeAddress = parseInt(person["postCodeAddress"]);
         });
     }
     // If there is no cookie on the client side --> not connected so redirect to '/'
@@ -68,11 +72,11 @@ angular.module('AWIAPP', ['ngCookies'])
     }
 
     // Update the value of the person
-    $scope.update = function(name, pseudo, siret, password) {
+    $scope.update = function(name, pseudo, numberAddress, streetAddress, postCodeAddress, cityAddress, siret, passwordv) {
         var rqt = {
             method : 'PUT',
             url : '/person/' + id_person,
-            data : $.param({newName: name, newPseudo: pseudo, newSiret: siret, newPassword: password}),
+            data : $.param({newName: name, newPseudo: pseudo, newNumberAddress: numberAddress, newStreetAddress: streetAddress, newPostCodeAddress: postCodeAddress, newCityAddress: cityAddress, newSiret: siret, newPassword: passwordv}),
             headers : { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' }
         };
         $http(rqt).success(function(data){
@@ -86,6 +90,10 @@ angular.module('AWIAPP', ['ngCookies'])
                 $scope.pseudo = person["pseudo"];
                 $scope.email = person["email"];
                 $scope.password = person["password"];
+                $scope.numberAddress = parseInt(person["numberAddress"]);
+                $scope.streetAddress = person["streetAddress"];
+                $scope.cityAddress = person["cityAddress"];
+                $scope.postCodeAddress = parseInt(person["postCodeAddress"]);
                 if(person["role"] == 0)
                     $scope.typeAccount = "Simple User"
                 if(person["role"] == 1) {

@@ -1,6 +1,7 @@
 package controllers;
 
 import models.Person;
+import play.api.libs.Codecs;
 import play.data.DynamicForm;
 import play.libs.Json;
 import play.mvc.Controller;
@@ -68,7 +69,12 @@ public class PersonController extends Controller {
             final Map<String, String[]> values = request().body().asFormUrlEncoded();
             String newName = values.get("newName")[0];
             String newPseudo = values.get("newPseudo")[0];
-            String newPassword = values.get("newPassword")[0];
+            String newNumberAddress = values.get("newNumberAddress")[0];
+            String newStreetAddress = values.get("newStreetAddress")[0];
+            String newPostCodeAddress = values.get("newPostCodeAddress")[0];
+            String newCityAddress = values.get("newCityAddress")[0];
+
+
 //            System.out.println("personUpdate(id) from PersonController -- updatePerson="+updatePerson);
 
             // Test if not empty, make the update, else nothing
@@ -79,8 +85,16 @@ public class PersonController extends Controller {
             if(!values.get("newSiret")[0].isEmpty()) {
                 updatePerson.setSiret(values.get("newSiret")[0]);
             }
-            if(!newPassword.isEmpty())
-                updatePerson.setPassword(newPassword);
+            if(!values.get("newPassword")[0].isEmpty())
+                updatePerson.setPassword(values.get("newPassword")[0]);
+            if(!newNumberAddress.isEmpty())
+                updatePerson.setNumberAddress(newNumberAddress);
+            if(!newStreetAddress.isEmpty())
+                updatePerson.setStreetAddress(newStreetAddress);
+            if(!newPostCodeAddress.isEmpty())
+                updatePerson.setPostCodeAddress(newPostCodeAddress);
+            if(!newCityAddress.isEmpty())
+                updatePerson.setCityAddress(newCityAddress);
 
             // Make change in the database
             updatePerson.save();
@@ -102,12 +116,16 @@ public class PersonController extends Controller {
         String pseudo = values.get("pseudo")[0];
         String email = values.get("email")[0];
         String siret = null;
+        String numberAddress = values.get("numberAddress")[0];
+        String streetAddress = values.get("streetAddress")[0];
+        String cityAddress = values.get("cityAddress")[0];
+        String postCodeAddress = values.get("postCodeAddress")[0];
         int role = 0; // 0 = SP
         if(!values.get("siret")[0].isEmpty()) {
             siret = values.get("siret")[0];
             role = 1; // SV
         }
-        String password = values.get("password")[0];
+        String password = Codecs.sha1(values.get("password")[0]);
         if(!values.get("admin")[0].isEmpty()) {
 //            System.out.println(values.get("admin")[0]);
             if(values.get("admin")[0].equals("yes")) {
@@ -117,11 +135,11 @@ public class PersonController extends Controller {
 
         // Test if the user is already in the database before the save, if no return 201 created, else return 409 conflict
         Person isAlreadyExist = Person.find.where().like("email", "%"+email+"%").findUnique();
-//        System.out.println("personCreate() FROM PersonController.java -- isAlreadyExist="+isAlreadyExist);
+        System.out.println("personCreate() FROM PersonController.java -- isAlreadyExist="+isAlreadyExist);
         if(isAlreadyExist == null) {
             // Create the person in the database with the informations
-            Person person = new Person(null, name, email, pseudo, siret, password, role, null, null);
-//            System.out.println("personCreate() FROM PersonController.java -- person="+person);
+            Person person = new Person(null, name, email, pseudo, siret, password, role, numberAddress, streetAddress, cityAddress, postCodeAddress, null, null);
+            System.out.println("personCreate() FROM PersonController.java -- person="+person);
             return created();
         }
         else {
@@ -154,7 +172,7 @@ public class PersonController extends Controller {
         // Get attribute from the form
         final Map<String, String[]> values = request().body().asFormUrlEncoded();
         String email = values.get("email")[0];
-        String password = values.get("password")[0];
+        String password = Codecs.sha1(values.get("password")[0]);
 
         // Check if exist in the database
         List<Person> isExist = Person.find.where().like("email", "%"+email+"%").like("password", "%"+password+"%").findList();
@@ -215,34 +233,34 @@ public class PersonController extends Controller {
     }
 
     public void initializePerson() {
-        Person SU = new Person(null, "SimpleUser", "SU@a.com", "SU", null, "pierrick34$", 0, null, null);
-        Person SC = new Person(null, "SimpleSeller", "SC@a.com", "SC", "11111111111111", "pierrick34$", 1, null, null);
-        Person ADMIN = new Person(null, "Admin", "admin@a.com", "Admin", null, "pierrick34$", 2, null, null);
-        Person a = new Person(null, "a", "a@a.com", "a", null, "pierrick34$", 0, null, null);
-        Person b = new Person(null, "b", "b@b.com", "b", null, "pierrick34$", 0, null, null);
-        Person c = new Person(null, "c", "c@c.com", "c", null, "pierrick34$", 0, null, null);
-        Person d = new Person(null, "d", "d@d.com", "d", null, "pierrick34$", 0, null, null);
-        Person e = new Person(null, "e", "e@e.com", "e", null, "pierrick34$", 0, null, null);
-        Person f = new Person(null, "f", "f@f.com", "f", null, "pierrick34$", 0, null, null);
-        Person g = new Person(null, "g", "g@g.com", "g", null, "pierrick34$", 0, null, null);
-        Person h = new Person(null, "h", "h@h.com", "h", null, "pierrick34$", 0, null, null);
-        Person i = new Person(null, "i", "i@i.com", "i", null, "pierrick34$", 0, null, null);
-        Person j = new Person(null, "j", "j@j.com", "j", null, "pierrick34$", 0, null, null);
-        Person k = new Person(null, "k", "k@k.com", "k", null, "pierrick34$", 0, null, null);
-        Person l = new Person(null, "l", "l@l.com", "l", null, "pierrick34$", 0, null, null);
-        Person m = new Person(null, "m", "m@m.com", "m", null, "pierrick34$", 0, null, null);
-        Person n = new Person(null, "n", "n@n.com", "n", null, "pierrick34$", 0, null, null);
-        Person o = new Person(null, "o", "o@o.com", "o", null, "pierrick34$", 0, null, null);
-        Person p = new Person(null, "p", "p@p.com", "p", null, "pierrick34$", 0, null, null);
-        Person q = new Person(null, "q", "q@q.com", "q", null, "pierrick34$", 0, null, null);
-        Person r = new Person(null, "r", "r@r.com", "r", null, "pierrick34$", 0, null, null);
-        Person s = new Person(null, "s", "s@s.com", "s", null, "pierrick34$", 0, null, null);
-        Person t = new Person(null, "t", "t@t.com", "t", null, "pierrick34$", 0, null, null);
-        Person u = new Person(null, "u", "u@u.com", "u", null, "pierrick34$", 0, null, null);
-        Person v = new Person(null, "v", "v@v.com", "v", null, "pierrick34$", 0, null, null);
-        Person w = new Person(null, "w", "w@w.com", "w", null, "pierrick34$", 0, null, null);
-        Person x = new Person(null, "x", "x@x.com", "x", null, "pierrick34$", 0, null, null);
-        Person y = new Person(null, "y", "y@y.com", "y", null, "pierrick34$", 0, null, null);
-        Person z = new Person(null, "z", "z@z.com", "z", null, "pierrick34$", 0, null, null);
+        Person SU = new Person(null, "SimpleUser", "SU@a.com", "SU", null, Codecs.sha1("pierrick34$"), 0, "2", "rue emile pereire", "Béziers", "34500", null, null);
+        Person SC = new Person(null, "SimpleSeller", "SC@a.com", "SC", "11111111111111", Codecs.sha1("pierrick34$"), 1, "2", "rue emile pereire", "Béziers", "34500", null, null);
+        Person ADMIN = new Person(null, "Admin", "admin@a.com", "Admin", null, Codecs.sha1("pierrick34$"), 2, "2", "rue emile pereire", "Béziers", "34500", null, null);
+        Person a = new Person(null, "a", "a@a.com", "a", null, Codecs.sha1("pierrick34$"), 0, "2", "rue emile pereire", "Béziers", "34500", null, null);
+        Person b = new Person(null, "b", "b@b.com", "b", null, Codecs.sha1("pierrick34$"), 0, "2", "rue emile pereire", "Béziers", "34500", null, null);
+        Person c = new Person(null, "c", "c@c.com", "c", null, Codecs.sha1("pierrick34$"), 0, "2", "rue emile pereire", "Béziers", "34500", null, null);
+        Person d = new Person(null, "d", "d@d.com", "d", null, Codecs.sha1("pierrick34$"), 0, "2", "rue emile pereire", "Béziers", "34500", null, null);
+        Person e = new Person(null, "e", "e@e.com", "e", null, Codecs.sha1("pierrick34$"), 0, "2", "rue emile pereire", "Béziers", "34500", null, null);
+        Person f = new Person(null, "f", "f@f.com", "f", null, Codecs.sha1("pierrick34$"), 0, "2", "rue emile pereire", "Béziers", "34500", null, null);
+        Person g = new Person(null, "g", "g@g.com", "g", null, Codecs.sha1("pierrick34$"), 0, "2", "rue emile pereire", "Béziers", "34500", null, null);
+        Person h = new Person(null, "h", "h@h.com", "h", null, Codecs.sha1("pierrick34$"), 0, "2", "rue emile pereire", "Béziers", "34500", null, null);
+        Person i = new Person(null, "i", "i@i.com", "i", null, Codecs.sha1("pierrick34$"), 0, "2", "rue emile pereire", "Béziers", "34500", null, null);
+        Person j = new Person(null, "j", "j@j.com", "j", null, Codecs.sha1("pierrick34$"), 0, "2", "rue emile pereire", "Béziers", "34500", null, null);
+        Person k = new Person(null, "k", "k@k.com", "k", null, Codecs.sha1("pierrick34$"), 0, "2", "rue emile pereire", "Béziers", "34500", null, null);
+        Person l = new Person(null, "l", "l@l.com", "l", null, Codecs.sha1("pierrick34$"), 0, "2", "rue emile pereire", "Béziers", "34500", null, null);
+        Person m = new Person(null, "m", "m@m.com", "m", null, Codecs.sha1("pierrick34$"), 0, "2", "rue emile pereire", "Béziers", "34500", null, null);
+        Person n = new Person(null, "n", "n@n.com", "n", null, Codecs.sha1("pierrick34$"), 0, "2", "rue emile pereire", "Béziers", "34500", null, null);
+        Person o = new Person(null, "o", "o@o.com", "o", null, Codecs.sha1("pierrick34$"), 0, "2", "rue emile pereire", "Béziers", "34500", null, null);
+        Person p = new Person(null, "p", "p@p.com", "p", null, Codecs.sha1("pierrick34$"), 0, "2", "rue emile pereire", "Béziers", "34500", null, null);
+        Person q = new Person(null, "q", "q@q.com", "q", null, Codecs.sha1("pierrick34$"), 0, "2", "rue emile pereire", "Béziers", "34500", null, null);
+        Person r = new Person(null, "r", "r@r.com", "r", null, Codecs.sha1("pierrick34$"), 0, "2", "rue emile pereire", "Béziers", "34500", null, null);
+        Person s = new Person(null, "s", "s@s.com", "s", null, Codecs.sha1("pierrick34$"), 0, "2", "rue emile pereire", "Béziers", "34500", null, null);
+        Person t = new Person(null, "t", "t@t.com", "t", null, Codecs.sha1("pierrick34$"), 0, "2", "rue emile pereire", "Béziers", "34500", null, null);
+        Person u = new Person(null, "u", "u@u.com", "u", null, Codecs.sha1("pierrick34$"), 0, "2", "rue emile pereire", "Béziers", "34500", null, null);
+        Person v = new Person(null, "v", "v@v.com", "v", null, Codecs.sha1("pierrick34$"), 0, "2", "rue emile pereire", "Béziers", "34500", null, null);
+        Person w = new Person(null, "w", "w@w.com", "w", null, Codecs.sha1("pierrick34$"), 0, "2", "rue emile pereire", "Béziers", "34500", null, null);
+        Person x = new Person(null, "x", "x@x.com", "x", null, Codecs.sha1("pierrick34$"), 0, "2", "rue emile pereire", "Béziers", "34500", null, null);
+        Person y = new Person(null, "y", "y@y.com", "y", null, Codecs.sha1("pierrick34$"), 0, "2", "rue emile pereire", "Béziers", "34500", null, null);
+        Person z = new Person(null, "z", "z@z.com", "z", null, Codecs.sha1("pierrick34$"), 0, "2", "rue emile pereire", "Béziers", "34500", null, null);
     }
 }

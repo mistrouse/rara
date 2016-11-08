@@ -79,12 +79,12 @@ angular.module('AWIAPP', ['ngCookies'])
     $scope.back = function() { $window.location.href = '/'; };
 
     // CREATE (POST) a person in the database with the information enter in the form
-    $scope.createPerson = function(name, pseudo, email, siret, password) {
+    $scope.createPerson = function(name, pseudo, email, numberAddress, streetAddress, cityAddress, postCodeAddress, siret, password) {
             var admin;
             var rqt = {
                     method : 'POST',
                     url : '/person',
-                    data : $.param({name: name, pseudo : pseudo, email: email, siret: siret, password: password, admin: admin}),
+                    data : $.param({name: name, pseudo : pseudo, email: email, siret: siret, password: password, admin: admin, numberAddress: numberAddress, streetAddress: streetAddress, cityAddress: cityAddress, postCodeAddress: postCodeAddress}),
                     headers : { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' }
             };
             $http(rqt).success(function(data){

@@ -27,7 +27,7 @@
 
         <div class="signUpForm" ng-show="signUpFormShow">
             <h3>Fill the information below to create your account !</h3>
-            <form name="signUpForm" ng-submit="createPerson(name, pseudo, email, siret, password)">
+            <form name="signUpForm" ng-submit="createPerson(name, pseudo, email, numberAddress, streetAddress, cityAddress, postCodeAddress, siret, password)">
                 <div class="form-group">
                     <label class="control-label">Name *</label>
                     <div>
@@ -44,6 +44,30 @@
                     <label class="control-label">Email *</label>
                     <div>
                         <input type="email" class="form-control" ng-model="email" placeholder="Enter your email here" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Number address *</label>
+                    <div>
+                        <input type="number" class="form-control" ng-model="numberAddress" placeholder="Enter your number address here" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Street address *</label>
+                    <div>
+                        <input type="text" class="form-control" ng-model="streetAddress" placeholder="Enter your street address here" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Post code address *</label>
+                    <div>
+                        <input type="number" class="form-control" ng-model="postCodeAddress" placeholder="Enter your post code address here" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">City address *</label>
+                    <div>
+                        <input type="text" class="form-control" ng-model="cityAddress" placeholder="Enter your city address here" required>
                     </div>
                 </div>
                 <div class="form-group" ng-show="isNotNullSiret == 'isNotNull'">
