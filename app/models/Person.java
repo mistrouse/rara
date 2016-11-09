@@ -32,9 +32,9 @@ public class Person extends Model {
     String cityAddress;
     String postCodeAddress;
     String token;
-    @OneToMany(mappedBy = "creator")
+    @OneToMany(mappedBy = "seller")
     @JsonManagedReference
-    List<Task> taskRealised = new ArrayList<Task>();
+    List<Product> productSell = new ArrayList<Product>();
 
     public Person() {
     }
@@ -54,9 +54,9 @@ public class Person extends Model {
      * @param streetAddress The street adress
      * @param cityAddress The city adress
      * @param postCodeAddress The post code for the adress
-     * @param taskRealised List of the task realised by a Person
+     * @param productSell List of the product sell by a seller
      */
-    public Person(Long id, String name, String email, String pseudo, String siret, String password, int role, String numberAddress, String streetAddress, String cityAddress, String postCodeAddress, String token, List<Task> taskRealised) {
+    public Person(Long id, String name, String email, String pseudo, String siret, String password, int role, String numberAddress, String streetAddress, String cityAddress, String postCodeAddress, String token, List<Product> productSell) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -69,7 +69,7 @@ public class Person extends Model {
         this.cityAddress = cityAddress;
         this.postCodeAddress = postCodeAddress;
         this.token = token;
-        this.taskRealised = taskRealised;
+        this.productSell = productSell;
         this.save();
     }
 
@@ -83,10 +83,6 @@ public class Person extends Model {
 
     public String getEmail() {
         return email;
-    }
-
-    public List<Task> getTaskRealised() {
-        return taskRealised;
     }
 
     public String getPseudo() {
@@ -125,6 +121,10 @@ public class Person extends Model {
         return postCodeAddress;
     }
 
+    public List<Product> getProductSell() {
+        return productSell;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -135,10 +135,6 @@ public class Person extends Model {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public void setTaskRealised(List<Task> taskRealised) {
-        this.taskRealised = taskRealised;
     }
 
     public void setPseudo(String pseudo) {
@@ -177,6 +173,10 @@ public class Person extends Model {
         this.postCodeAddress = postCodeAddress;
     }
 
+    public void setProductSell(List<Product> productSell) {
+        this.productSell = productSell;
+    }
+
     @Override
     public String toString() {
         return "Person{" +
@@ -192,8 +192,7 @@ public class Person extends Model {
                 ", cityAddress='" + cityAddress + '\'' +
                 ", postCodeAddress='" + postCodeAddress + '\'' +
                 ", token='" + token + '\'' +
-                ", taskRealised=" + taskRealised +
+                ", productSell=" + productSell +
                 '}';
     }
-
 }
