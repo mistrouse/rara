@@ -66,12 +66,62 @@ public class ProductController extends Controller {
         }
     }
 
+    /**
+     * Update a product with the data in the form
+     * @param id The id of the product to update
+     * @return The information of a Product in JSON format <br/>
+     * If the product doesn't exist in the database, return <b>404 Not Found</b> <br/>
+     * Else return <b>200 Ok</b>
+     */
     public Result productUpdate(long id) {
-        return TODO;
+        // Get the product in the database, if not exist return 404 not found
+        Product updateProduct = Product.find.byId(id);
+        if(updateProduct == null) {
+            return notFound("Product not found.");
+        }
+        // If exist, get the value of the form and do the update in the database
+        else {
+            // Get the value of the form
+            final Map<String, String[]> values = request().body().asFormUrlEncoded();
+            String newName = values.get("newName")[0];
+            String newDescription = values.get("newDescription")[0];
+            String newPrice = values.get("newPrice")[0];
+            String newQuantity = values.get("newQuantity")[0];
+            //String newImage = values.get("newImage")[0];
+
+            // Test if not empty, make the update, else nothing
+            if(!newName.isEmpty())
+                updateProduct.setName(newName);
+            if(!newDescription.isEmpty())
+                updateProduct.setDescription(newDescription);
+            if(!newPrice.isEmpty())
+                updateProduct.setPrice(Double.parseDouble(newPrice));
+            if(!newQuantity.isEmpty())
+                updateProduct.setQuantity(Integer.parseInt(newQuantity));
+            /*if(!newImage.isEmpty())
+                updateProduct.setId(newImage);*/
+
+            // Make change in the database
+            updateProduct.save();
+//            System.out.println("personUpdate(id) from PersonController -- updatePerson="+updatePerson);
+            return ok(Json.toJson(Product.find.byId(id)));
+        }
     }
 
+    /**
+     * DELETE a product in the database with his ID
+     * @param id The id of a Product
+     * @return If the product doesn't exist in the dababase, return <b>404 Not Found</b> <br/>
+     * Else return <b>200 Ok</b>
+     */
     public Result productDelete(long id) {
-        return TODO;
+        if(Product.find.byId(id) == null) {
+            return notFound("Product not found.");
+        }
+        else {
+            Product.find.deleteById(id);
+            return ok("The product has been deleted");
+        }
     }
 
     public void initializeProduct() {

@@ -35,13 +35,31 @@ POST    /login                      controllers.PersonController.login
 # Logout the person
 POST    /logout                     controllers.PersonController.logout
 # Check if the user is already connect or not
-GET     /isConnected/:id/:token      controllers.PersonController.isConnected(id: Int, token: String)
+GET     /isConnected/:id/:token     controllers.PersonController.isConnected(id: Int, token: String)
+# Get all products for a seller
+GET     /person/:id/products        controllers.PersonController.getAllProductsForSeller(id: Long)
+
+########################
+#       PRODUCT        #
+########################
+# Get All products
+GET     /products                    controllers.ProductController.products
+# GET just a produt by ID
+GET     /product/:id                controllers.ProductController.product(id: Long)
+# Create a product
+POST    /product                       controllers.ProductController.productCreate
+# Upate a product by the ID
+PUT     /product/:id                controllers.ProductController.productUpdate(id: Long)
+# Delete a product
+DELETE  /product/:id                controllers.ProductController.productDelete(id: Long)
+
 
 
 #######################
 #         Lib         #
 #######################
 GET /lib/smart-table               controllers.Assets.at(path="/public", file="lib/smart-table.js")
+GET /lib/dropzone                  controllers.Assets.at(path="/public", file="lib/dropzone.js")
 
 
 # A SUPPR
@@ -104,4 +122,9 @@ GET /Admin/manageAccount             controllers.Assets.at(path="/public", file=
 GET /Admin/manageAccountJS           controllers.Assets.at(path="/public", file="javascripts/manageAccountAdmin.js")
 
 # Manage product for a SC
-GET /SC/myProduct                   controllers.Assets.at(path="/public", file="html/myProduct.html")
+GET /SC/createProduct                controllers.Assets.at(path="/public", file="html/createProductSeller.html")
+GET /SC/createProductJS              controllers.Assets.at(path="/public", file="javascripts/createProductSeller.js")
+
+# Show and update products for seller
+GET /SC/myProduct                   controllers.Assets.at(path="/public", file="html/myProductSeller.html")
+GET /SC/myProductJS                 controllers.Assets.at(path="/public", file="javascripts/myProductSeller.js")
