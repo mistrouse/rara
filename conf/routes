@@ -46,7 +46,7 @@ GET     /persons/seller           controllers.PersonController.getAllSeller()
 ########################
 # Get All products
 GET     /products                    controllers.ProductController.products
-# GET just a produt by ID
+# GET just a product by ID
 GET     /product/:id                controllers.ProductController.product(id: Long)
 # Create a product
 POST    /product                       controllers.ProductController.productCreate
@@ -54,7 +54,8 @@ POST    /product                       controllers.ProductController.productCrea
 PUT     /product/:id                controllers.ProductController.productUpdate(id: Long)
 # Delete a product
 DELETE  /product/:id                controllers.ProductController.productDelete(id: Long)
-
+# Buy a product
+PUT  /product/:id/buy               controllers.ProductController.productBuy(id: Long)
 
 
 #######################
@@ -139,5 +140,3 @@ GET /SU/product/search                  controllers.Assets.at(path="/public", fi
 GET /SU/product/searchJS                controllers.Assets.at(path="/public", file="javascripts/searchProduct.js")
 GET /SC/product/search                  controllers.Assets.at(path="/public", file="html/searchProduct.html")
 GET /SC/product/searchJS                controllers.Assets.at(path="/public", file="javascripts/searchProduct.js")
-
-

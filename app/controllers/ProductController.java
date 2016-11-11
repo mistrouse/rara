@@ -124,6 +124,29 @@ public class ProductController extends Controller {
         }
     }
 
+    /**
+     * Buy a product, decremented the value for the product in the database and send a notification for the seller.
+     * @param id The id of the product
+     * @return If the product doesn't exist, return <b>404 Not Found</b> <br/>
+     * Else return <b>200 Ok</b>
+     */
+    public Result productBuy(long id) {
+        // Get the product in the database, if not exist return 404 not found
+        Product buyProduct = Product.find.byId(id);
+        if(buyProduct == null) {
+            return notFound("Product not found.");
+        }
+        // If exist, update the value in the database with the value of the buyer
+        else {
+            final Map<String, String[]> values = request().body().asFormUrlEncoded();
+            String quantityPurchased = values.get("quantityPurchased")[0];
+            buyProduct.setQuantity(buyProduct.getQuantity()-Integer.parseInt(quantityPurchased));
+            buyProduct.save();
+            // SEND NOTIFICATION TO THE SELLER !!!!!
+            return ok(Json.toJson(buyProduct));
+        }
+    }
+
     public void initializeProduct() {
         Product p = new Product(null, "Téléphone", "Ceci est un téléphone...", 499.99, 2, Person.find.byId(2l));
         Product p1 = new Product(null, "Crayon", "Mine extra fine!", 9.99, 10, Person.find.byId(2l));

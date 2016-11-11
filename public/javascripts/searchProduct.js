@@ -2,9 +2,9 @@ angular.module('AWIAPP', ['ngCookies'])
 .controller('searchProduct', function($scope, $http, $window, $cookies, $cookieStore) {
 
     // Test if the person can stay on the page
-    var typeAccount;
     var id_person = $cookies.get('id');
     var token_person = $cookies.get('token');
+    $scope.isSeller = false;
     if(!angular.isUndefined(id_person) && !angular.isUndefined(token_person)){
         var rqt = {
             method : 'GET',
@@ -14,11 +14,8 @@ angular.module('AWIAPP', ['ngCookies'])
         };
         $http(rqt).success(function(data) {
            person = data;
-           if(person["role"] == 0) {
-                typeAccount = "SU";
-           }
-           else if(person["role"] == 1) {
-               typeAccount = "SC";
+           if(data.role == 0) {
+                $scope.isSeller = true;
            }
         })
         $http(rqt).error(function(data){
@@ -32,6 +29,13 @@ angular.module('AWIAPP', ['ngCookies'])
 
     // Hide the error message if the seller has no product in his shop
     $scope.hideErrorNoProduct = true;
+    // Hide the error message if the user want too much product
+    $scope.hideErrorNotEnoughProduct = true;
+    // Hide the success message if the user add product in his basket
+    $scope.hideSuccessAddBasketProduct = true;
+    // Hide the information of a product
+    $scope.showProductInformation = false;
+    var valueProductSelected;
 
     // Get all seller who will fill the combo
     $scope.getAllSeller = function() {
@@ -59,7 +63,10 @@ angular.module('AWIAPP', ['ngCookies'])
 
     // When the user select a company, we retrieve the company and get all products from his company
     $scope.hasChanged = function(seller) {
+        // Empty the search bar when change company
         $scope.searchProduct = null;
+        // Hide the information of a product
+        $scope.showProductInformation = false;
         if(seller.name == null) {
             $scope.getAllProduct();
         }
@@ -68,16 +75,18 @@ angular.module('AWIAPP', ['ngCookies'])
         }
     }
 
+    // Create the product search in the search bar
     $scope.searchBar= function(data) {
-        // Create the product search in the search bar
         // If the seller has no product in his shop, we display a error message
         if(data.length == 0) {
             $scope.hideErrorNoProduct = false;
             $scope.titleErrorNoProduct = "No product for this company..."
         }
+        // Else hide the error message
         else {
             $scope.hideErrorNoProduct = true;
         }
+        // Create the product
         var options = {
             // Take all product for data
             data: data,
@@ -90,25 +99,19 @@ angular.module('AWIAPP', ['ngCookies'])
                     description: "description"
                 }
             },
-            /*
-            template: {
-                type: "custom",
-                method: function(value, item) {
-                    return res = value + ' -- <i>' +item.description +'</i>';
-                }
-            },
-            */
-            // When a user click on a row it is redirect to the page of the product
+            // When a user click on a row, there is information of the product show below
             list: {
-                match: {
-                    enabled: true
-                },
                 onClickEvent: function() {
                     //retrieve JSON to which the user clicked
-                    var value = $("#search-product").getSelectedItemData();
-                    // Redirect the user to product page
-                    var path = '/' + typeAccount + '/product/view/' + value.id;
-                    $window.location.href = path;
+                    valueProductSelected = $("#search-product").getSelectedItemData();
+                    // We show the information of the product
+                    $scope.$apply(function(){
+                        $scope.nameProduct = valueProductSelected.name;
+                        $scope.descriptionProduct = valueProductSelected.description;
+                        $scope.priceProduct = valueProductSelected.price;
+                        $scope.quantityProduct = valueProductSelected.quantity;
+                        $scope.showProductInformation = true;
+                    });
                 },
                 showAnimation: {
                     type: "fade",
@@ -119,10 +122,40 @@ angular.module('AWIAPP', ['ngCookies'])
                     type: "slide",
                     time: 400,
                     callback: function() {}
-                }
+                },
             }
         };
         // link the search options to the search bar in the html
         $("#search-product").easyAutocomplete(options);
-    }
+    };
+
+    // When the user would add to his basket the product
+    $scope.addToBasket = function(desiredQuantity) {
+        var id_product = valueProductSelected.id;
+        var quantity_product_stock = valueProductSelected.quantity;
+        // If the user want too much product, show error message
+        if(desiredQuantity > quantity_product_stock) {
+            $scope.hideErrorNotEnoughProduct = false;
+            $scope.tittleErrorNotEnoughProduct = "You cannot buy this quantity, the seller hasn’t have the capability..."
+        }
+        // Else, we modified in the database and show the success to the user
+        else {
+            $scope.hideErrorNotEnoughProduct = true;
+            var rqt = {
+                method : 'PUT',
+                url : '/product/' + id_product +'/buy',
+                data : $.param({quantityPurchased: desiredQuantity,}),
+                headers : { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' }
+            };
+            // Reload the data and show success message
+            $http(rqt).success(function(data){
+                $scope.nameProduct = data.name;
+                $scope.descriptionProduct = data.description;
+                $scope.priceProduct = data.price;
+                $scope.quantityProduct = data.quantity;
+                $scope.hideSuccessAddBasketProduct = false;
+                $scope.tittleHideSuccessAddBasketProduct = "The product "+data.name+" has been add to your basket. Thank you."
+            });
+        }
+    };
 });

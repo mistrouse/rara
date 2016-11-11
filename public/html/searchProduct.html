@@ -12,8 +12,8 @@
 </head>
 <body ng-app="AWIAPP" ng-controller="searchProduct" class="searchProduct" ng-init="getAllSeller(); getAllProduct()">
     <div class="all">
-        <h1>Search Product</h1>
-        <div>
+        <div class="searchProduct">
+            <h1>Search Product</h1>
             <div class="companyValue">
                 Choose your company :
                 <select ng-model="seller.name" ng-options="seller as seller.name for seller in allSeller" ng-change="hasChanged(seller)">
@@ -26,7 +26,31 @@
                 <input ng-model="searchProduct" id="search-product"/>
             </div>
         </div>
+        <div class="showProductInformation" ng-show="showProductInformation">
+            <h1>Information for the product: {{nameProduct}}</h1>
+            <div class="valueDescription">
+                Description : {{descriptionProduct}} <br>
+            </div>
+            <div class="valuePrice">
+                Price : {{priceProduct}} <br>
+            </div>
+            <div class="valueQuantity">
+                Quantity : {{quantityProduct}} <br>
+            </div><br>
+            <div class="showAddBasket" ng-show="isSeller">
+                <form name="addBasket" ng-submit="addToBasket(desiredQuantity)">
+                    <div class="form-group">
+                        <label class="control-label">What quantity would like buy ?</label>
+                        <div>
+                            <input type="number" class="form-control" ng-model="desiredQuantity" placeholder="Enter your quantity here" required>
+                        </div>
+                    </div>
+                    <button ng-disabled="addBasket.$invalid" class="btn btn-success">Add Basket</button>
+                </form>
+                <div ng-hide="hideErrorNotEnoughProduct" class="alert alert-danger"> <strong>Error! </strong>{{tittleErrorNotEnoughProduct}} </div>
+                <div ng-hide="hideSuccessAddBasketProduct" class="alert alert-success"> <strong>Success! </strong>{{tittleHideSuccessAddBasketProduct}} </div>
+            </div>
+        </div>
     </div>
-
 </body>
 </html>
