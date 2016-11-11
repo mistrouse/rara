@@ -42,7 +42,7 @@ public class ProductController extends Controller {
     /**
      * CREATE a product in the database with the values of the FORM
      * @return The product is created <br/>
-     * If the person is not a seller, return <b>404 Not Found</b> <br/>
+     * If the person is not a seller or an admin, return <b>404 Not Found</b> <br/>
      * Else return <b>201 Created</b>
      */
     public Result productCreate() {
@@ -54,15 +54,14 @@ public class ProductController extends Controller {
         String quantity = values.get("quantity")[0];
         String id = values.get("id")[0];
 
-        Person isSeller = Person.find.byId(Long.valueOf(id));
-        if(isSeller.getRole() != 1) {
-            return notFound("The person is not a seller");
-        }
-        else {
+        Person isSellerOrAdmin = Person.find.byId(Long.valueOf(id));
+        if(isSellerOrAdmin.getRole() == 1 || isSellerOrAdmin.getRole() == 2){
             // Create the product in the database with the informations
             Product product = new Product(null, name, description, Double.parseDouble(price), Integer.parseInt(quantity), Person.find.byId(Long.valueOf(id)));
             return created("The product has been created");
-
+        }
+        else {
+            return notFound("The person is not a seller or an admin");
         }
     }
 

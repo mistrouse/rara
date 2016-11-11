@@ -124,8 +124,12 @@ GET /Admin/myaccount                 controllers.Assets.at(path="/public", file=
 GET /Admin/myaccountJS               controllers.Assets.at(path="/public", file="javascripts/myaccount.js")
 
 # Manage account by Admin
-GET /Admin/manageAccount             controllers.Assets.at(path="/public", file="html/manageAccountAdmin.html")
-GET /Admin/manageAccountJS           controllers.Assets.at(path="/public", file="javascripts/manageAccountAdmin.js")
+GET /Admin/manage/account             controllers.Assets.at(path="/public", file="html/manageAccountAdmin.html")
+GET /Admin/manage/accountJS           controllers.Assets.at(path="/public", file="javascripts/manageAccountAdmin.js")
+
+# Manage product by Admin
+GET /Admin/manage/product             controllers.Assets.at(path="/public", file="html/manageProductAdmin.html")
+GET /Admin/manage/productJS           controllers.Assets.at(path="/public", file="javascripts/manageProductAdmin.js")
 
 # Manage product for a SC
 GET /SC/createProduct                controllers.Assets.at(path="/public", file="html/createProductSeller.html")

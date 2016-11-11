@@ -75,9 +75,14 @@ angular.module('AWIAPP', ['ngCookies'])
         $window.location.href = '/SC/createProduct';
     }
 
-    // If an admin would manage account, is redirect to 'Admin/manageaccount'
+    // If an admin would manage account, is redirect to '/Admin/manage/account'
     $scope.manageAccount = function() {
-        $window.location.href='/Admin/manageAccount'
+        $window.location.href='/Admin/manage/account';
+    }
+
+    // If an admin would manage product, is redirect to '/Admin/manage/product'
+    $scope.manageProduct = function() {
+        $window.location.href='/Admin/manage/product';
     }
 
     // If the SU or SC would to search a product

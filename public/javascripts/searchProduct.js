@@ -101,6 +101,9 @@ angular.module('AWIAPP', ['ngCookies'])
             },
             // When a user click on a row, there is information of the product show below
             list: {
+                match: {
+                    enabled: true
+                },
                 onClickEvent: function() {
                     //retrieve JSON to which the user clicked
                     valueProductSelected = $("#search-product").getSelectedItemData();
