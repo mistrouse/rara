@@ -17,6 +17,7 @@ angular.module('AWIAPP', ['ngCookies'])
            person = data;
            if(person["role"] == 0) {
                $scope.typeAccount = "Simple User";
+               $scope.isSimpleUser = "isSimpleUser";
            }
            else if(person["role"] == 1) {
                $scope.typeAccount = "Simple Seller";
@@ -53,7 +54,7 @@ angular.module('AWIAPP', ['ngCookies'])
 
     // If the user would see his information account is redirect to '/typeOfAccount/myaccount'
     $scope.myAccount = function() {
-        if(person["role"] == 0) {
+       if(person["role"] == 0) {
            $window.location.href = '/SU/myaccount';
        }
        else if(person["role"] == 1) {
@@ -77,5 +78,15 @@ angular.module('AWIAPP', ['ngCookies'])
     // If an admin would manage account, is redirect to 'Admin/manageaccount'
     $scope.manageAccount = function() {
         $window.location.href='/Admin/manageAccount'
+    }
+
+    // If the SU or SC would to search a product
+    $scope.searchProduct =  function() {
+        if(person["role"] == 0) {
+           $window.location.href = '/SU/product/search';
+       }
+       else if(person["role"] == 1) {
+           $window.location.href = '/SC/product/search';
+       }
     }
 });

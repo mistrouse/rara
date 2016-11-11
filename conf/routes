@@ -38,6 +38,8 @@ POST    /logout                     controllers.PersonController.logout
 GET     /isConnected/:id/:token     controllers.PersonController.isConnected(id: Int, token: String)
 # Get all products for a seller
 GET     /person/:id/products        controllers.PersonController.getAllProductsForSeller(id: Long)
+# Get all seller companies
+GET     /persons/seller           controllers.PersonController.getAllSeller()
 
 ########################
 #       PRODUCT        #
@@ -60,6 +62,9 @@ DELETE  /product/:id                controllers.ProductController.productDelete(
 #######################
 GET /lib/smart-table               controllers.Assets.at(path="/public", file="lib/smart-table.js")
 GET /lib/dropzone                  controllers.Assets.at(path="/public", file="lib/dropzone.js")
+GET /lib/easy-autocomplete/easy-autocompleteJS                  controllers.Assets.at(path="/public", file="lib/easy-autocomplete/easy-autocomplete.js")
+GET /lib/easy-autocomplete/easy-autocompleteCSS                 controllers.Assets.at(path="/public", file="lib/easy-autocomplete/easy-autocomplete.css")
+GET /lib/easy-autocomplete/easy-autocomplete-themeCSS           controllers.Assets.at(path="/public", file="lib/easy-autocomplete/easy-autocomplete-theme.css")
 
 
 # A SUPPR
@@ -128,3 +133,11 @@ GET /SC/createProductJS              controllers.Assets.at(path="/public", file=
 # Show and update products for seller
 GET /SC/myProduct                   controllers.Assets.at(path="/public", file="html/myProductSeller.html")
 GET /SC/myProductJS                 controllers.Assets.at(path="/public", file="javascripts/myProductSeller.js")
+
+# Show the search page for SU and SC to search the product in the database
+GET /SU/product/search                  controllers.Assets.at(path="/public", file="html/searchProduct.html")
+GET /SU/product/searchJS                controllers.Assets.at(path="/public", file="javascripts/searchProduct.js")
+GET /SC/product/search                  controllers.Assets.at(path="/public", file="html/searchProduct.html")
+GET /SC/product/searchJS                controllers.Assets.at(path="/public", file="javascripts/searchProduct.js")
+
+

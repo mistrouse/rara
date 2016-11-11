@@ -16,6 +16,7 @@
                 <button name="myAccount" class="btn btn-success" ng-click="myAccount()">My account</button>
                 <button ng-show="isSeller == 'isSeller'" name="myProduct" class="btn btn-success" ng-click="myProduct()">My product</button>
                 <button ng-show="isSeller == 'isSeller'" name="createProduct" class="btn btn-success" ng-click="createProduct()">Create product</button>
+                <button ng-show="isSeller == 'isSeller' || isSimpleUser == 'isSimpleUser'" name="searchProduct" class="btn btn-success" ng-click="searchProduct()">Search product</button>
                 <button ng-show="isAdmin == 'isAdmin'" name="manageAccount" class="btn btn-success" ng-click="manageAccount()">Manage account</button>
                 <button name="logOut" class="btn btn-success" ng-click="logOut()">Log out</button>
             </div>

@@ -125,7 +125,8 @@ public class ProductController extends Controller {
     }
 
     public void initializeProduct() {
-        System.out.println(Person.find.byId(2l));
-        Product p = new Product(null, "Téléphone", "Ceci est un téléphone...", 12.12, 12, Person.find.byId(2l));
+        Product p = new Product(null, "Téléphone", "Ceci est un téléphone...", 499.99, 2, Person.find.byId(2l));
+        Product p1 = new Product(null, "Crayon", "Mine extra fine!", 9.99, 10, Person.find.byId(2l));
+        Product p2 = new Product(null, "Cure dent", "Lot de 100 cure dent", 5.0, 10, Person.find.byId(3l));
     }
 }

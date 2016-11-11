@@ -247,9 +247,20 @@ public class PersonController extends Controller {
         }
     }
 
+    /**
+     * Retrieve all seller of the database
+     * @return All seller in the database, if there are no seller, return <b>404 NotFound</b>,
+     * Else <b>200 Ok</b>
+     */
+    public Result getAllSeller() {
+        return ok(Json.toJson(Person.find.where().eq("role", 1).findList()));
+    }
+
     public void initializePerson() {
         Person SU = new Person(null, "SimpleUser", "SU@a.com", "SU", null, Codecs.sha1("pierrick34$"), 0, "2", "rue emile pereire", "Béziers", "34500", null, null);
         Person SC = new Person(null, "SimpleSeller", "SC@a.com", "SC", "11111111111111", Codecs.sha1("pierrick34$"), 1, "2", "rue emile pereire", "Béziers", "34500", null, null);
+        Person jsuisseller = new Person(null, "J'suisSeller", "seller@a.com", "Seller", "11111111111111", Codecs.sha1("pierrick34$"), 1, "2", "rue emile pereire", "Béziers", "34500", null, null);
+        Person decatlhon = new Person(null, "decatlhon", "decatlhon@a.com", "decatlhon", "11111111111111", Codecs.sha1("pierrick34$"), 1, "2", "rue emile pereire", "Béziers", "34500", null, null);
         Person ADMIN = new Person(null, "Admin", "admin@a.com", "Admin", null, Codecs.sha1("pierrick34$"), 2, "2", "rue emile pereire", "Béziers", "34500", null, null);
         Person a = new Person(null, "a", "a@a.com", "a", null, Codecs.sha1("pierrick34$"), 0, "2", "rue emile pereire", "Béziers", "34500", null, null);
         Person b = new Person(null, "b", "b@b.com", "b", null, Codecs.sha1("pierrick34$"), 0, "2", "rue emile pereire", "Béziers", "34500", null, null);

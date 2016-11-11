@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-cookies.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="searchJS"></script>
+    <script src="/lib/easy-autocomplete/easy-autocompleteJS"></script>
+    <link rel="stylesheet" href="/lib/easy-autocomplete/easy-autocompleteCSS">
+    <link rel="stylesheet" href="/lib/easy-autocomplete/easy-autocomplete-themeCSS">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+</head>
+<body ng-app="AWIAPP" ng-controller="searchProduct" class="searchProduct" ng-init="getAllSeller(); getAllProduct()">
+    <div class="all">
+        <h1>Search Product</h1>
+        <div>
+            <div class="companyValue">
+                Choose your company :
+                <select ng-model="seller.name" ng-options="seller as seller.name for seller in allSeller" ng-change="hasChanged(seller)">
+                    <option value="" selected="selected">All</option>
+                </select>
+            </div>
+            <div ng-hide="hideErrorNoProduct" class="alert alert-danger"> <strong>Sorry! </strong>{{titleErrorNoProduct}} </div>
+            <div class="productValue">
+                Search your products in this company :
+                <input ng-model="searchProduct" id="search-product"/>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
