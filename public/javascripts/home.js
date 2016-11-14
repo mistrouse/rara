@@ -54,7 +54,7 @@ angular.module('AWIAPP', ['ngCookies'])
 
     // If the user would see his information account is redirect to '/typeOfAccount/myaccount'
     $scope.myAccount = function() {
-       if(person["role"] == 0) {
+       /*if(person["role"] == 0) {
            $window.location.href = '/SU/myaccount';
        }
        else if(person["role"] == 1) {
@@ -62,36 +62,42 @@ angular.module('AWIAPP', ['ngCookies'])
        }
        else {
            $window.location.href = '/Admin/myaccount';
-       }
+       }*/
+       $window.location.href = '/myaccount.html';
     }
 
     // If the Seller would to show his product
     $scope.myProduct = function(){
-        $window.location.href = '/SC/myProduct';
+        //$window.location.href = '/SC/myProduct';
+        $window.location.href = '/myProductSeller.html';
     }
 
     // If the Seller would to create a product
     $scope.createProduct = function() {
-        $window.location.href = '/SC/createProduct';
+        //$window.location.href = '/SC/createProduct';
+        $window.location.href = '/createProductSeller.html';
     }
 
     // If an admin would manage account, is redirect to '/Admin/manage/account'
     $scope.manageAccount = function() {
-        $window.location.href='/Admin/manage/account';
+        //$window.location.href='/Admin/manage/account';
+        $window.location.href = '/manageAccountAdmin.html';
     }
 
     // If an admin would manage product, is redirect to '/Admin/manage/product'
     $scope.manageProduct = function() {
-        $window.location.href='/Admin/manage/product';
+        //$window.location.href='/Admin/manage/product';
+        $window.location.href = '/manageProductAdmin.html';
     }
 
     // If the SU or SC would to search a product
     $scope.searchProduct =  function() {
-        if(person["role"] == 0) {
+       /*if(person["role"] == 0) {
            $window.location.href = '/SU/product/search';
        }
        else if(person["role"] == 1) {
            $window.location.href = '/SC/product/search';
-       }
+       }*/
+       $window.location.href = '/searchProduct.html';
     }
 });

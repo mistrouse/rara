@@ -12,7 +12,7 @@ angular.module('AWIAPP', ['ngCookies'])
             headers : { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' }
         };
         $http(rqt).success(function(data){
-            // If the person is a SU, redirect to /homeSU
+            /*// If the person is a SU, redirect to /homeSU
             if(data["role"] == 0) {
                 $window.location.href = '/SU/home';
             }
@@ -23,7 +23,8 @@ angular.module('AWIAPP', ['ngCookies'])
             // If the person is an Admin, redirect to /homeAdmin
             else {
                 $window.location.href = '/Admin/home';
-            }
+            }*/
+            $window.location.href = '/home.html';
         });
     }
 
@@ -94,7 +95,7 @@ angular.module('AWIAPP', ['ngCookies'])
                         headers : { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' }
                 };
                 $http(rqt).success(function(data){
-                    $window.location.href = '/login';
+                    $window.location.href = '/login.html';
                 });
             }).error(function(data) {
                 $scope.hideError = false;

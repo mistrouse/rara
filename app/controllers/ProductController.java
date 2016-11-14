@@ -19,7 +19,7 @@ public class ProductController extends Controller {
      * @return The information of all Product in JSON format
      */
     public Result products() {
-        //this.initializeProduct();
+        this.initializeProduct();
         return ok(Json.toJson(Product.find.all()));
     }
 

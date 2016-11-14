@@ -13,7 +13,7 @@ angular.module('AWIAPP', ['ngCookies'])
         };
         $http(rqt).success(function(data){
             // If the person is a SU, redirect to /homeSU
-            if(data["role"] == 0) {
+            /*if(data["role"] == 0) {
                 $window.location.href = '/SU/home';
             }
             // If the person is a SC, redirect to /homeSC
@@ -23,7 +23,8 @@ angular.module('AWIAPP', ['ngCookies'])
             // If the person is an Admin, redirect to /homeAdmin
             else {
                 $window.location.href = '/Admin/home';
-            }
+            }*/
+            $window.location.href = '/home.html';
         });
     }
 
@@ -40,7 +41,7 @@ angular.module('AWIAPP', ['ngCookies'])
         };
         $http(rqt).success(function(data){
             $scope.hideError = true;
-            if(data["role"] == 0) {
+            /*if(data["role"] == 0) {
                 $window.location.href = '/SU/home';
             }
             // If the person is a SC, redirect to /homeSC
@@ -50,7 +51,8 @@ angular.module('AWIAPP', ['ngCookies'])
             // If the person is an Admin, redirect to /homeAdmin
             else {
                 $window.location.href = '/Admin/home';
-            }
+            }*/
+            $window.location.href = '/home.html';
         }).error(function(data) {
             $scope.hideError = false;
             $scope.titleError = data;

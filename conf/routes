@@ -1,22 +1,6 @@
 # Routes
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
-
-####################
-#       TASK       #
-####################
-# Create one task
-POST    /task                       controllers.HomeController.taskCreate
-# Get All task
-GET     /tasks                      controllers.HomeController.tasks
-# Get just one task
-GET     /task/:id                   controllers.HomeController.task(id: Long)
-# Update one task
-PUT     /task/:id                   controllers.HomeController.taskUpdate(id: Long)
-# Delete one task
-DELETE  /task/:id                   controllers.HomeController.taskDelete(id: Long)
-
-
 #######################
 #       PERSON        #
 #######################
@@ -67,80 +51,8 @@ GET /lib/easy-autocomplete/easy-autocompleteJS                  controllers.Asse
 GET /lib/easy-autocomplete/easy-autocompleteCSS                 controllers.Assets.at(path="/public", file="lib/easy-autocomplete/easy-autocomplete.css")
 GET /lib/easy-autocomplete/easy-autocomplete-themeCSS           controllers.Assets.at(path="/public", file="lib/easy-autocomplete/easy-autocomplete-theme.css")
 
-
-# A SUPPR
-GET /test                           controllers.Assets.at(path="/public", file="html/testCreatePerson.html")
-# A SUPPR
-GET /personJS                       controllers.Assets.at(path="/public", file="javascripts/person.js")
-
-
-# PAGE HTML
-# Index
 GET /                               controllers.Assets.at(path="/public", file="html/index.html")
-GET /indexJS                        controllers.Assets.at(path="/public", file="javascripts/index.js")
 
-# Create a person
-GET /createPerson                   controllers.Assets.at(path="/public", file="html/createPerson.html")
-GET /createPersonJS                 controllers.Assets.at(path="/public", file="javascripts/createPerson.js")
-
-# Login a person
-GET /login                          controllers.Assets.at(path="/public", file="html/login.html")
-GET /loginJS                        controllers.Assets.at(path="/public", file="javascripts/login.js")
-
-# Home for SU when connect
-#GET /SU/home                        controllers.Assets.at(path="/public", file="html/homeSU.html")
-#GET /SU/homeSUJS                    controllers.Assets.at(path="/public", file="javascripts/homeSU.js")
-
-# Home for SC when connect
-#GET /SC/home                        controllers.Assets.at(path="/public", file="html/homeSC.html")
-#GET /SC/homeSCJS                    controllers.Assets.at(path="/public", file="javascripts/homeSC.js")
-
-# Home for Admin when connect
-#GET /Admin/home                     controllers.Assets.at(path="/public", file="html/homeAdmin.html")
-#GET /Admin/homeAdminJS              controllers.Assets.at(path="/public", file="javascripts/homeAdmin.js")
-
-# A DELETE
-# TEST DE FAIRE QUE UN /XX/HOME
-GET /SU/home                         controllers.Assets.at(path="/public", file="html/home.html")
-GET /SU/homeJS                       controllers.Assets.at(path="/public", file="javascripts/home.js")
-
-GET /SC/home                         controllers.Assets.at(path="/public", file="html/home.html")
-GET /SC/homeJS                       controllers.Assets.at(path="/public", file="javascripts/home.js")
-
-GET /Admin/home                      controllers.Assets.at(path="/public", file="html/home.html")
-GET /Admin/homeJS                    controllers.Assets.at(path="/public", file="javascripts/home.js")
-# A DELETE
-
-# Update an SU account
-GET /SU/myaccount                    controllers.Assets.at(path="/public", file="html/myaccount.html")
-GET /SU/myaccountJS                  controllers.Assets.at(path="/public", file="javascripts/myaccount.js")
-
-# Update an SC account
-GET /SC/myaccount                    controllers.Assets.at(path="/public", file="html/myaccount.html")
-GET /SC/myaccountJS                  controllers.Assets.at(path="/public", file="javascripts/myaccount.js")
-
-# Update an Admin account
-GET /Admin/myaccount                 controllers.Assets.at(path="/public", file="html/myaccount.html")
-GET /Admin/myaccountJS               controllers.Assets.at(path="/public", file="javascripts/myaccount.js")
-
-# Manage account by Admin
-GET /Admin/manage/account             controllers.Assets.at(path="/public", file="html/manageAccountAdmin.html")
-GET /Admin/manage/accountJS           controllers.Assets.at(path="/public", file="javascripts/manageAccountAdmin.js")
-
-# Manage product by Admin
-GET /Admin/manage/product             controllers.Assets.at(path="/public", file="html/manageProductAdmin.html")
-GET /Admin/manage/productJS           controllers.Assets.at(path="/public", file="javascripts/manageProductAdmin.js")
-
-# Manage product for a SC
-GET /SC/createProduct                controllers.Assets.at(path="/public", file="html/createProductSeller.html")
-GET /SC/createProductJS              controllers.Assets.at(path="/public", file="javascripts/createProductSeller.js")
-
-# Show and update products for seller
-GET /SC/myProduct                   controllers.Assets.at(path="/public", file="html/myProductSeller.html")
-GET /SC/myProductJS                 controllers.Assets.at(path="/public", file="javascripts/myProductSeller.js")
-
-# Show the search page for SU and SC to search the product in the database
-GET /SU/product/search                  controllers.Assets.at(path="/public", file="html/searchProduct.html")
-GET /SU/product/searchJS                controllers.Assets.at(path="/public", file="javascripts/searchProduct.js")
-GET /SC/product/search                  controllers.Assets.at(path="/public", file="html/searchProduct.html")
-GET /SC/product/searchJS                controllers.Assets.at(path="/public", file="javascripts/searchProduct.js")
+GET    /js/*file               controllers.Assets.at(path="/public/javascripts", file)
+GET    /*file                  controllers.Assets.at(path="/public/html", file)
+GET    /lib/*file              controllers.Assets.at(path="/public/lib", file)
