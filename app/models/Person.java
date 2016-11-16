@@ -35,7 +35,9 @@ public class Person extends Model {
     @OneToMany(mappedBy = "seller")
     @JsonManagedReference
     List<Product> productSell = new ArrayList<Product>();
-
+    @OneToMany(mappedBy = "user")
+    @JsonManagedReference
+    List<Diary> diaryUser = new ArrayList<Diary>();
     public Person() {
     }
 
@@ -55,8 +57,9 @@ public class Person extends Model {
      * @param cityAddress The city adress
      * @param postCodeAddress The post code for the adress
      * @param productSell List of the product sell by a seller
+     * @param diaryUser List of the user diary
      */
-    public Person(Long id, String name, String email, String pseudo, String siret, String password, int role, String numberAddress, String streetAddress, String cityAddress, String postCodeAddress, String token, List<Product> productSell) {
+    public Person(Long id, String name, String email, String pseudo, String siret, String password, int role, String numberAddress, String streetAddress, String cityAddress, String postCodeAddress, String token, List<Product> productSell,List<Diary> diaryUser) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -70,6 +73,7 @@ public class Person extends Model {
         this.postCodeAddress = postCodeAddress;
         this.token = token;
         this.productSell = productSell;
+        this.diaryUser=diaryUser;
         this.save();
     }
 
@@ -125,6 +129,10 @@ public class Person extends Model {
         return productSell;
     }
 
+    public List<Diary> getDiaryUser() {
+        return diaryUser;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -177,6 +185,10 @@ public class Person extends Model {
         this.productSell = productSell;
     }
 
+    public void setDiaryUser(List<Diary> diaryUser) {
+        this.diaryUser =diaryUser;
+    }
+
     @Override
     public String toString() {
         return "Person{" +
@@ -192,7 +204,8 @@ public class Person extends Model {
                 ", cityAddress='" + cityAddress + '\'' +
                 ", postCodeAddress='" + postCodeAddress + '\'' +
                 ", token='" + token + '\'' +
-                ", productSell=" + productSell +
+                ", productSell=" + productSell + '\''+
+                ", diaryUser=" + diaryUser +
                 '}';
     }
 }
