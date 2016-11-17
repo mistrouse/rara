@@ -158,7 +158,7 @@ angular.module('AWIAPP', ['ngCookies'])
             $scope.hideErrorNotEnoughProduct = true;
             var rqt = {
                 method : 'PUT',
-                url : '/product/' + id_product +'/buy',
+                url : '/product/' + id_product +'/addToBasket',
                 data : $.param({quantityPurchased: desiredQuantity, id_buyer: id_person}),
                 headers : { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' }
             };

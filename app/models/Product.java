@@ -30,15 +30,34 @@ public class Product extends Model {
     @JsonBackReference
     Person seller;
 
-    public Product(Long id, String name, String description, Double price, int quantity, Person seller) {
+    //TEST BASKET
+    @OneToMany(mappedBy = "refProduct")
+    @JsonManagedReference
+    List<ProductInBasket> basket = new ArrayList<ProductInBasket>();
+    //TEST BASKET
+
+    public Product(Long id, String name, String description, Double price, int quantity, Person seller, List<ProductInBasket> basket) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
         this.quantity = quantity;
         this.seller = seller;
+        this.basket = basket;
         this.save();
     }
+
+    //TEST BASKET
+
+    public List<ProductInBasket> getBasket() {
+        return basket;
+    }
+
+    public void setBasket(List<ProductInBasket> basket) {
+        this.basket = basket;
+    }
+
+    //TEST BASKET
 
     public Long getId() {
         return id;
@@ -105,6 +124,7 @@ public class Product extends Model {
                 ", price=" + price +
                 ", quantity=" + quantity +
                 ", seller=" + seller +
+                ", basket=" + basket +
                 '}';
     }
 }

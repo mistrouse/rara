@@ -37,16 +37,15 @@ public class Person extends Model {
     @JsonManagedReference
     List<Product> productSell = new ArrayList<Product>();
 
-    //TEST BASKET
-    @OneToOne
-    private Basket basketOfSU;
-    //TEST BASKET
-
     @OneToMany(mappedBy = "user")
     @JsonManagedReference
     List<Diary> diaryUser = new ArrayList<Diary>();
-    public Person() {
-    }
+
+    //TEST BASKET
+    @OneToMany(mappedBy = "refPerson")
+    @JsonManagedReference
+    List<ProductInBasket> basket = new ArrayList<ProductInBasket>();
+    //TEST BASKET
 
 
     /**
@@ -66,7 +65,7 @@ public class Person extends Model {
      * @param productSell List of the product sell by a seller
      * @param diaryUser List of the user diary
      */
-    public Person(Long id, String name, String email, String pseudo, String siret, String password, int role, String numberAddress, String streetAddress, String cityAddress, String postCodeAddress, String token, List<Product> productSell,List<Diary> diaryUser) {
+    public Person(Long id, String name, String email, String pseudo, String siret, String password, int role, String numberAddress, String streetAddress, String cityAddress, String postCodeAddress, String token, List<Product> productSell,List<Diary> diaryUser, List<ProductInBasket> basket) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -80,22 +79,24 @@ public class Person extends Model {
         this.postCodeAddress = postCodeAddress;
         this.token = token;
         this.productSell = productSell;
-        //TEST BASKET
-            this.basketOfSU = new Basket(null);
-        //TEST BASKET
         this.diaryUser=diaryUser;
+        //TEST BASKET
+        this.basket = basket;
+        //TEST BASKEt
         this.save();
     }
 
     //TEST BASKET
 
-    public Basket getBasketOfSU() {
-        return basketOfSU;
+    public List<ProductInBasket> getBasket() {
+        return basket;
     }
 
-    public void setBasketOfSU(Basket basketOfSU) {
-        this.basketOfSU = basketOfSU;
+    public void setBasket(List<ProductInBasket> basket) {
+        this.basket = basket;
     }
+
+    //TEST BASKET
 
     public static Finder<Long, Person> getFind() {
         return find;
@@ -104,8 +105,6 @@ public class Person extends Model {
     public static void setFind(Finder<Long, Person> find) {
         Person.find = find;
     }
-
-    //TEST BASKET
 
     public Long getId() {
         return id;
@@ -236,6 +235,7 @@ public class Person extends Model {
                 ", token='" + token + '\'' +
                 ", productSell=" + productSell + '\''+
                 ", diaryUser=" + diaryUser +
+                ", basket=" + basket +
                 '}';
     }
 }

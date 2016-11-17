@@ -1,9 +1,7 @@
 package controllers;
 
-import models.Basket;
 import models.Person;
 import play.api.libs.Codecs;
-import play.data.DynamicForm;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Http;
@@ -139,7 +137,7 @@ public class PersonController extends Controller {
 //        System.out.println("personCreate() FROM PersonController.java -- isAlreadyExist="+isAlreadyExist);
         if(isAlreadyExist == null) {
             // Create the person in the database with the informations
-            Person person = new Person(null, name, email, pseudo, siret, password, role, numberAddress, streetAddress, cityAddress, postCodeAddress, null, null,null);
+            Person person = new Person(null, name, email, pseudo, siret, password, role, numberAddress, streetAddress, cityAddress, postCodeAddress, null, null,null, null);
             System.out.println("personCreate() FROM PersonController.java -- person="+person);
             return created();
         }
@@ -271,7 +269,7 @@ public class PersonController extends Controller {
         }
     }
     public void initializePerson() {
-        Person SU = new Person(null, "SimpleUser", "SU@a.com", "SU", null, Codecs.sha1("pierrick34$"), 0, "2", "rue emile pereire", "Béziers", "34500", null, null,null);
+        /*Person SU = new Person(null, "SimpleUser", "SU@a.com", "SU", null, Codecs.sha1("pierrick34$"), 0, "2", "rue emile pereire", "Béziers", "34500", null, null,null);
         Person SC = new Person(null, "SimpleSeller", "SC@a.com", "SC", "11111111111111", Codecs.sha1("pierrick34$"), 1, "2", "rue emile pereire", "Béziers", "34500", null, null,null);
         Person jsuisseller = new Person(null, "J'suisSeller", "seller@a.com", "Seller", "11111111111111", Codecs.sha1("pierrick34$"), 1, "2", "rue emile pereire", "Béziers", "34500", null, null,null);
         Person decatlhon = new Person(null, "decatlhon", "decatlhon@a.com", "decatlhon", "11111111111111", Codecs.sha1("pierrick34$"), 1, "2", "rue emile pereire", "Béziers", "34500", null, null,null);
@@ -301,6 +299,6 @@ public class PersonController extends Controller {
         Person w = new Person(null, "w", "w@w.com", "w", null, Codecs.sha1("pierrick34$"), 0, "2", "rue emile pereire", "Béziers", "34500", null, null,null);
         Person x = new Person(null, "x", "x@x.com", "x", null, Codecs.sha1("pierrick34$"), 0, "2", "rue emile pereire", "Béziers", "34500", null, null,null);
         Person y = new Person(null, "y", "y@y.com", "y", null, Codecs.sha1("pierrick34$"), 0, "2", "rue emile pereire", "Béziers", "34500", null, null,null);
-        Person z = new Person(null, "z", "z@z.com", "z", null, Codecs.sha1("pierrick34$"), 0, "2", "rue emile pereire", "Béziers", "34500", null, null,null);
+        Person z = new Person(null, "z", "z@z.com", "z", null, Codecs.sha1("pierrick34$"), 0, "2", "rue emile pereire", "Béziers", "34500", null, null,null);*/
     }
 }

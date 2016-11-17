@@ -40,7 +40,7 @@ PUT     /product/:id                controllers.ProductController.productUpdate(
 # Delete a product
 DELETE  /product/:id                controllers.ProductController.productDelete(id: Long)
 # Buy a product
-PUT  /product/:id/buy               controllers.ProductController.productBuy(id: Long)
+PUT  /product/:id/addToBasket               controllers.ProductController.addToBasket(id: Long)
 
 # BASKET
 GET     /baskets                    controllers.BasketController.baskets

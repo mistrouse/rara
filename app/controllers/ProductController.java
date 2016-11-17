@@ -2,6 +2,7 @@ package controllers;
 
 import models.Person;
 import models.Product;
+import models.ProductInBasket;
 import play.api.libs.Codecs;
 import play.libs.Json;
 import play.mvc.Controller;
@@ -57,7 +58,7 @@ public class ProductController extends Controller {
         Person isSellerOrAdmin = Person.find.byId(Long.valueOf(id));
         if(isSellerOrAdmin.getRole() == 1 || isSellerOrAdmin.getRole() == 2){
             // Create the product in the database with the informations
-            Product product = new Product(null, name, description, Double.parseDouble(price), Integer.parseInt(quantity), Person.find.byId(Long.valueOf(id)));
+            Product product = new Product(null, name, description, Double.parseDouble(price), Integer.parseInt(quantity), Person.find.byId(Long.valueOf(id)), null);
             return created("The product has been created");
         }
         else {
@@ -124,31 +125,33 @@ public class ProductController extends Controller {
     }
 
     /**
-     * Buy a product, decremented the value for the product in the database and add the product in the basket of the buyer.
+     * Add a product in the basket of the buyer.
      * @param id The id of the product
      * @return If the product doesn't exist, return <b>404 Not Found</b> <br/>
      * Else return <b>200 Ok</b>
      */
-    public Result productBuy(long id) {
+    public Result addToBasket(long id) {
         // Get the product in the database, if not exist return 404 not found
         Product buyProduct = Product.find.byId(id);
         if(buyProduct == null) {
             return notFound("Product not found.");
         }
-        // If exist, update the value in the database with the value of the buyer
+        // If exist, add the product in the buyer basket
         else {
             final Map<String, String[]> values = request().body().asFormUrlEncoded();
             String quantityPurchased = values.get("quantityPurchased")[0];
             String idBuyer = values.get("id_buyer")[0];
-            buyProduct.setQuantity(buyProduct.getQuantity()-Integer.parseInt(quantityPurchased));
-            buyProduct.save();
+            // TEST BASKET
+            Person buyer = Person.find.byId(Long.valueOf(idBuyer));
+            buyer.getBasket().add(new ProductInBasket(null, buyProduct.getPrice(), Integer.parseInt(quantityPurchased), buyer, buyProduct));
+            //TEST BASKET
             return ok(Json.toJson(buyProduct));
         }
     }
 
     public void initializeProduct() {
-        Product p = new Product(null, "Téléphone", "Ceci est un téléphone...", 499.99, 2, Person.find.byId(2l));
-        Product p1 = new Product(null, "Crayon", "Mine extra fine!", 9.99, 10, Person.find.byId(2l));
-        Product p2 = new Product(null, "Cure dent", "Lot de 100 cure dent", 5.0, 10, Person.find.byId(3l));
+        Product p = new Product(null, "Téléphone", "Ceci est un téléphone...", 499.99, 2, Person.find.byId(2l), null);
+        /*Product p1 = new Product(null, "Crayon", "Mine extra fine!", 9.99, 10, Person.find.byId(2l));
+        Product p2 = new Product(null, "Cure dent", "Lot de 100 cure dent", 5.0, 10, Person.find.byId(3l));*/
     }
 }
