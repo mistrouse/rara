@@ -57,6 +57,12 @@ angular.module('AWIAPP', ['ngCookies'])
                 headers : { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' }
         };
         $http(rqt).success(function(data){
+            // Parse and delete the products if they are no quantity available
+            for(var i = 0; i < data.length; i++) {
+                if(data[i].quantity == 0) {
+                    data.splice(data[i].id, 1);
+                }
+            }
             $scope.searchBar(data);
         });
     }
@@ -71,6 +77,12 @@ angular.module('AWIAPP', ['ngCookies'])
             $scope.getAllProduct();
         }
         else {
+            // Parse and verify if there is no quantity for a product (remove if the quantity is equal to zero)
+            for(var i = 0; i < seller.name.productSell.length; i++) {
+                if(seller.name.productSell[i].quantity == 0) {
+                    seller.name.productSell.splice(seller.name.productSell[i], 1);
+                }
+            }
             $scope.searchBar(seller.name.productSell);
         }
     }
@@ -147,7 +159,7 @@ angular.module('AWIAPP', ['ngCookies'])
             var rqt = {
                 method : 'PUT',
                 url : '/product/' + id_product +'/buy',
-                data : $.param({quantityPurchased: desiredQuantity,}),
+                data : $.param({quantityPurchased: desiredQuantity, id_buyer: id_person}),
                 headers : { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' }
             };
             // Reload the data and show success message

@@ -19,7 +19,7 @@ public class ProductController extends Controller {
      * @return The information of all Product in JSON format
      */
     public Result products() {
-        this.initializeProduct();
+        //this.initializeProduct();
         return ok(Json.toJson(Product.find.all()));
     }
 
@@ -124,7 +124,7 @@ public class ProductController extends Controller {
     }
 
     /**
-     * Buy a product, decremented the value for the product in the database and send a notification for the seller.
+     * Buy a product, decremented the value for the product in the database and add the product in the basket of the buyer.
      * @param id The id of the product
      * @return If the product doesn't exist, return <b>404 Not Found</b> <br/>
      * Else return <b>200 Ok</b>
@@ -139,9 +139,9 @@ public class ProductController extends Controller {
         else {
             final Map<String, String[]> values = request().body().asFormUrlEncoded();
             String quantityPurchased = values.get("quantityPurchased")[0];
+            String idBuyer = values.get("id_buyer")[0];
             buyProduct.setQuantity(buyProduct.getQuantity()-Integer.parseInt(quantityPurchased));
             buyProduct.save();
-            // SEND NOTIFICATION TO THE SELLER !!!!!
             return ok(Json.toJson(buyProduct));
         }
     }

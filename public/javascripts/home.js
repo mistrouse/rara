@@ -98,6 +98,6 @@ angular.module('AWIAPP', ['ngCookies'])
        else if(person["role"] == 1) {
            $window.location.href = '/SC/product/search';
        }*/
-       $window.location.href = '/searchProduct.html';
+       $window.location.href = '/searchAndBasketProduct.html';
     }
 });

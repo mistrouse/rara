@@ -2,9 +2,12 @@ package models;
 
 import com.avaje.ebean.Model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by pierrickgiuliani on 08/11/2016.

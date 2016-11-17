@@ -1,6 +1,7 @@
 package models;
 
 import com.avaje.ebean.Model;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.sun.org.apache.bcel.internal.classfile.Code;
 import play.api.libs.Codecs;
@@ -36,6 +37,11 @@ public class Person extends Model {
     @JsonManagedReference
     List<Product> productSell = new ArrayList<Product>();
 
+    //TEST BASKET
+    @OneToOne
+    private Basket basketOfSU;
+    //TEST BASKET
+
     public Person() {
     }
 
@@ -70,8 +76,51 @@ public class Person extends Model {
         this.postCodeAddress = postCodeAddress;
         this.token = token;
         this.productSell = productSell;
+        //TEST BASKET
+            this.basketOfSU = new Basket(null);
+        //TEST BASKET
         this.save();
     }
+
+    //TEST BASKET
+
+    public Basket getBasketOfSU() {
+        return basketOfSU;
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", pseudo='" + pseudo + '\'' +
+                ", siret='" + siret + '\'' +
+                ", password='" + password + '\'' +
+                ", role=" + role +
+                ", numberAddress='" + numberAddress + '\'' +
+                ", streetAddress='" + streetAddress + '\'' +
+                ", cityAddress='" + cityAddress + '\'' +
+                ", postCodeAddress='" + postCodeAddress + '\'' +
+                ", token='" + token + '\'' +
+                ", productSell=" + productSell +
+                ", basketOfSU=" + basketOfSU +
+                '}';
+    }
+
+    public void setBasketOfSU(Basket basketOfSU) {
+        this.basketOfSU = basketOfSU;
+    }
+
+    public static Finder<Long, Person> getFind() {
+        return find;
+    }
+
+    public static void setFind(Finder<Long, Person> find) {
+        Person.find = find;
+    }
+
+    //TEST BASKET
 
     public Long getId() {
         return id;
@@ -177,22 +226,4 @@ public class Person extends Model {
         this.productSell = productSell;
     }
 
-    @Override
-    public String toString() {
-        return "Person{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", pseudo='" + pseudo + '\'' +
-                ", siret='" + siret + '\'' +
-                ", password='" + password + '\'' +
-                ", role=" + role +
-                ", numberAddress='" + numberAddress + '\'' +
-                ", streetAddress='" + streetAddress + '\'' +
-                ", cityAddress='" + cityAddress + '\'' +
-                ", postCodeAddress='" + postCodeAddress + '\'' +
-                ", token='" + token + '\'' +
-                ", productSell=" + productSell +
-                '}';
-    }
 }

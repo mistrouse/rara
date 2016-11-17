@@ -1,5 +1,6 @@
 package controllers;
 
+import models.Basket;
 import models.Person;
 import play.api.libs.Codecs;
 import play.data.DynamicForm;
@@ -135,11 +136,11 @@ public class PersonController extends Controller {
 
         // Test if the user is already in the database before the save, if no return 201 created, else return 409 conflict
         Person isAlreadyExist = Person.find.where().like("email", "%"+email+"%").findUnique();
-        System.out.println("personCreate() FROM PersonController.java -- isAlreadyExist="+isAlreadyExist);
+//        System.out.println("personCreate() FROM PersonController.java -- isAlreadyExist="+isAlreadyExist);
         if(isAlreadyExist == null) {
             // Create the person in the database with the informations
             Person person = new Person(null, name, email, pseudo, siret, password, role, numberAddress, streetAddress, cityAddress, postCodeAddress, null, null);
-            System.out.println("personCreate() FROM PersonController.java -- person="+person);
+//            System.out.println("personCreate() FROM PersonController.java -- person="+person);
             return created();
         }
         else {

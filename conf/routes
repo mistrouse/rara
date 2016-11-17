@@ -41,6 +41,10 @@ DELETE  /product/:id                controllers.ProductController.productDelete(
 # Buy a product
 PUT  /product/:id/buy               controllers.ProductController.productBuy(id: Long)
 
+# BASKET
+GET     /baskets                    controllers.BasketController.baskets
+GET     /basket/:id                controllers.BasketController.basket(id: Long)
+
 
 #######################
 #         Lib         #
