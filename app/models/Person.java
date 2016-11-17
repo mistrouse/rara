@@ -15,7 +15,7 @@ import java.util.List;
  */
 @Entity
 public class Person extends Model {
- 
+
     public static Model.Finder<Long, Person> find = new Model.Finder<Long,Person>(Person.class);
 
     @Id
@@ -91,26 +91,6 @@ public class Person extends Model {
 
     public Basket getBasketOfSU() {
         return basketOfSU;
-    }
-
-    @Override
-    public String toString() {
-        return "Person{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", pseudo='" + pseudo + '\'' +
-                ", siret='" + siret + '\'' +
-                ", password='" + password + '\'' +
-                ", role=" + role +
-                ", numberAddress='" + numberAddress + '\'' +
-                ", streetAddress='" + streetAddress + '\'' +
-                ", cityAddress='" + cityAddress + '\'' +
-                ", postCodeAddress='" + postCodeAddress + '\'' +
-                ", token='" + token + '\'' +
-                ", productSell=" + productSell +
-                ", basketOfSU=" + basketOfSU +
-                '}';
     }
 
     public void setBasketOfSU(Basket basketOfSU) {
