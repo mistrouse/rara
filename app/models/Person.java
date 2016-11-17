@@ -15,7 +15,7 @@ import java.util.List;
  */
 @Entity
 public class Person extends Model {
-
+ 
     public static Model.Finder<Long, Person> find = new Model.Finder<Long,Person>(Person.class);
 
     @Id
@@ -42,6 +42,9 @@ public class Person extends Model {
     private Basket basketOfSU;
     //TEST BASKET
 
+    @OneToMany(mappedBy = "user")
+    @JsonManagedReference
+    List<Diary> diaryUser = new ArrayList<Diary>();
     public Person() {
     }
 
@@ -61,8 +64,9 @@ public class Person extends Model {
      * @param cityAddress The city adress
      * @param postCodeAddress The post code for the adress
      * @param productSell List of the product sell by a seller
+     * @param diaryUser List of the user diary
      */
-    public Person(Long id, String name, String email, String pseudo, String siret, String password, int role, String numberAddress, String streetAddress, String cityAddress, String postCodeAddress, String token, List<Product> productSell) {
+    public Person(Long id, String name, String email, String pseudo, String siret, String password, int role, String numberAddress, String streetAddress, String cityAddress, String postCodeAddress, String token, List<Product> productSell,List<Diary> diaryUser) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -79,6 +83,7 @@ public class Person extends Model {
         //TEST BASKET
             this.basketOfSU = new Basket(null);
         //TEST BASKET
+        this.diaryUser=diaryUser;
         this.save();
     }
 
@@ -174,6 +179,10 @@ public class Person extends Model {
         return productSell;
     }
 
+    public List<Diary> getDiaryUser() {
+        return diaryUser;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -226,4 +235,27 @@ public class Person extends Model {
         this.productSell = productSell;
     }
 
+    public void setDiaryUser(List<Diary> diaryUser) {
+        this.diaryUser =diaryUser;
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", pseudo='" + pseudo + '\'' +
+                ", siret='" + siret + '\'' +
+                ", password='" + password + '\'' +
+                ", role=" + role +
+                ", numberAddress='" + numberAddress + '\'' +
+                ", streetAddress='" + streetAddress + '\'' +
+                ", cityAddress='" + cityAddress + '\'' +
+                ", postCodeAddress='" + postCodeAddress + '\'' +
+                ", token='" + token + '\'' +
+                ", productSell=" + productSell + '\''+
+                ", diaryUser=" + diaryUser +
+                '}';
+    }
 }

@@ -24,7 +24,8 @@ GET     /isConnected/:id/:token     controllers.PersonController.isConnected(id:
 GET     /person/:id/products        controllers.PersonController.getAllProductsForSeller(id: Long)
 # Get all seller companies
 GET     /persons/seller           controllers.PersonController.getAllSeller()
-
+# Get all diaries for an user
+GET     /person/:id/diaries        controllers.PersonController.getAllDiaryForUser(id: Long)
 ########################
 #       PRODUCT        #
 ########################
@@ -44,6 +45,20 @@ PUT  /product/:id/buy               controllers.ProductController.productBuy(id:
 # BASKET
 GET     /baskets                    controllers.BasketController.baskets
 GET     /basket/:id                controllers.BasketController.basket(id: Long)
+
+########################
+#       Diaries        #
+########################
+# Get All diaries
+GET     /diaries                  controllers.DiaryController.diaries
+# GET just a diary by ID
+GET     /diary/:id                controllers.DiaryController.diary(id: Long)
+# Create a diary
+POST    /diary                    controllers.DiaryController.diaryCreate
+# Upate a diary by the ID
+PUT     /diary/:id                controllers.DiaryController.diaryUpdate(id: Long)
+# Delete a diary
+DELETE  /diary/:id                controllers.DiaryController.diaryDelete(id: Long)
 
 
 #######################

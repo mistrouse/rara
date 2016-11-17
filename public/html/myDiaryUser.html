@@ -1,0 +1,76 @@
+<!doctype html>
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-cookies.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="/js/myDiaryUser.js"></script>
+    <script src="/lib/smart-table"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+</head>
+<body ng-app="AWIAPP" ng-controller="myDiaryUser" class="myDiaryUser" ng-init="getAllDiaryForUser()">
+<div class="all">
+    <h1>My diary</h1>
+    <div ng-hide="hideSuccess" class="alert alert-success"> <strong>Success! </strong>{{titleSuccess}} </div>
+    <div class="tableDiary">
+        <table st-table="myTableDiary" st-safe-src="allDiary" class="table table-striped">
+            <thead>
+            <tr>
+                <th st-sort="title">Title</th>
+                <th st-sort="description">Description</th>
+                <th st-sort="date">Date</th>
+                <th>Update</th>
+                <th>Delete</th>
+            </tr>
+            <tr>
+                <th colspan="7"><input st-search="" class="form-control" placeholder="Search your diary in the table" type="text"/></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="diary in myTableDiary">
+                <td>{{diary.title}}</td>
+                <td>{{diary.description}}</td>
+                <td>{{diary.dateDiary}}</td>
+
+
+                <td> <button type="button" ng-click="showUpdateFormDiary(diary)" class="btn btn-default">Update</button> </td>
+                <td> <button type="button" ng-click="deleteDiary(diary)" class="btn btn-sm btn-danger">
+                    <i class="glyphicon glyphicon-remove-circle">
+                    </i>
+                </button>
+                </td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="5" class="text-center">
+                    <div st-pagination="" st-items-by-page="10" st-displayed-pages="5"></div>
+                </td>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+    <div class="isFormUpdate" ng-show="isFormUpdateShow">
+        <div class="updateForm">
+            <h3>Fill the field of what you would update...</h3>
+            <form name="updateForm" ng-submit="updateDiary(titleToUpdate, descriptionToUpdate)">
+                <div class="form-group">
+                    <label class="control-label">Title</label>
+                    <div>
+                        <input type="text" class="form-control" ng-model="titleToUpdate" placeholder="Enter the new title here">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Description</label>
+                    <div>
+                        <input type="text" class="form-control" ng-model="descriptionToUpdate" placeholder="Enter the new description here">
+                    </div>
+                </div>
+                <button class="btn btn-success">Update</button>
+            </form>
+            <button class="btn btn-danger" ng-click="cancelFormUpdate()">Cancel</button>
+        </div>
+    </div>
+</div>
+</body>
+</html>

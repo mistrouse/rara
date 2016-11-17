@@ -78,6 +78,7 @@ angular.module('AWIAPP', ['ngCookies'])
         $window.location.href = '/createProductSeller.html';
     }
 
+
     // If an admin would manage account, is redirect to '/Admin/manage/account'
     $scope.manageAccount = function() {
         //$window.location.href='/Admin/manage/account';
@@ -100,4 +101,14 @@ angular.module('AWIAPP', ['ngCookies'])
        }*/
        $window.location.href = '/searchAndBasketProduct.html';
     }
+
+     // If the USer would to create a diary
+     $scope.createDiary = function() {
+         $window.location.href = '/createDiaryUser.html';
+     }
+     // If the User would to show his diary
+     $scope.myDiary = function(){
+         $window.location.href = '/myDiaryUser.html';
+     }
+
 });
