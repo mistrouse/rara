@@ -111,4 +111,8 @@ angular.module('AWIAPP', ['ngCookies'])
          $window.location.href = '/myDiaryUser.html';
      }
 
+     $scope.myBasket = function() {
+        $window.location.href = '/myBasketUser.html'
+     }
+
 });

@@ -1,12 +1,17 @@
 package controllers;
 
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import models.Person;
+import models.ProductInBasket;
 import play.api.libs.Codecs;
+import play.api.libs.json.JsObject;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Http;
 import play.mvc.Result;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -138,7 +143,7 @@ public class PersonController extends Controller {
         if(isAlreadyExist == null) {
             // Create the person in the database with the informations
             Person person = new Person(null, name, email, pseudo, siret, password, role, numberAddress, streetAddress, cityAddress, postCodeAddress, null, null,null, null);
-            System.out.println("personCreate() FROM PersonController.java -- person="+person);
+//            System.out.println("personCreate() FROM PersonController.java -- person="+person);
             return created();
         }
         else {
@@ -268,6 +273,47 @@ public class PersonController extends Controller {
             return ok(Json.toJson(Person.find.byId(id).getDiaryUser()));
         }
     }
+
+    /**
+     * Return name, price and quantity of all products in basket for an user
+     * @param id The id of the user
+     * @return <b>Erreur 404 Not Found</b> if the user doesn't exist
+     * Else <b>200 Ok</b> with the lists of the diaries
+     */
+    public Result getAllProductInBasket(long id){
+        if(Person.find.byId(id) == null) {
+            return notFound("Person not found.");
+        }
+        else {
+            ArrayNode information = Json.newArray();
+            for (int i = 0; i< Person.find.byId(id).getBasket().size(); i++) {
+                ObjectNode basketInformation = Json.newObject();
+                basketInformation.put("id", Person.find.byId(id).getBasket().get(i).getRefProduct().getId());
+                basketInformation.put("name", Person.find.byId(id).getBasket().get(i).getRefProduct().getName());
+                basketInformation.put("price", Person.find.byId(id).getBasket().get(i).getPrice());
+                basketInformation.put("quantity", Person.find.byId(id).getBasket().get(i).getQuantity());
+                basketInformation.put("seller", Person.find.byId(id).getBasket().get(i).getRefProduct().getSeller().getName());
+                information.add(basketInformation);
+            }
+            return ok(Json.toJson(information));
+        }
+    }
+
+    public Result removeProductInBasket(Long id, Long idProd) {
+        if(Person.find.byId(id) == null) {
+            return notFound("Person not found.");
+        }
+        else {
+            for(int i = 0; i < Person.find.byId(id).getBasket().size(); i++) {
+                if(Person.find.byId(id).getBasket().get(i).getRefProduct().getId().equals(idProd)) {
+                    Person.find.byId(id).getBasket().remove(ProductInBasket.find.byId(idProd));
+                    return ok("The product has been deleted from your basket");
+                }
+            }
+            return notFound("The product is not in your basket");
+        }
+    }
+
     public void initializePerson() {
         /*Person SU = new Person(null, "SimpleUser", "SU@a.com", "SU", null, Codecs.sha1("pierrick34$"), 0, "2", "rue emile pereire", "Béziers", "34500", null, null,null);
         Person SC = new Person(null, "SimpleSeller", "SC@a.com", "SC", "11111111111111", Codecs.sha1("pierrick34$"), 1, "2", "rue emile pereire", "Béziers", "34500", null, null,null);
