@@ -11,7 +11,13 @@ import play.mvc.Result;
 import java.util.Map;
 
 /**
- * Created by pierrickgiuliani on 08/11/2016.
+ * Name of the class : ProductController
+ *
+ * Description   : Controller to manage an Product
+ *
+ * Version       : 1.0
+ *
+ * Date          : 08/11/2016
  */
 public class ProductController extends Controller {
 
@@ -28,7 +34,7 @@ public class ProductController extends Controller {
      *  GET the product in the database with his ID if it exist
      * @param id The id of a Product
      * @return The information of a Product in JSON format <br/>
-     * If the product exist, return <b>200 Ok</b><br/>
+     * If the product exist, return <b>200 Ok</b><br/> with the product
      * Else return <b>404 Not Found</b>
      */
     public Result product(long id) {
@@ -71,7 +77,7 @@ public class ProductController extends Controller {
      * @param id The id of the product to update
      * @return The information of a Product in JSON format <br/>
      * If the product doesn't exist in the database, return <b>404 Not Found</b> <br/>
-     * Else return <b>200 Ok</b>
+     * Else return <b>200 Ok</b> with the product
      */
     public Result productUpdate(long id) {
         // Get the product in the database, if not exist return 404 not found

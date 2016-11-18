@@ -5,26 +5,61 @@ import com.avaje.ebean.config.JsonConfig;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import javax.persistence.*;
 
-
 /**
- * Created by Djeneba on 11/11/2016.
+ * Name of the class : Diary
+ *
+ * Description   : Persistence for the Diary
+ *
+ * Version       : 1.0
+ *
+ * Date          : 11/11/2016
  */
-
 @Entity
 public class Diary extends Model {
+
+    /**
+     * Allows you search for a Diary from anywhere
+     */
     public static Model.Finder<Long, Diary> find = new Model.Finder<Long, Diary>(Diary.class);
 
 
+    /**
+     * Id of the Diary
+     */
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     Long id;
+
+    /**
+     * Title of the diary
+     */
     String title;
+
+    /**
+     * Description of the diary
+     */
     String description;
+
+    /**
+     * Date of the diary publication
+     */
     String dateDiary;
-    //Many diary may correspond to an user
+
+    /**
+     * Creator of the diary
+     */
     @ManyToOne
     @JsonBackReference
     Person user;
+
+    /**
+     * Constructor of the diary
+     * @param id The id of the diary
+     * @param title The title of the diary
+     * @param description The description of the diary
+     * @param dateDiary The date of the diary publication
+     * @param user The user who created the diary
+     */
     public Diary(Long id, String title, String description, String dateDiary, Person user){
         this.id=id;
         this.title=title;
@@ -33,23 +68,65 @@ public class Diary extends Model {
         this.user=user;
         this.save();
     }
-    // Getters and Setters
+
+    /**
+     * Get the ID of the diary
+     * @return The id of the diary
+     */
     public Long getId() {
         return id;
     }
+
+    /**
+     * Get the title of the diary
+     * @return The title of the diary
+     */
     public String getTitle() {
         return title;
     }
+
+    /**
+     * Get description of the diary
+     * @return The description of the diary
+     */
     public String getDescription(){return description;}
+
+    /**
+     * Get date creation of the diary
+     * @return The date of of the diary
+     */
     public String getDateDiary(){return dateDiary;}
+
+    /**
+     * Get the person who created the diary
+     * @return The person who created the diary
+     */
     public Person getUser(){return user;}
 
-
+    /**
+     * Set the title of the diary
+     * @param title2 of the diary
+     */
     public void setTitle(String title2) {
         title=title2;
     }
+
+    /**
+     * Set the description of the diary
+     * @param description2 of the diary
+     */
     public void setDescription(String description2){description=description2;}
+
+    /**
+     * Set date of the diary
+     * @param dateDiary1 of the diary
+     */
     public void setDateDiary(String dateDiary1){dateDiary=dateDiary1;}
+
+    /**
+     * Set the user who created the diary
+     * @param user2 creator of the diary
+     */
     public void setUser(Person user2) {
         this.user = user2;
     }

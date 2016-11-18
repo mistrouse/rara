@@ -19,18 +19,17 @@ import java.util.UUID;
 import static play.data.Form.form;
 
 /**
- * Controller to manage a Person
- * Created by pierrickgiuliani on 03/11/2016.
+ * Name of the class : PersonController
+ *
+ * Description   : Controller to manage an Person
+ *
+ * Version       : 1.0
+ *
+ * Date          : 03/11/2016
  */
 public class PersonController extends Controller {
-    /*
-                           #################################
-                           #             PERSON            #
-                           #################################
-     */
-
     /**
-     * GET all person in the database
+     * GET all persons in the database
      * @return The information of all Person in JSON format
      */
     public Result persons() {
@@ -290,10 +289,10 @@ public class PersonController extends Controller {
     }
 
     /**
-     * Return name, price and quantity of all products in basket for an user
+     * Return id product, name, price, quantity and seller name of all products in basket for an user
      * @param id The id of the user
-     * @return <b>Erreur 404 Not Found</b> if the user doesn't exist
-     * Else <b>200 Ok</b> with the lists of the diaries
+     * @return <b>404 Not Found</b> if the user doesn't exist
+     * Else <b>200 Ok</b>
      */
     public Result getAllProductInBasket(long id){
         if(Person.find.byId(id) == null) {
@@ -314,6 +313,13 @@ public class PersonController extends Controller {
         }
     }
 
+    /**
+     * Remove a product in the basket of the SU
+     * @param id Of the sU
+     * @param idProd In the basket to delete
+     * @return <b>404 Not found</b> if the SU doesn't exist or if the product doesn't exist in his basket,
+     * Else <b>200 Ok</b>
+     */
     public Result removeProductInBasket(Long id, Long idProd) {
         if(Person.find.byId(id) == null) {
             return notFound("Person not found.");

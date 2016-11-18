@@ -12,9 +12,16 @@ import play.mvc.Result;
 import java.util.Map;
 
 /**
- * Created by Djeneba on 11/11/2016.
+ * Name of the class : DiaryController
+ *
+ * Description   : Controller to manage a Diary
+ *
+ * Version       : 1.0
+ *
+ * Date          : 11/11/2016
  */
 public class DiaryController extends Controller {
+
     /**
      * GET all diaries in the database
      * @return The information of all Diaries in JSON format
@@ -23,8 +30,6 @@ public class DiaryController extends Controller {
         //this.initializeDiary();
         return ok(Json.toJson(Diary.find.all()));
     }
-
-
 
     /**
      *  GET the diary in the database with his ID if it exist
@@ -41,10 +46,11 @@ public class DiaryController extends Controller {
             return ok(Json.toJson(Diary.find.byId(id)));
         }
     }
+
     /**
      * CREATE a diary in the database with the values of the FORM
      * @return The diary is created <br/>
-     * If the person is not a user, return <b>404 Not Found</b> <br/>
+     * If the person is not a simple user, return <b>404 Not Found</b> <br/>
      * Else return <b>201 Created</b>
      */
     public Result diaryCreate() {
@@ -61,12 +67,13 @@ public class DiaryController extends Controller {
             return notFound("The person is not an user");
         }
         else {
-            // Create the diary in the database with the informations
+            // Create the diary in the database with the information
             Diary diary = new Diary(null, title, description,dateDiary, Person.find.byId(Long.valueOf(id)));
             return created("The diary has been created");
 
         }
     }
+
     /**
      * Update a diary with the data in the form
      * @param id The id of the diary to update
@@ -104,7 +111,7 @@ public class DiaryController extends Controller {
     /**
      * DELETE a diary in the database with his ID
      * @param id The id of a Diary
-     * @return If the diary doesn't exist in the dababase, return <b>404 Not Found</b> <br/>
+     * @return If the diary doesn't exist in the database, return <b>404 Not Found</b> <br/>
      * Else return <b>200 Ok</b>
      */
     // Delete a diary may delete all comments on this diary

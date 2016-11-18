@@ -29,6 +29,10 @@ angular.module('AWIAPP', ['ngCookies'])
         };
         $http(rqt).success(function(data){
             $scope.allProductInBasket = data;
+            $scope.sumPrice = 0;
+            for(var i = 0; i < data.length; i++) {
+                $scope.sumPrice += data[i].price * data[i].quantity;
+            }
         });
     }
 

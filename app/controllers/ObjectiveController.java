@@ -9,7 +9,13 @@ import play.mvc.Result;
 import java.util.Map;
 
 /**
- * Created by Gab on 10/11/2016.
+ * Name of the class : ObjectiveController
+ *
+ * Description   : Controller to manage an Objective
+ *
+ * Version       : 1.0
+ *
+ * Date          : 10/11/2016
  */
 public class ObjectiveController extends Controller {
 
@@ -97,7 +103,7 @@ public class ObjectiveController extends Controller {
     /**
      * DELETE an objective in the database with his ID
      * @param id The id of an objective
-     * @return If the objective doesn't exist in the dababase, return <b>404 Not Found</b> <br/>
+     * @return If the objective doesn't exist in the database, return <b>404 Not Found</b> <br/>
      * Else return <b>200 Ok</b>
      */
     public Result objectiveDelete(long id) {
