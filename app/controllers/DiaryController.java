@@ -1,6 +1,7 @@
 package controllers;
 
 import models.Diary;
+import models.Objective;
 import models.Person;
 import java.util.Date;
 
@@ -57,12 +58,13 @@ public class DiaryController extends Controller {
 
         String id = values.get("id")[0];
         Person isUser = Person.find.byId(Long.valueOf(id));
+        Objective objective = Objective.find.byId(Long.valueOf(id));
         if(isUser.getRole() != 0) {
             return notFound("The person is not an user");
         }
         else {
             // Create the diary in the database with the informations
-            Diary diary = new Diary(null, title, description,dateDiary, Person.find.byId(Long.valueOf(id)));
+            Diary diary = new Diary(null, title, description,dateDiary, Person.find.byId(Long.valueOf(id)), Objective.find.byId(Long.valueOf(id)));
             return created("The diary has been created");
 
         }

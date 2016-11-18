@@ -20,6 +20,18 @@ angular.module('AWIAPP', ['ngCookies'])
         $window.location.href = '/';
     }
 
+    // Get all objectives who will fill the combo
+        $scope.getAllObjectives = function() {
+            var rqt = {
+                method: 'GET',
+                url : '/person/'+id_person+'/objectives',
+                headers : { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' }
+            };
+            $http(rqt).success(function(data){
+                $scope.allObjectives = data;
+            });
+        }
+
     $scope.hideSuccess = true;
 
     $scope.createDiary = function(title, description) {

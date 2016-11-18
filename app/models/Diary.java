@@ -25,12 +25,18 @@ public class Diary extends Model {
     @ManyToOne
     @JsonBackReference
     Person user;
-    public Diary(Long id, String title, String description, String dateDiary, Person user){
+    // A diary describes the achievement of an objective
+    @ManyToOne
+    @JsonBackReference
+    Objective objective;
+
+    public Diary(Long id, String title, String description, String dateDiary, Person user, Objective objective){
         this.id=id;
         this.title=title;
         this.description=description;
         this.dateDiary=dateDiary;
         this.user=user;
+        this.objective=objective;
         this.save();
     }
     // Getters and Setters
@@ -43,6 +49,7 @@ public class Diary extends Model {
     public String getDescription(){return description;}
     public String getDateDiary(){return dateDiary;}
     public Person getUser(){return user;}
+    public Objective getObjective(){return objective;}
 
 
     public void setTitle(String title2) {
@@ -54,6 +61,10 @@ public class Diary extends Model {
         this.user = user2;
     }
 
+    public void setObjective(Objective objective) {
+        this.objective = objective;
+    }
+
     @Override
     public String toString() {
         return "Diary{" +
@@ -62,6 +73,7 @@ public class Diary extends Model {
                 ", description='" + description + '\'' +
                 ", user=" + user +
                 ", dateDiary=" + dateDiary +
+                ", objective='" + objective + '\'' +
                 '}';
     }
 }
