@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-cookies.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="/js/createObjectiveSU.js"></script>
+    <script src="/lib/dropzone"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+</head>
+<body ng-app="AWIAPP" ng-controller="createObjectiveSU" class="createObjectiveSU">
+<div class="all">
+    <div class="createObjective">
+        <div ng-hide="hideSuccess" class="alert alert-success"> <strong>Success! </strong>{{titleSuccess}} </div>
+        <h1>Create objective</h1>
+        <form name="createObjectiveForm" ng-submit="createObjective(name, description)">
+            <div class="form-group">
+                <label class="control-label">Name *</label>
+                <div>
+                    <input type="text" class="form-control" ng-model="name" placeholder="Enter your name here" required>
+                </div>
+            </div>
+            <div class="form-group"> <label class="control-label">Description *</label>
+                <div>
+                    <input type="text" class="form-control" ng-model="description" placeholder="Enter your description here" required>
+                </div>
+            </div>
+            <button ng-disabled="createObjectiveForm.$invalid" class="btn btn-success">Create objective</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

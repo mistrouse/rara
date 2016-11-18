@@ -115,4 +115,14 @@ angular.module('AWIAPP', ['ngCookies'])
         $window.location.href = '/myBasketUser.html'
      }
 
+     // If a SU wants to show his objectives
+         $scope.myObjective = function(){
+         $window.location.href = '/myObjectivesSU.html';
+         }
+
+         // If a SU wants to create an objective
+         $scope.createObjective = function(){
+         window.location.href='/createObjectiveSU.html';
+         }
+
 });

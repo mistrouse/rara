@@ -24,6 +24,8 @@ GET     /isConnected/:id/:token     controllers.PersonController.isConnected(id:
 GET     /person/:id/products        controllers.PersonController.getAllProductsForSeller(id: Long)
 # Get all seller companies
 GET     /persons/seller           controllers.PersonController.getAllSeller()
+# Get all objectives for a su
+GET     /person/:id/objectives        controllers.PersonController.getAllObjectivesForSU(id: Long)
 # Get all diaries for an user
 GET     /person/:id/diaries        controllers.PersonController.getAllDiaryForUser(id: Long)
 # Get all products in basket for an user
@@ -49,6 +51,22 @@ PUT  /product/:id/addToBasket               controllers.ProductController.addToB
 # BASKET
 GET     /baskets                    controllers.BasketController.baskets
 GET     /basket/:id                controllers.BasketController.basket(id: Long)
+
+
+########################
+#       OBJECTIVE        #
+########################
+# Get All objectives
+GET     /objectives                    controllers.ObjectiveController.objectives
+# GET just an objective by ID
+GET     /objective/:id                controllers.ObjectiveController.objective(id: Long)
+# Create an objective
+POST    /objective                       controllers.ObjectiveController.objectiveCreate
+# Update an objective by the ID
+PUT     /objective/:id                controllers.ObjectiveController.objectiveUpdate(id: Long)
+# Delete an objective
+DELETE  /objective/:id                controllers.ObjectiveController.objectiveDelete(id: Long)
+
 
 ########################
 #       Diaries        #
