@@ -137,7 +137,7 @@ public class PersonController extends Controller {
 //        System.out.println("personCreate() FROM PersonController.java -- isAlreadyExist="+isAlreadyExist);
         if(isAlreadyExist == null) {
             // Create the person in the database with the informations
-            Person person = new Person(null, name, email, pseudo, siret, password, role, numberAddress, streetAddress, cityAddress, postCodeAddress, null, null,null, null);
+            Person person = new Person(null, name, email, pseudo, siret, password, role, numberAddress, streetAddress, cityAddress, postCodeAddress, null, null, null,null, null);
             System.out.println("personCreate() FROM PersonController.java -- person="+person);
             return created();
         }
@@ -247,6 +247,21 @@ public class PersonController extends Controller {
     }
 
     /**
+     * Return all objectives of a SU
+     * @param id The id of the SU
+     * @return <b>Erreur 404 Not Found</b> if the SU doesn't exist
+     * Else <b>200 Ok</b> with the lists of the objectives
+     */
+    public Result getAllObjectivesForSU(long id) {
+        if(Person.find.byId(id) == null) {
+            return notFound("Person not found.");
+        }
+        else {
+            return ok(Json.toJson(Person.find.byId(id).getObjectiveSU()));
+        }
+    }
+
+    /**
      * Retrieve all seller of the database
      * @return All seller in the database, if there are no seller, return <b>404 NotFound</b>,
      * Else <b>200 Ok</b>
@@ -269,12 +284,12 @@ public class PersonController extends Controller {
         }
     }
     public void initializePerson() {
-        /*Person SU = new Person(null, "SimpleUser", "SU@a.com", "SU", null, Codecs.sha1("pierrick34$"), 0, "2", "rue emile pereire", "Béziers", "34500", null, null,null);
-        Person SC = new Person(null, "SimpleSeller", "SC@a.com", "SC", "11111111111111", Codecs.sha1("pierrick34$"), 1, "2", "rue emile pereire", "Béziers", "34500", null, null,null);
-        Person jsuisseller = new Person(null, "J'suisSeller", "seller@a.com", "Seller", "11111111111111", Codecs.sha1("pierrick34$"), 1, "2", "rue emile pereire", "Béziers", "34500", null, null,null);
-        Person decatlhon = new Person(null, "decatlhon", "decatlhon@a.com", "decatlhon", "11111111111111", Codecs.sha1("pierrick34$"), 1, "2", "rue emile pereire", "Béziers", "34500", null, null,null);
-        Person ADMIN = new Person(null, "Admin", "admin@a.com", "Admin", null, Codecs.sha1("pierrick34$"), 2, "2", "rue emile pereire", "Béziers", "34500", null, null,null);
-        Person a = new Person(null, "a", "a@a.com", "a", null, Codecs.sha1("pierrick34$"), 0, "2", "rue emile pereire", "Béziers", "34500", null, null,null);
+        Person SU = new Person(null, "SimpleUser", "SU@a.com", "SU", null, Codecs.sha1("pierrick34$"), 0, "2", "rue emile pereire", "Béziers", "34500", null, null,null, null,null);
+        Person SC = new Person(null, "SimpleSeller", "SC@a.com", "SC", "11111111111111", Codecs.sha1("pierrick34$"), 1, "2", "rue emile pereire", "Béziers", "34500", null, null,null, null,null);
+        Person jsuisseller = new Person(null, "J'suisSeller", "seller@a.com", "Seller", "11111111111111", Codecs.sha1("pierrick34$"), 1, "2", "rue emile pereire", "Béziers", "34500", null, null,null, null,null);
+        Person decatlhon = new Person(null, "decatlhon", "decatlhon@a.com", "decatlhon", "11111111111111", Codecs.sha1("pierrick34$"), 1, "2", "rue emile pereire", "Béziers", "34500", null, null,null, null,null);
+        Person ADMIN = new Person(null, "Admin", "admin@a.com", "Admin", null, Codecs.sha1("pierrick34$"), 2, "2", "rue emile pereire", "Béziers", "34500", null, null,null, null,null);
+        /*Person a = new Person(null, "a", "a@a.com", "a", null, Codecs.sha1("pierrick34$"), 0, "2", "rue emile pereire", "Béziers", "34500", null, null,null);
         Person b = new Person(null, "b", "b@b.com", "b", null, Codecs.sha1("pierrick34$"), 0, "2", "rue emile pereire", "Béziers", "34500", null, null,null);
         Person c = new Person(null, "c", "c@c.com", "c", null, Codecs.sha1("pierrick34$"), 0, "2", "rue emile pereire", "Béziers", "34500", null, null,null);
         Person d = new Person(null, "d", "d@d.com", "d", null, Codecs.sha1("pierrick34$"), 0, "2", "rue emile pereire", "Béziers", "34500", null, null,null);

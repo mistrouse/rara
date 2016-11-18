@@ -37,6 +37,10 @@ public class Person extends Model {
     @JsonManagedReference
     List<Product> productSell = new ArrayList<Product>();
 
+    @OneToMany(mappedBy = "simpleUser")
+    @JsonManagedReference
+    List<Objective> objectiveSU = new ArrayList<Objective>();
+
     @OneToMany(mappedBy = "user")
     @JsonManagedReference
     List<Diary> diaryUser = new ArrayList<Diary>();
@@ -63,9 +67,10 @@ public class Person extends Model {
      * @param cityAddress The city adress
      * @param postCodeAddress The post code for the adress
      * @param productSell List of the product sell by a seller
+     * @param objectiveSU List of the objectives for a SU
      * @param diaryUser List of the user diary
      */
-    public Person(Long id, String name, String email, String pseudo, String siret, String password, int role, String numberAddress, String streetAddress, String cityAddress, String postCodeAddress, String token, List<Product> productSell,List<Diary> diaryUser, List<ProductInBasket> basket) {
+    public Person(Long id, String name, String email, String pseudo, String siret, String password, int role, String numberAddress, String streetAddress, String cityAddress, String postCodeAddress, String token, List<Product> productSell, List<Objective> objectiveSU, List<Diary> diaryUser, List<ProductInBasket> basket) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -79,6 +84,7 @@ public class Person extends Model {
         this.postCodeAddress = postCodeAddress;
         this.token = token;
         this.productSell = productSell;
+        this.objectiveSU = objectiveSU;
         this.diaryUser=diaryUser;
         //TEST BASKET
         this.basket = basket;
@@ -158,6 +164,8 @@ public class Person extends Model {
         return productSell;
     }
 
+    public List<Objective> getObjectiveSU() { return objectiveSU; }
+
     public List<Diary> getDiaryUser() {
         return diaryUser;
     }
@@ -214,6 +222,8 @@ public class Person extends Model {
         this.productSell = productSell;
     }
 
+    public void setObjectiveSU(List<Objective> objectiveSU) { this.objectiveSU = objectiveSU; }
+
     public void setDiaryUser(List<Diary> diaryUser) {
         this.diaryUser =diaryUser;
     }
@@ -234,6 +244,7 @@ public class Person extends Model {
                 ", postCodeAddress='" + postCodeAddress + '\'' +
                 ", token='" + token + '\'' +
                 ", productSell=" + productSell + '\''+
+                ", objectiveSU=" + objectiveSU + '\''+
                 ", diaryUser=" + diaryUser +
                 ", basket=" + basket +
                 '}';
