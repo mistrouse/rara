@@ -35,7 +35,7 @@ public class PersonController extends Controller {
      * @return The information of all Person in JSON format
      */
     public Result persons() {
-        //this.initializePerson();
+        this.initializePerson();
         return ok(Json.toJson(Person.find.all()));
     }
 

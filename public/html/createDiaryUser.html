@@ -8,12 +8,12 @@
     <script src="/lib/dropzone"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 </head>
-<body ng-app="AWIAPP" ng-controller="createDiaryUser" class="createDiaryUser">
+<body ng-app="AWIAPP" ng-controller="createDiaryUser" class="createDiaryUser" ng-init="getAllObjectives()">
 <div class="all">
     <div class="createDiary">
         <div ng-hide="hideSuccess" class="alert alert-success"> <strong>Success! </strong>{{titleSuccess}} </div>
         <h1>Create Diary</h1>
-        <form name="createDiaryForm" ng-submit="createDiary(title, description)">
+        <form name="createDiaryForm" ng-submit="createDiary(title, description, objective)">
             <div class="form-group">
                 <label class="control-label">Title *</label>
                 <div>
@@ -24,6 +24,11 @@
                 <div>
                     <input type="text" class="form-control" ng-model="description" placeholder="Enter your description here" required>
                 </div>
+            </div>
+            <div class="form-group"><label class="control-label">Which Objective does this diary describe ?*</label>
+                <select ng-model="objective.name" ng-options="objective as objective.name for objective in allObjectives" ng-change="hasChanged(objective)" required>
+                    <option value="" disabled selected>Select your objective</option>
+                </select>
             </div>
             <button ng-disabled="createDiaryForm.$invalid" class="btn btn-success">Create Diary</button>
         </form>

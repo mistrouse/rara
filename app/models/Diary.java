@@ -51,6 +51,13 @@ public class Diary extends Model {
     @ManyToOne
     @JsonBackReference
     Person user;
+    /**
+     * A diary describes the achievement of an objective
+     */
+    @ManyToOne
+    @JsonBackReference
+    Objective objective;
+
 
     /**
      * Constructor of the diary
@@ -60,12 +67,14 @@ public class Diary extends Model {
      * @param dateDiary The date of the diary publication
      * @param user The user who created the diary
      */
-    public Diary(Long id, String title, String description, String dateDiary, Person user){
+    public Diary(Long id, String title, String description, String dateDiary, Person user, Objective objective){
+
         this.id=id;
         this.title=title;
         this.description=description;
         this.dateDiary=dateDiary;
         this.user=user;
+        this.objective=objective;
         this.save();
     }
 
@@ -104,6 +113,12 @@ public class Diary extends Model {
     public Person getUser(){return user;}
 
     /**
+     * Get the objective that the diary describes
+     * @return The objective that the diary describes
+     */
+    public Objective getObjective(){return objective;}
+
+    /**
      * Set the title of the diary
      * @param title2 of the diary
      */
@@ -131,6 +146,14 @@ public class Diary extends Model {
         this.user = user2;
     }
 
+    /**
+     * Set the objective the diary describes
+     * @param objective that the diary describes
+     */
+    public void setObjective(Objective objective) {
+        this.objective = objective;
+    }
+
     @Override
     public String toString() {
         return "Diary{" +
@@ -139,6 +162,7 @@ public class Diary extends Model {
                 ", description='" + description + '\'' +
                 ", user=" + user +
                 ", dateDiary=" + dateDiary +
+                ", objective='" + objective + '\'' +
                 '}';
     }
 }
