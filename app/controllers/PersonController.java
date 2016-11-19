@@ -307,7 +307,7 @@ public class PersonController extends Controller {
                 basketInformation.put("idLine", i);
                 basketInformation.put("idProduct", Person.find.byId(id).getBasket().get(i).getRefProduct().getId());
                 basketInformation.put("name", Person.find.byId(id).getBasket().get(i).getRefProduct().getName());
-                basketInformation.put("price", Person.find.byId(id).getBasket().get(i).getPrice());
+                basketInformation.put("price", Person.find.byId(id).getBasket().get(i).getRefProduct().getPrice());
                 basketInformation.put("quantity", Person.find.byId(id).getBasket().get(i).getQuantity());
                 basketInformation.put("seller", Person.find.byId(id).getBasket().get(i).getRefProduct().getSeller().getName());
                 basketInformation.put("idBasket", Person.find.byId(id).getBasket().get(i).getId());

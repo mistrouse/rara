@@ -33,11 +33,6 @@ public class ProductInBasket extends Model {
     Long id;
 
     /**
-     * The price of the ProductInBasket, this quantity permit to save the price if the seller change the price when we have already buy a product
-     */
-    private Double price;
-
-    /**
      * The quantity of the ProductInBasket
      */
     private int quantity;
@@ -59,14 +54,12 @@ public class ProductInBasket extends Model {
     /**
      * Constructor of the ProductInBasket
      * @param id The ID of the ProductInBasket
-     * @param price The price of the ProductInBasket
      * @param quantity The quantity of the ProductInBasket
      * @param refPerson The person who buy the product
      * @param refProduct The product buy by the person
      */
-    public ProductInBasket(Long id, Double price, int quantity, Person refPerson, Product refProduct) {
+    public ProductInBasket(Long id, int quantity, Person refPerson, Product refProduct) {
         this.id = id;
-        this.price = price;
         this.quantity = quantity;
         this.refPerson = refPerson;
         this.refProduct = refProduct;
@@ -83,14 +76,6 @@ public class ProductInBasket extends Model {
      */
     public Long getId() {
         return id;
-    }
-
-    /**
-     * Get the price of the ProductInBasket
-     * @return The price of the ProductInBasket
-     */
-    public Double getPrice() {
-        return price;
     }
 
     /**
@@ -130,14 +115,6 @@ public class ProductInBasket extends Model {
     }
 
     /**
-     * Set the price of the ProductInBasket
-     * @param price of the ProductInBasket
-     */
-    public void setPrice(Double price) {
-        this.price = price;
-    }
-
-    /**
      * Set the quantity of the ProductInBasket
      * @param quantity of the ProductInBasket
      */
@@ -166,7 +143,6 @@ public class ProductInBasket extends Model {
     public String toString() {
         return "ProductInBasket{" +
                 "id=" + id +
-                ", price=" + price +
                 ", quantity=" + quantity +
                 ", refPerson=" + refPerson +
                 ", refProduct=" + refProduct +
