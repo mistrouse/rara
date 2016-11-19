@@ -69,13 +69,8 @@ public class DiaryController extends Controller {
             return notFound("The person is not an user");
         }
         else {
-<<<<<<< HEAD
             // Create the diary in the database with the informations
             Diary diary = new Diary(null, title, description,dateDiary, Person.find.byId(Long.valueOf(id)), Objective.find.byId(Long.valueOf(id)));
-=======
-            // Create the diary in the database with the information
-            Diary diary = new Diary(null, title, description,dateDiary, Person.find.byId(Long.valueOf(id)));
->>>>>>> origin/master
             return created("The diary has been created");
 
         }

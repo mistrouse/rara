@@ -51,14 +51,13 @@ public class Diary extends Model {
     @ManyToOne
     @JsonBackReference
     Person user;
-<<<<<<< HEAD
-    // A diary describes the achievement of an objective
+    /**
+     * A diary describes the achievement of an objective
+     */
     @ManyToOne
     @JsonBackReference
     Objective objective;
 
-    public Diary(Long id, String title, String description, String dateDiary, Person user, Objective objective){
-=======
 
     /**
      * Constructor of the diary
@@ -68,8 +67,8 @@ public class Diary extends Model {
      * @param dateDiary The date of the diary publication
      * @param user The user who created the diary
      */
-    public Diary(Long id, String title, String description, String dateDiary, Person user){
->>>>>>> origin/master
+    public Diary(Long id, String title, String description, String dateDiary, Person user, Objective objective){
+
         this.id=id;
         this.title=title;
         this.description=description;
@@ -106,17 +105,18 @@ public class Diary extends Model {
      * @return The date of of the diary
      */
     public String getDateDiary(){return dateDiary;}
-<<<<<<< HEAD
-    public Person getUser(){return user;}
-    public Objective getObjective(){return objective;}
-=======
->>>>>>> origin/master
 
     /**
      * Get the person who created the diary
      * @return The person who created the diary
      */
     public Person getUser(){return user;}
+
+    /**
+     * Get the objective that the diary describes
+     * @return The objective that the diary describes
+     */
+    public Objective getObjective(){return objective;}
 
     /**
      * Set the title of the diary
@@ -146,6 +146,10 @@ public class Diary extends Model {
         this.user = user2;
     }
 
+    /**
+     * Set the objective the diary describes
+     * @param objective that the diary describes
+     */
     public void setObjective(Objective objective) {
         this.objective = objective;
     }
