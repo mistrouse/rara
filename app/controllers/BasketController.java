@@ -39,4 +39,22 @@ public class BasketController extends Controller {
             return ok(Json.toJson(ProductInBasket.find.byId(id)));
         }
     }
+
+    /**
+     * DELETE a ProductInBasket in the database with his ID
+     * @param id The id of a ProductInBasket
+     * @return If the ProductInBasket doesn't exist in the dababase, return <b>404 Not Found</b> <br/>
+     * Else return <b>200 Ok</b>
+     */
+    public Result productInBasketDelete(Long id) {
+        if(ProductInBasket.find.byId(id) == null) {
+            return notFound("ProductInBasket not found.");
+        }
+        else {
+            ProductInBasket.find.deleteById(id);
+            return ok("The ProductInBasket has been deleted");
+        }
+    }
+
+
 }

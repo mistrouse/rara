@@ -20,6 +20,11 @@ angular.module('AWIAPP', ['ngCookies'])
         $window.location.href = '/';
     }
 
+    // Hide the success at the beginning
+    $scope.hideSuccess = true;
+    // Hide the error at the beginning
+    $scope.hideError = true;
+
     // Get all product of the seller account
     $scope.getAllProductInBasket = function() {
         var rqt = {
@@ -30,26 +35,51 @@ angular.module('AWIAPP', ['ngCookies'])
         $http(rqt).success(function(data){
             $scope.allProductInBasket = data;
             $scope.sumPrice = 0;
+            // Calcul total amount
             for(var i = 0; i < data.length; i++) {
                 $scope.sumPrice += data[i].price * data[i].quantity;
             }
+            console.log(data);
         });
     }
 
-    $scope.showUpdateFormProductInBasket = function(productBasket) {
-        alert(productBasket.name);
+    // Update the quantity for a product in the basket
+    $scope.showUpdateFormProductInBasket = function(newQuantity, productBasket) {
+        var rqt = {
+            method : 'PUT',
+            url : '/person/' + id_person + '/basket/' + productBasket.idLine,
+            data : $.param({newQuantity: newQuantity, idProduct: productBasket.idProduct}),
+            headers : { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' }
+        };
+        $http(rqt).success(function(data){
+            $scope.hideError = true;
+            $scope.hideSuccess = false;
+            $scope.titleSuccess = data;
+            $scope.getAllProductInBasket();
+        }).error(function(data){
+          $scope.hideSuccess = true;
+          $scope.hideError = false;
+          $scope.titleError = data;
+      });
     }
 
+    // Delete the product in the basket of the SU
     $scope.deleteProductInBasket = function(productBasket) {
         var rqt = {
-                method : 'DELETE',
-                url : '/person/' + id_person + '/basket/' + productBasket.id,
-                data : $.param({id: id_person, token: token_person}),
-                headers : { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' }
-            };
-        $http(rqt).error(function(data){
-            console.log(data);
-            $scope.getAllProductInBasket;
-        })
+            method : 'DELETE',
+            url : '/person/' + id_person + '/line/' + productBasket.idLine + '/basket/'+productBasket.idBasket,
+            data : $.param({idProduct: productBasket.idProduct}),
+            headers : { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' }
+        };
+        $http(rqt).success(function(data){
+            $scope.hideError = true;
+            $scope.hideSuccess = false;
+            $scope.titleSuccess = data;
+            $scope.getAllProductInBasket();
+        }).error(function(data){
+          $scope.hideSuccess = true;
+          $scope.hideError = false;
+          $scope.titleError = data;
+      });
     }
 });

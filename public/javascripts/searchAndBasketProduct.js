@@ -146,6 +146,7 @@ angular.module('AWIAPP', ['ngCookies'])
 
     // When the user would add to his basket the product
     $scope.addToBasket = function(desiredQuantity) {
+        console.log(valueProductSelected);
         var id_product = valueProductSelected.id;
         var quantity_product_stock = valueProductSelected.quantity;
         // If the user want too much product, show error message

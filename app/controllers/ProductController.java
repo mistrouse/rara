@@ -82,7 +82,7 @@ public class ProductController extends Controller {
     public Result productUpdate(long id) {
         // Get the product in the database, if not exist return 404 not found
         Product updateProduct = Product.find.byId(id);
-        if(updateProduct == null) {
+        if(updateProduct == null) { 
             return notFound("Product not found.");
         }
         // If exist, get the value of the form and do the update in the database

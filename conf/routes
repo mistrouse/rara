@@ -31,7 +31,9 @@ GET     /person/:id/diaries        controllers.PersonController.getAllDiaryForUs
 # Get all products in basket for an user
 GET     /person/:id/baskets        controllers.PersonController.getAllProductInBasket(id: Long)
 # DELETE a product in basket for an user
-DELETE  /person/:id/basket/:idProd   controllers.PersonController.removeProductInBasket(id: Long, idProd: Long)
+DELETE  /person/:id/line/:idLine/basket/:idBasket   controllers.PersonController.removeProductInBasket(id: Long, idLine: Long, idBasket: Long)
+# Update a quantity in the basket
+PUT    /person/:id/basket/:idBasket   controllers.PersonController.updateProductInBasket(id: Long, idBasket: Long)
 ########################
 #       PRODUCT        #
 ########################

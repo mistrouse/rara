@@ -3,6 +3,7 @@ package controllers;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import models.Person;
+import models.Product;
 import models.ProductInBasket;
 import play.api.libs.Codecs;
 import play.api.libs.json.JsObject;
@@ -16,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import static java.lang.Math.toIntExact;
 import static play.data.Form.form;
 
 /**
@@ -142,7 +144,7 @@ public class PersonController extends Controller {
         if(isAlreadyExist == null) {
             // Create the person in the database with the informations
             Person person = new Person(null, name, email, pseudo, siret, password, role, numberAddress, streetAddress, cityAddress, postCodeAddress, null, null, null,null, null);
-            System.out.println("personCreate() FROM PersonController.java -- person="+person);
+//            System.out.println("personCreate() FROM PersonController.java -- person="+person);
             return created();
         }
         else {
@@ -302,11 +304,13 @@ public class PersonController extends Controller {
             ArrayNode information = Json.newArray();
             for (int i = 0; i< Person.find.byId(id).getBasket().size(); i++) {
                 ObjectNode basketInformation = Json.newObject();
-                basketInformation.put("id", Person.find.byId(id).getBasket().get(i).getRefProduct().getId());
+                basketInformation.put("idLine", i);
+                basketInformation.put("idProduct", Person.find.byId(id).getBasket().get(i).getRefProduct().getId());
                 basketInformation.put("name", Person.find.byId(id).getBasket().get(i).getRefProduct().getName());
                 basketInformation.put("price", Person.find.byId(id).getBasket().get(i).getPrice());
                 basketInformation.put("quantity", Person.find.byId(id).getBasket().get(i).getQuantity());
                 basketInformation.put("seller", Person.find.byId(id).getBasket().get(i).getRefProduct().getSeller().getName());
+                basketInformation.put("idBasket", Person.find.byId(id).getBasket().get(i).getId());
                 information.add(basketInformation);
             }
             return ok(Json.toJson(information));
@@ -314,34 +318,58 @@ public class PersonController extends Controller {
     }
 
     /**
-     * Remove a product in the basket of the SU
-     * @param id Of the sU
-     * @param idProd In the basket to delete
-     * @return <b>404 Not found</b> if the SU doesn't exist or if the product doesn't exist in his basket,
-     * Else <b>200 Ok</b>
+     * Remove the product in the basket of the SU
+     * @param id of the SU
+     * @param idLine Line of the SU of the basket
+     * @param idBasket of the basket
+     * @return <b>404 Not found if the SU doesn't exist</b>
+     * <b>200 Ok</b> if the product has remove from the basket
      */
-    public Result removeProductInBasket(Long id, Long idProd) {
+    public Result removeProductInBasket(Long id, Long idLine, Long idBasket) {
         if(Person.find.byId(id) == null) {
             return notFound("Person not found.");
         }
         else {
-            for(int i = 0; i < Person.find.byId(id).getBasket().size(); i++) {
-                if(Person.find.byId(id).getBasket().get(i).getRefProduct().getId().equals(idProd)) {
-                    Person.find.byId(id).getBasket().remove(ProductInBasket.find.byId(idProd));
-                    return ok("The product has been deleted from your basket");
-                }
+            Person.find.byId(id).getBasket().get(toIntExact(idLine)).find.deleteById(idBasket);
+            return ok("The product has been deleted from your basket");
+        }
+    }
+
+    /**
+     * Update the quantity for a product in the basket
+     * @param id of the SU
+     * @param idBasket of the basket line
+     * @return <b>404 Not found if the SU doesn't exist</b>,
+     * <b>409 Conflict</b> if there is not enough stock for the product
+     * And <b>200 Ok</b> if the quantity has been updated
+     */
+    public Result updateProductInBasket(Long id, Long idBasket) {
+        if(Person.find.byId(id) == null) {
+            return notFound("Person not found.");
+        }
+        else {
+            // Get the new quantity, test if there is enough for the seller and update
+            final Map<String, String[]> values = request().body().asFormUrlEncoded();
+            String newQuantity = values.get("newQuantity")[0];
+            String idProduct = values.get("idProduct")[0];
+            int stockProduct = Product.find.byId(Long.valueOf(idProduct)).getQuantity();
+            if(Integer.parseInt(newQuantity) <= stockProduct) {
+                Person.find.byId(id).getBasket().get(toIntExact(idBasket)).setQuantity(Integer.parseInt(newQuantity));
+                return ok("The quantity has changed");
             }
-            return notFound("The product is not in your basket");
+            else {
+                return status(409, "There is not enough stock. There is only " +stockProduct+ " elements for this product.");
+            }
         }
     }
 
     public void initializePerson() {
-        Person SU = new Person(null, "SimpleUser", "SU@a.com", "SU", null, Codecs.sha1("pierrick34$"), 0, "2", "rue emile pereire", "Béziers", "34500", null, null,null, null,null);
+        /*Person SU = new Person(null, "SimpleUser", "SU@a.com", "SU", null, Codecs.sha1("pierrick34$"), 0, "2", "rue emile pereire", "Béziers", "34500", null, null,null, null,null);
         Person SC = new Person(null, "SimpleSeller", "SC@a.com", "SC", "11111111111111", Codecs.sha1("pierrick34$"), 1, "2", "rue emile pereire", "Béziers", "34500", null, null,null, null,null);
         Person jsuisseller = new Person(null, "J'suisSeller", "seller@a.com", "Seller", "11111111111111", Codecs.sha1("pierrick34$"), 1, "2", "rue emile pereire", "Béziers", "34500", null, null,null, null,null);
         Person decatlhon = new Person(null, "decatlhon", "decatlhon@a.com", "decatlhon", "11111111111111", Codecs.sha1("pierrick34$"), 1, "2", "rue emile pereire", "Béziers", "34500", null, null,null, null,null);
         Person ADMIN = new Person(null, "Admin", "admin@a.com", "Admin", null, Codecs.sha1("pierrick34$"), 2, "2", "rue emile pereire", "Béziers", "34500", null, null,null, null,null);
-        /*Person a = new Person(null, "a", "a@a.com", "a", null, Codecs.sha1("pierrick34$"), 0, "2", "rue emile pereire", "Béziers", "34500", null, null,null);
+        Person a = new Person(null, "a", "a@a.com", "a", null, Codecs.sha1("pierrick34$"), 0, "2", "rue emile pereire", "Béziers", "34500", null, null,null);
         Person b = new Person(null, "b", "b@b.com", "b", null, Codecs.sha1("pierrick34$"), 0, "2", "rue emile pereire", "Béziers", "34500", null, null,null);
         Person c = new Person(null, "c", "c@c.com", "c", null, Codecs.sha1("pierrick34$"), 0, "2", "rue emile pereire", "Béziers", "34500", null, null,null);
         Person d = new Person(null, "d", "d@d.com", "d", null, Codecs.sha1("pierrick34$"), 0, "2", "rue emile pereire", "Béziers", "34500", null, null,null);

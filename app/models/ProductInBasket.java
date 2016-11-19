@@ -143,6 +143,7 @@ public class ProductInBasket extends Model {
      */
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+        this.save();
     }
 
     /**

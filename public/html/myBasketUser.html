@@ -11,6 +11,8 @@
 <body ng-app="AWIAPP" ng-controller="myBasketUser" class="myBasketUser" ng-init="getAllProductInBasket()">
     <div class="DELETE"><h1>My basket</h1></div>
     <div class="all">
+        <div ng-hide="hideSuccess" class="alert alert-success"> <strong>Success! </strong>{{titleSuccess}} </div>
+        <div ng-hide="hideError" class="alert alert-danger"> <strong>Error! </strong>{{titleError}} </div>
         <div class="tableBasket">
             <table st-table="allProductInBasket" class="table table-striped">
                 <thead>
@@ -29,7 +31,15 @@
                     <td>{{productBasket.price}}</td>
                     <td>{{productBasket.quantity}}</td>
                     <td>{{productBasket.seller}}</td>
-                    <td> <button type="button" ng-click="showUpdateFormProductInBasket(productBasket)" class="btn btn-default">Update</button> </td>
+                    <td>
+                        <div class="col-sm-5">
+                            <label class="control-label">New quantity</label>
+                            <div>
+                                <input type="number" class="form-control" ng-model="newQuantity" ng-value="{{productBasket.quantity}}" placeholder="Enter your new quantity" required>
+                            </div>
+                            <button type="button" ng-click="showUpdateFormProductInBasket(newQuantity, productBasket)" class="btn btn-default">Update</button>
+                        </div>
+                    </td>
                     <td> <button type="button" ng-click="deleteProductInBasket(productBasket)" class="btn btn-sm btn-danger">
                         <i class="glyphicon glyphicon-remove-circle">
                         </i>
