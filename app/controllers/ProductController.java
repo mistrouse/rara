@@ -134,6 +134,7 @@ public class ProductController extends Controller {
      * Add a product in the basket of the buyer.
      * @param id The id of the product
      * @return If the product doesn't exist, return <b>404 Not Found</b> <br/>
+     * Else if the quantity is not ok, <b>409 Conflict</b>
      * Else return <b>200 Ok</b>
      */
     public Result addToBasket(long id) {
@@ -147,12 +148,88 @@ public class ProductController extends Controller {
             final Map<String, String[]> values = request().body().asFormUrlEncoded();
             String quantityPurchased = values.get("quantityPurchased")[0];
             String idBuyer = values.get("id_buyer")[0];
-            // TEST BASKET
+            String idProductPurchased = values.get("idProductPurchased")[0];
             Person buyer = Person.find.byId(Long.valueOf(idBuyer));
-            buyer.getBasket().add(new ProductInBasket(null, Integer.parseInt(quantityPurchased), buyer, buyProduct));
-            //TEST BASKET
-            return ok(Json.toJson(buyProduct));
+            //buyer.getBasket().add(new ProductInBasket(null, Integer.parseInt(quantityPurchased), buyer, buyProduct));
+
+
+
+            //TEST UNE LIGNE POUR UN MEME PRODUIT DANS LE PANIER
+            int quantityMaxForTheProduct = Product.find.byId(Long.valueOf(idProductPurchased)).getQuantity();
+            int quantityAlreadyInBasket = 0;
+            for(int i = 0; i < Product.find.byId(Long.valueOf(idProductPurchased)).getBasket().size(); i++) {
+                quantityAlreadyInBasket += Product.find.byId(Long.valueOf(idProductPurchased)).getBasket().get(i).getQuantity();
+            }
+
+            // If this is the first element in the basket, we trie to add
+            if(buyer.getBasket().size() == 0){
+                //If the quantity purchased is less than the max stock for the product we trie to add
+                boolean test = this.isPossibleToAdd(Integer.parseInt(quantityPurchased), quantityMaxForTheProduct, quantityAlreadyInBasket, 0);
+                if(test) {
+                    buyer.getBasket().add(new ProductInBasket(null, Integer.parseInt(quantityPurchased), buyer, buyProduct));
+                    return ok(Json.toJson(buyProduct));
+                }
+                else {
+                    return status(409, "There is not enough stock for this product (maximum = " + Product.find.byId(Long.valueOf(idProductPurchased)).getQuantity() + "), tried less.");
+                }
+            }
+            else {
+                int i = 0;
+                while(i < buyer.getBasket().size() && buyer.getBasket().get(i).getRefProduct().getId() != Long.valueOf(idProductPurchased)) {
+                    i++;
+                }
+                // If there is no line for the product, we create a new line
+                if(i == buyer.getBasket().size()) {
+                    boolean test = this.isPossibleToAdd(Integer.parseInt(quantityPurchased), quantityMaxForTheProduct, quantityAlreadyInBasket, 0);
+                    if(test) {
+                        buyer.getBasket().add(new ProductInBasket(null, Integer.parseInt(quantityPurchased), buyer, buyProduct));
+                        return ok(Json.toJson(buyProduct));
+                    }
+                    else {
+                        return status(409, "There is not enough stock for this product (maximum = " + Product.find.byId(Long.valueOf(idProductPurchased)).getQuantity() + "), tried less.");
+                    }
+                }
+                // If there is a line for the product, we update the quantity
+                else {
+                    boolean test = this.isPossibleToAdd(Integer.parseInt(quantityPurchased), quantityMaxForTheProduct, quantityAlreadyInBasket, buyer.getBasket().get(i).getQuantity());
+                    if(test) {
+                        buyer.getBasket().get(i).setQuantity(buyer.getBasket().get(i).getQuantity() + Integer.parseInt(quantityPurchased));
+                        return ok(Json.toJson(buyProduct));
+                    }
+                    else {
+                        return status(409, "There is not enough stock for this product (maximum = " + Product.find.byId(Long.valueOf(idProductPurchased)).getQuantity() + "), tried less.");
+                    }
+                }
+            }
+            //TEST UNE LIGNE POUR UN MEME PRODUIT DANS LE PANIER
         }
+    }
+
+    /**
+     * Test if the SU can add a quantity in his basket for a product
+     * @param quantityPurchased quantity purchased by the SU
+     * @param quantityMaxForTheProduct quantity max in stock of the SC
+     * @param quantityAlreadyInBasket quantity already in all basket for this product
+     * @param quantityInBasketOfBuyer quantity already in the basket of the SU
+     * @return true if the SU can add to his basket
+     * Else false
+     */
+    private boolean isPossibleToAdd(int quantityPurchased, int quantityMaxForTheProduct, int quantityAlreadyInBasket, int quantityInBasketOfBuyer) {
+        //If the quantity purchased is less than the max stock for the product we trie to add
+        if(Long.valueOf(quantityPurchased) <= quantityMaxForTheProduct) {
+//                    System.out.println("minus="+(quantityMaxForTheProduct - Long.valueOf(quantityPurchased)));
+//                    System.out.println("all"+quantityAlreadyInBasket);
+            // If the difference between the max quantity and purchased is less than quantity in all basket, we add
+            if (!((quantityMaxForTheProduct - (Long.valueOf(quantityPurchased))+quantityInBasketOfBuyer) < quantityAlreadyInBasket)) {
+//                        System.out.println("OK");
+                return true;
+            }
+            // Else the seller has already his max stock in differrent basket
+            else {
+                return false;
+            }
+        }
+        return false;
     }
 
     public void initializeProduct() {

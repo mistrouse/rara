@@ -160,17 +160,22 @@ angular.module('AWIAPP', ['ngCookies'])
             var rqt = {
                 method : 'PUT',
                 url : '/product/' + id_product +'/addToBasket',
-                data : $.param({quantityPurchased: desiredQuantity, id_buyer: id_person}),
+                data : $.param({quantityPurchased: desiredQuantity, id_buyer: id_person, idProductPurchased: valueProductSelected.id}),
                 headers : { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' }
             };
             // Reload the data and show success message
             $http(rqt).success(function(data){
+                $scope.hideErrorNotEnoughProduct = true;
                 $scope.nameProduct = data.name;
                 $scope.descriptionProduct = data.description;
                 $scope.priceProduct = data.price;
                 $scope.quantityProduct = data.quantity;
                 $scope.hideSuccessAddBasketProduct = false;
                 $scope.tittleHideSuccessAddBasketProduct = "The product "+data.name+" has been add to your basket. Thank you."
+            }).error(function(data){
+                $scope.hideSuccessAddBasketProduct = true;
+                $scope.hideErrorNotEnoughProduct = false;
+                $scope.tittleErrorNotEnoughProduct = data;
             });
         }
     };
