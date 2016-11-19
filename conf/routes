@@ -28,6 +28,10 @@ GET     /persons/seller           controllers.PersonController.getAllSeller()
 GET     /person/:id/objectives        controllers.PersonController.getAllObjectivesForSU(id: Long)
 # Get all diaries for an user
 GET     /person/:id/diaries        controllers.PersonController.getAllDiaryForUser(id: Long)
+# Get all products in basket for an user
+GET     /person/:id/baskets        controllers.PersonController.getAllProductInBasket(id: Long)
+# DELETE a product in basket for an user
+DELETE  /person/:id/basket/:idProd   controllers.PersonController.removeProductInBasket(id: Long, idProd: Long)
 ########################
 #       PRODUCT        #
 ########################

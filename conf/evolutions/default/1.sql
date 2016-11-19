@@ -42,13 +42,15 @@ create table product (
 );
 create sequence product_seq;
 
-create table task (
+create table product_in_basket (
   id                            bigint not null,
-  name                          varchar(255),
-  creator_id                    bigint,
-  constraint pk_task primary key (id)
+  price                         double,
+  quantity                      integer,
+  ref_person_id                 bigint,
+  ref_product_id                bigint,
+  constraint pk_product_in_basket primary key (id)
 );
-create sequence task_seq;
+create sequence product_in_basket_seq;
 
 alter table diary add constraint fk_diary_user_id foreign key (user_id) references person (id) on delete restrict on update restrict;
 create index ix_diary_user_id on diary (user_id);
@@ -56,8 +58,11 @@ create index ix_diary_user_id on diary (user_id);
 alter table product add constraint fk_product_seller_id foreign key (seller_id) references person (id) on delete restrict on update restrict;
 create index ix_product_seller_id on product (seller_id);
 
-alter table task add constraint fk_task_creator_id foreign key (creator_id) references person (id) on delete restrict on update restrict;
-create index ix_task_creator_id on task (creator_id);
+alter table product_in_basket add constraint fk_product_in_basket_ref_person_id foreign key (ref_person_id) references person (id) on delete restrict on update restrict;
+create index ix_product_in_basket_ref_person_id on product_in_basket (ref_person_id);
+
+alter table product_in_basket add constraint fk_product_in_basket_ref_product_id foreign key (ref_product_id) references product (id) on delete restrict on update restrict;
+create index ix_product_in_basket_ref_product_id on product_in_basket (ref_product_id);
 
 
 # --- !Downs
@@ -68,8 +73,11 @@ drop index if exists ix_diary_user_id;
 alter table product drop constraint if exists fk_product_seller_id;
 drop index if exists ix_product_seller_id;
 
-alter table task drop constraint if exists fk_task_creator_id;
-drop index if exists ix_task_creator_id;
+alter table product_in_basket drop constraint if exists fk_product_in_basket_ref_person_id;
+drop index if exists ix_product_in_basket_ref_person_id;
+
+alter table product_in_basket drop constraint if exists fk_product_in_basket_ref_product_id;
+drop index if exists ix_product_in_basket_ref_product_id;
 
 drop table if exists diary;
 drop sequence if exists diary_seq;
@@ -80,6 +88,6 @@ drop sequence if exists person_seq;
 drop table if exists product;
 drop sequence if exists product_seq;
 
-drop table if exists task;
-drop sequence if exists task_seq;
+drop table if exists product_in_basket;
+drop sequence if exists product_in_basket_seq;
 

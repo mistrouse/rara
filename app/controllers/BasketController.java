@@ -6,7 +6,13 @@ import play.mvc.Controller;
 import play.mvc.Result;
 
 /**
- * Created by pierrickgiuliani on 16/11/2016.
+ * Name of the class : BasketController
+ *
+ * Description   : Controller to manage a Basket
+ *
+ * Version       : 1.0
+ *
+ * Date          : 16/11/2016
  */
 public class BasketController extends Controller {
 
@@ -19,7 +25,7 @@ public class BasketController extends Controller {
     }
 
     /**
-     *  GET the line of the basket in the database with his ID if it exist
+     *  GET the lines of the basket in the database with his ID if it exist
      * @param id The id of the basket line
      * @return The information of a basket line with the price, the quantity, the buyer and the product buy in JSON format <br/>
      * If the basket exist, return <b>200 Ok</b><br/>

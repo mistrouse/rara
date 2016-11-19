@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-cookies.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="/js/myBasketUser.js"></script>
+    <script src="/lib/smart-table"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+</head>
+<body ng-app="AWIAPP" ng-controller="myBasketUser" class="myBasketUser" ng-init="getAllProductInBasket()">
+    <div class="DELETE"><h1>My basket</h1></div>
+    <div class="all">
+        <div class="tableBasket">
+            <table st-table="allProductInBasket" class="table table-striped">
+                <thead>
+                <tr>
+                    <th st-sort="name">Name</th>
+                    <th st-sort="price">Price</th>
+                    <th st-sort="quantity">Quantity</th>
+                    <th>Seller</th>
+                    <th>Update</th>
+                    <th>Delete</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="productBasket in allProductInBasket">
+                    <td>{{productBasket.name}}</td>
+                    <td>{{productBasket.price}}</td>
+                    <td>{{productBasket.quantity}}</td>
+                    <td>{{productBasket.seller}}</td>
+                    <td> <button type="button" ng-click="showUpdateFormProductInBasket(productBasket)" class="btn btn-default">Update</button> </td>
+                    <td> <button type="button" ng-click="deleteProductInBasket(productBasket)" class="btn btn-sm btn-danger">
+                        <i class="glyphicon glyphicon-remove-circle">
+                        </i>
+                    </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            Total amount : {{sumPrice}} €
+        </div>
+    </div>
+</body>
+</html>
