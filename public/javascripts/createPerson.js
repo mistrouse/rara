@@ -102,6 +102,10 @@ angular.module('AWIAPP', ['ngCookies'])
                 $scope.titleError = data;
             });
         };
+    $scope.login = function() {
+        //$window.location.href = '/login';
+        $window.location.href = '/login.html';
+    }
 
     // This pattern permit to verify if the passwords are the same
     $scope.getPattern = function(){ return ($scope.password && $scope.password.replace(/([.*+?^${}()|\[\]\/\\])/g, '\\$1')); };

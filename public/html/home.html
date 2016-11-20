@@ -1,33 +1,76 @@
 <!doctype html>
 <html>
 <head>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-cookies.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
+
+    <link rel="stylesheet" type="text/css" href="/stylesheets/main.css">
     <script src="/js/home.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 </head>
 <body ng-app="AWIAPP" ng-controller="home" class="home">
-<div class="all">
-    <h1>Welcome {{pseudo}} ! ({{typeAccount}})</h1>
-    <div class="headerChoiceForm">
-        <form name="headerChoiceForm">
-            <div class="form-group">
-                <button name="myAccount" class="btn btn-success" ng-click="myAccount()">My account</button>
-                <button ng-show="isSimpleUser == 'isSimpleUser'" name="myObjective" class="btn btn-success" ng-click="myObjective()">My Objectives</button>
-                <button ng-show="isSimpleUser == 'isSimpleUser'" name="createObjective" class="btn btn-success" ng-click="createObjective()">Create Objective</button>
-                <button ng-show="isSimpleUser == 'isSimpleUser'" name="myDiary" class="btn btn-success" ng-click="myDiary()">My diary</button>
-                <button ng-show="isSimpleUser == 'isSimpleUser'" name="createDiary" class="btn btn-success" ng-click="createDiary()">Create diary</button>
-                <button ng-show="isSimpleUser == 'isSimpleUser'" name="myBasket" class="btn btn-success" ng-click="myBasket()">My basket</button>
-                <button ng-show="isSeller == 'isSeller'" name="myProduct" class="btn btn-success" ng-click="myProduct()">My product</button>
-                <button ng-show="isSeller == 'isSeller'" name="createProduct" class="btn btn-success" ng-click="createProduct()">Create product</button>
-                <button ng-show="isSeller == 'isSeller' || isSimpleUser == 'isSimpleUser'" name="searchProduct" class="btn btn-success" ng-click="searchProduct()">Search product</button>
-                <button ng-show="isAdmin == 'isAdmin'" name="manageAccount" class="btn btn-success" ng-click="manageAccount()">Manage account</button>
-                <button ng-show="isAdmin == 'isAdmin'" name="manageProduct" class="btn btn-success" ng-click="manageProduct()">Manage product</button>
-                <button name="logOut" class="btn btn-success" ng-click="logOut()">Log out</button>
-            </div>
-        </form>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a >
+                <img id="logo" align="top" src="/images/logo.png" alt="logo" />
+            </a>
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav navbar-right">
+                <li  ng-click="back()"><a href=""><span class="glyphicon glyphicon-home"></span> Home</a></li>
+
+                <li  ng-show="isSimpleUser == 'isSimpleUser'" ng-click="myBasket()"><a href=""><span class="glyphicon glyphicon-shopping-cart"></span> Basket</a></li>
+
+                <li  ng-click="myAccount()"><a href=""><span class="glyphicon glyphicon-user"></span> My account</a></li>
+                <li ng-click="logOut()"><a href=""><span class="glyphicon glyphicon-log-out"></span> Log out</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<br><br><br>
+<div class="container-fluid text-center">
+    <div class="row content">
+        <div class="col-sm-2 sidenav">
+            <h4 ng-show="isAdmin == 'isAdmin'"  ng-click="manageAccount()"><a href="#">Manage Accounts</a></h4>
+            <h4 ng-show="isSeller == 'isSeller' || isSimpleUser == 'isSimpleUser'" ng-click="searchProduct()"><a href="">Search product</a></h4>
+            <h4 ng-show="isSimpleUser == 'isSimpleUser'" ng-click="createObjective()"><a href="#">Create Objective</a></h4>
+            <h4 ng-show="isSimpleUser == 'isSimpleUser'"   ng-click="myObjective()"><a href="#">My objective</a></h4>
+
+            <h4 ng-show="isSimpleUser == 'isSimpleUser'" ng-click="createDiary()"><a href="#">Create Diary</a></h4>
+            <h4 ng-show="isSimpleUser == 'isSimpleUser'"  ng-click="myDiary()"><a href="">My diaries</a></h4>
+
+            <h4 ng-show="isSeller == 'isSeller'"  ng-click="myProduct()"><a href="#">My Products</a></h4>
+
+            <h4  ng-show="isSeller == 'isSeller'" name="createProduct"  ng-click="createProduct()"><a href="">Create Products</a></h4>
+
+            <h4 ng-show="isAdmin == 'isAdmin'"  ng-click="manageProduct()"><a href="#">Manage Products</a></h4>
+
+
+        </div>
+        <div class="col-sm-8 text-left">
+            <h1>Welcome</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            <hr>
+            <h3>Test</h3>
+            <p>Lorem ipsum...</p>
+        </div>
+
     </div>
 </div>
+<footer class="container-fluid text-center">
+    <p>Footer Text</p>
+</footer>
 </body>
 </html>

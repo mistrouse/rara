@@ -1,56 +1,97 @@
 <!doctype html>
 <html>
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-cookies.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+
     <script src="/js/searchAndBasketProduct.js"></script>
     <script src="/lib/easy-autocomplete/easy-autocompleteJS"></script>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/main.css">
     <link rel="stylesheet" href="/lib/easy-autocomplete/easy-autocompleteCSS">
     <link rel="stylesheet" href="/lib/easy-autocomplete/easy-autocomplete-themeCSS">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 </head>
 <body ng-app="AWIAPP" ng-controller="searchProduct" class="searchProduct" ng-init="getAllSeller(); getAllProduct()">
-    <div class="all">
-        <div class="searchProduct">
-            <h1>Search Product</h1>
-            <div class="companyValue">
-                Choose your company :
-                <select ng-model="seller.name" ng-options="seller as seller.name for seller in allSeller" ng-change="hasChanged(seller)">
-                    <option value="" selected="selected">All</option>
-                </select>
-            </div>
-            <div ng-hide="hideErrorNoProduct" class="alert alert-danger"> <strong>Sorry! </strong>{{titleErrorNoProduct}} </div>
-            <div class="productValue">
-                Search your products in this company :
-                <input ng-model="searchProduct" id="search-product"/>
-            </div>
+<body ng-app="AWIAPP" ng-controller="myProductSeller" class="myProductSeller" ng-init="getAllProductForSeller()">
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a >
+                <img id="logo" align="top" src="/images/logo.png" alt="logo" />
+            </a>
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
         </div>
-        <div class="showProductInformation" ng-show="showProductInformation">
-            <h1>Information for the product: {{nameProduct}}</h1>
-            <div class="valueDescription">
-                Description : {{descriptionProduct}} <br>
-            </div>
-            <div class="valuePrice">
-                Price : {{priceProduct}} <br>
-            </div>
-            <div class="valueQuantity">
-                Quantity : {{quantityProduct}} <br>
-            </div><br>
-            <div class="showAddBasket" ng-show="isSeller">
-                <form name="addBasket" ng-submit="addToBasket(desiredQuantity)">
-                    <div class="form-group">
-                        <label class="control-label">What quantity would like buy ?</label>
-                        <div>
-                            <input type="number" class="form-control" ng-model="desiredQuantity" placeholder="Enter your quantity here" required>
-                        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav navbar-right">
+                <li  ng-click="back()"><a href=""><span class="glyphicon glyphicon-home"></span> Home</a></li>
+                <li  ng-click="myAccount()"><a href=""><span class="glyphicon glyphicon-user"></span> My account</a></li>
+                <li ng-click="logOut()"><a href=""><span class="glyphicon glyphicon-log-out"></span> Log out</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<br><br><br>
+<div class="container-fluid text-center" >
+    <div class="row content">
+        <div class="col-sm-2 sidenav">
+            <h4  ng-click="searchProduct()"><a href="">Search products</a></h4>
+
+            <h4  ng-click="myProduct()"><a href="#">My Products</a></h4>
+
+            <h4   name="createProduct"  ng-click="createProduct()"><a href="">Create Products</a></h4>
+        </div>
+        <div class="col-sm-8 text-left">
+             <div class="all">
+                <div class="searchProduct">
+                    <h1>Search Product</h1>
+                    <div class="companyValue">
+                        Choose your company :
+                        <select ng-model="seller.name" ng-options="seller as seller.name for seller in allSeller" ng-change="hasChanged(seller)">
+                            <option value="" selected="selected">All</option>
+                        </select>
                     </div>
-                    <button ng-disabled="addBasket.$invalid" class="btn btn-success">Add Basket</button>
-                </form>
-                <div ng-hide="hideErrorNotEnoughProduct" class="alert alert-danger"> <strong>Error! </strong>{{tittleErrorNotEnoughProduct}} </div>
-                <div ng-hide="hideSuccessAddBasketProduct" class="alert alert-success"> <strong>Success! </strong>{{tittleHideSuccessAddBasketProduct}} </div>
+                    <div ng-hide="hideErrorNoProduct" class="alert alert-danger"> <strong>Sorry! </strong>{{titleErrorNoProduct}} </div>
+                    <div class="productValue">
+                        Search your products in this company :
+                        <input ng-model="searchProduct" id="search-product"/>
+                    </div>
+                </div>
+             <div class="showProductInformation" ng-show="showProductInformation">
+                <h1>Information for the product: {{nameProduct}}</h1>
+                <div class="valueDescription">
+                    Description : {{descriptionProduct}} <br>
+                </div>
+                <div class="valuePrice">
+                    Price : {{priceProduct}} <br>
+                </div>
+                <div class="valueQuantity">
+                    Quantity : {{quantityProduct}} <br>
+                </div><br>
+                <div class="showAddBasket" ng-show="isSeller">
+                    <form name="addBasket" ng-submit="addToBasket(desiredQuantity)">
+                        <div class="form-group">
+                            <label class="control-label">What quantity would like buy ?</label>
+                            <div>
+                                <input type="number" class="form-control" ng-model="desiredQuantity" placeholder="Enter your quantity here" required>
+                            </div>
+                        </div>
+                        <button ng-disabled="addBasket.$invalid" class="btn btn-success">Add Basket</button>
+                    </form>
+                    <div ng-hide="hideErrorNotEnoughProduct" class="alert alert-danger"> <strong>Error! </strong>{{tittleErrorNotEnoughProduct}} </div>
+                    <div ng-hide="hideSuccessAddBasketProduct" class="alert alert-success"> <strong>Success! </strong>{{tittleHideSuccessAddBasketProduct}} </div>
+                </div>
+            </div>
+            </div>
             </div>
         </div>
     </div>
+</body>
 </body>
 </html>
