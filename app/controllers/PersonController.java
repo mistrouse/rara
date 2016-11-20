@@ -35,7 +35,7 @@ public class PersonController extends Controller {
      * @return The information of all Person in JSON format
      */
     public Result persons() {
-        this.initializePerson();
+        //this.initializePerson();
         return ok(Json.toJson(Person.find.all()));
     }
 
@@ -364,6 +364,7 @@ public class PersonController extends Controller {
     }
 
     public void initializePerson() {
+        Person ADMIN = new Person(null, "Admin", "admin@a.com", "Admin", null, Codecs.sha1("pierrick34$"), 2, "2", "rue emile pereire", "Béziers", "34500", null, null,null, null,null);
         /*Person SU = new Person(null, "SimpleUser", "SU@a.com", "SU", null, Codecs.sha1("pierrick34$"), 0, "2", "rue emile pereire", "Béziers", "34500", null, null,null, null,null);
         Person SC = new Person(null, "SimpleSeller", "SC@a.com", "SC", "11111111111111", Codecs.sha1("pierrick34$"), 1, "2", "rue emile pereire", "Béziers", "34500", null, null,null, null,null);
         Person jsuisseller = new Person(null, "J'suisSeller", "seller@a.com", "Seller", "11111111111111", Codecs.sha1("pierrick34$"), 1, "2", "rue emile pereire", "Béziers", "34500", null, null,null, null,null);
