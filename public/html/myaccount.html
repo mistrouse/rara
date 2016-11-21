@@ -8,6 +8,27 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 </head>
 <body ng-app="AWIAPP" ng-controller="myaccount" class="myaccount">
+    <div class="header">
+        <h1>Welcome {{pseudo}} ! ({{typeAccount}})</h1>
+        <div class="headerChoiceForm">
+            <form name="headerChoiceForm">
+                <div class="form-group">
+                    <button name="myAccount" class="btn btn-success" ng-click="myAccount()">My account</button>
+                    <button ng-show="isSimpleUser == 'isSimpleUser'" name="myObjective" class="btn btn-success" ng-click="myObjective()">My Objectives</button>
+                    <button ng-show="isSimpleUser == 'isSimpleUser'" name="createObjective" class="btn btn-success" ng-click="createObjective()">Create Objective</button>
+                    <button ng-show="isSimpleUser == 'isSimpleUser'" name="myDiary" class="btn btn-success" ng-click="myDiary()">My diary</button>
+                    <button ng-show="isSimpleUser == 'isSimpleUser'" name="createDiary" class="btn btn-success" ng-click="createDiary()">Create diary</button>
+                    <button ng-show="isSimpleUser == 'isSimpleUser'" name="myBasket" class="btn btn-success" ng-click="myBasket()">My basket</button>
+                    <button ng-show="isSeller == 'isSeller'" name="myProduct" class="btn btn-success" ng-click="myProduct()">My product</button>
+                    <button ng-show="isSeller == 'isSeller'" name="createProduct" class="btn btn-success" ng-click="createProduct()">Create product</button>
+                    <button ng-show="isSeller == 'isSeller' || isSimpleUser == 'isSimpleUser'" name="searchProduct" class="btn btn-success" ng-click="searchProduct()">Search product</button>
+                    <button ng-show="isAdmin == 'isAdmin'" name="manageAccount" class="btn btn-success" ng-click="manageAccount()">Manage account</button>
+                    <button ng-show="isAdmin == 'isAdmin'" name="manageProduct" class="btn btn-success" ng-click="manageProduct()">Manage product</button>
+                    <button name="logOut" class="btn btn-success" ng-click="logOut()">Log out</button>
+                </div>
+            </form>
+        </div>
+    </div>
     <div class="all">
         <h1>{{pseudo}} information account:</h1>
         <div class="isValue" ng-show="isValueShow">
