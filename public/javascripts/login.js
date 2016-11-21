@@ -59,6 +59,10 @@ angular.module('AWIAPP', ['ngCookies'])
         });
     };
 
+    $scope.createPerson = function() {
+        //$window.location.href = '/createPerson';
+        $window.location.href = '/createPerson.html';
+    };
     // If the user doesn't want create an account and back, it redirects to the "/"
     $scope.back = function() { $window.location.href = '/'; };
 

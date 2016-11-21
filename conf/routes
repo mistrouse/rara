@@ -95,7 +95,8 @@ GET /lib/easy-autocomplete/easy-autocompleteCSS                 controllers.Asse
 GET /lib/easy-autocomplete/easy-autocomplete-themeCSS           controllers.Assets.at(path="/public", file="lib/easy-autocomplete/easy-autocomplete-theme.css")
 
 GET /                               controllers.Assets.at(path="/public", file="html/index.html")
-
+GET    /images/*file               controllers.Assets.at(path="/public/images", file)
+GET    /stylesheets/*file               controllers.Assets.at(path="/public/stylesheets", file)
 GET    /js/*file               controllers.Assets.at(path="/public/javascripts", file)
 GET    /*file                  controllers.Assets.at(path="/public/html", file)
 GET    /lib/*file              controllers.Assets.at(path="/public/lib", file)

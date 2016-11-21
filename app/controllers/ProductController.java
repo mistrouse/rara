@@ -160,46 +160,37 @@ public class ProductController extends Controller {
             for(int i = 0; i < Product.find.byId(Long.valueOf(idProductPurchased)).getBasket().size(); i++) {
                 quantityAlreadyInBasket += Product.find.byId(Long.valueOf(idProductPurchased)).getBasket().get(i).getQuantity();
             }
+            System.out.println("quantityAlreadyInBasket="+quantityAlreadyInBasket);
 
-            // If this is the first element in the basket, we trie to add
+
             if(buyer.getBasket().size() == 0){
-                //If the quantity purchased is less than the max stock for the product we trie to add
-                boolean test = this.isPossibleToAdd(Integer.parseInt(quantityPurchased), quantityMaxForTheProduct, quantityAlreadyInBasket, 0);
-                if(test) {
-                    buyer.getBasket().add(new ProductInBasket(null, Integer.parseInt(quantityPurchased), buyer, buyProduct));
-                    return ok(Json.toJson(buyProduct));
-                }
-                else {
-                    return status(409, "There is not enough stock for this product (maximum = " + Product.find.byId(Long.valueOf(idProductPurchased)).getQuantity() + "), tried less.");
-                }
+                // If(ma quantité < quantité en stock)
+                //If((qt en stock - ma qt) < Qt dans tous les panier)
+                //AJOUT
+                buyer.getBasket().add(new ProductInBasket(null, Integer.parseInt(quantityPurchased), buyer, buyProduct));
+                return ok(Json.toJson(buyProduct));
             }
             else {
                 int i = 0;
                 while(i < buyer.getBasket().size() && buyer.getBasket().get(i).getRefProduct().getId() != Long.valueOf(idProductPurchased)) {
                     i++;
                 }
-                // If there is no line for the product, we create a new line
                 if(i == buyer.getBasket().size()) {
-                    boolean test = this.isPossibleToAdd(Integer.parseInt(quantityPurchased), quantityMaxForTheProduct, quantityAlreadyInBasket, 0);
-                    if(test) {
-                        buyer.getBasket().add(new ProductInBasket(null, Integer.parseInt(quantityPurchased), buyer, buyProduct));
-                        return ok(Json.toJson(buyProduct));
-                    }
-                    else {
-                        return status(409, "There is not enough stock for this product (maximum = " + Product.find.byId(Long.valueOf(idProductPurchased)).getQuantity() + "), tried less.");
-                    }
+                    buyer.getBasket().add(new ProductInBasket(null, Integer.parseInt(quantityPurchased), buyer, buyProduct));
+                    return ok(Json.toJson(buyProduct));
                 }
-                // If there is a line for the product, we update the quantity
                 else {
-                    boolean test = this.isPossibleToAdd(Integer.parseInt(quantityPurchased), quantityMaxForTheProduct, quantityAlreadyInBasket, buyer.getBasket().get(i).getQuantity());
-                    if(test) {
+                    // If the quantity already in the basket with the new quantity is minus or equal with the stock of the product, we update
+                    if((buyer.getBasket().get(i).getQuantity()+Long.valueOf(quantityPurchased)) <= Product.find.byId(Long.valueOf(idProductPurchased)).getQuantity()) {
                         buyer.getBasket().get(i).setQuantity(buyer.getBasket().get(i).getQuantity() + Integer.parseInt(quantityPurchased));
                         return ok(Json.toJson(buyProduct));
                     }
+                    // There is no enough stock, return error
                     else {
-                        return status(409, "There is not enough stock for this product (maximum = " + Product.find.byId(Long.valueOf(idProductPurchased)).getQuantity() + "), tried less.");
+                        return status(409, "There is not enough stock for this product (maximum = "+Product.find.byId(Long.valueOf(idProductPurchased)).getQuantity()+"), tried less.");
                     }
                 }
+
             }
             //TEST UNE LIGNE POUR UN MEME PRODUIT DANS LE PANIER
         }

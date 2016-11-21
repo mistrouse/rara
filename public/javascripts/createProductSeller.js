@@ -112,4 +112,9 @@ angular.module('AWIAPP', ['ngCookies'])
          });
      };
 
+$scope.back=function(){
+$window.location.href='/home.html';
+}
+
+
 });

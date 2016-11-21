@@ -29,7 +29,7 @@ import static play.data.Form.form;
  *
  * Date          : 03/11/2016
  */
-public class PersonController extends Controller { 
+public class PersonController extends Controller {
     /**
      * GET all persons in the database
      * @return The information of all Person in JSON format

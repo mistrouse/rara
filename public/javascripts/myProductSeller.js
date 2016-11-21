@@ -154,4 +154,8 @@ angular.module('AWIAPP', ['ngCookies', 'smart-table'])
              $window.location.href = '/';
          });
      };
+
+     $scope.back=function(){
+     $window.location.href='/home.html';
+     }
 });
