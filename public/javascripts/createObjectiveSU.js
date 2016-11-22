@@ -31,7 +31,7 @@ angular.module('AWIAPP', ['ngCookies'])
 
     $scope.hideSuccess = true;
 
-    $scope.createObjectivee = function(name, description) {
+    $scope.createObjective = function(name, description) {
         var rqt = {
                 method : 'POST',
                 url : '/objective',
@@ -98,7 +98,15 @@ angular.module('AWIAPP', ['ngCookies'])
      $scope.createObjective = function(){
      window.location.href='/createObjectiveSU.html';
      }
+     // If a SU wants to show his comments
+     $scope.myComment = function(){
+     $window.location.href = '/myCommentUser.html';
+     }
 
+     // If a SU wants to create a comment
+     $scope.createComment = function(){
+     window.location.href='/createCommentUser.html';
+     }
      // When the user would to log out and it is redirect to '/'
          $scope.logOut = function() {
              var rqt = {

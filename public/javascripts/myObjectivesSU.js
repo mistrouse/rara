@@ -87,7 +87,7 @@ angular.module('AWIAPP', ['ngCookies', 'smart-table'])
                 });
             }
 
-     // If the user would see his information account is redirect to '/typeOfAccount/myaccount'
+         // If the user would see his information account is redirect to '/typeOfAccount/myaccount'
          $scope.myAccount = function() {
             $window.location.href = '/myaccount.html';
          }
@@ -132,14 +132,23 @@ angular.module('AWIAPP', ['ngCookies', 'smart-table'])
           }
 
           // If a SU wants to show his objectives
-              $scope.myObjective = function(){
-              $window.location.href = '/myObjectivesSU.html';
-              }
+          $scope.myObjective = function(){
+          $window.location.href = '/myObjectivesSU.html';
+          }
 
-              // If a SU wants to create an objective
-              $scope.createObjective = function(){
-              window.location.href='/createObjectiveSU.html';
-              }
+          // If a SU wants to create an objective
+          $scope.createObjective = function(){
+          window.location.href='/createObjectiveSU.html';
+          }
+          // If a SU wants to show his comments
+          $scope.myComment = function(){
+          $window.location.href = '/myCommentUser.html';
+          }
+
+          // If a SU wants to create a comment
+          $scope.createComment = function(){
+          window.location.href='/createCommentUser.html';
+          }
 
               // When the user would to log out and it is redirect to '/'
                   $scope.logOut = function() {

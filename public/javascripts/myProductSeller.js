@@ -88,59 +88,68 @@ angular.module('AWIAPP', ['ngCookies', 'smart-table'])
             $scope.titleSuccess = "The product has been updated";
         });
     }
-    // If the user would see his information account is redirect to '/typeOfAccount/myaccount'
-    $scope.myAccount = function() {
-       $window.location.href = '/myaccount.html';
-    }
+        // If the user would see his information account is redirect to '/typeOfAccount/myaccount'
+         $scope.myAccount = function() {
+            $window.location.href = '/myaccount.html';
+         }
 
-    // If the Seller would to show his product
-    $scope.myProduct = function(){
-        $window.location.href = '/myProductSeller.html';
-    }
+         // If the Seller would to show his product
+         $scope.myProduct = function(){
+             $window.location.href = '/myProductSeller.html';
+         }
 
-    // If the Seller would to create a product
-    $scope.createProduct = function() {
-        $window.location.href = '/createProductSeller.html';
-    }
+         // If the Seller would to create a product
+         $scope.createProduct = function() {
+             $window.location.href = '/createProductSeller.html';
+         }
 
 
-    // If an admin would manage account, is redirect to '/Admin/manage/account'
-    $scope.manageAccount = function() {
-        $window.location.href = '/manageAccountAdmin.html';
-    }
+         // If an admin would manage account, is redirect to '/Admin/manage/account'
+         $scope.manageAccount = function() {
+             $window.location.href = '/manageAccountAdmin.html';
+         }
 
-    // If an admin would manage product, is redirect to '/Admin/manage/product'
-    $scope.manageProduct = function() {
-        $window.location.href = '/manageProductAdmin.html';
-    }
+         // If an admin would manage product, is redirect to '/Admin/manage/product'
+         $scope.manageProduct = function() {
+             $window.location.href = '/manageProductAdmin.html';
+         }
 
-    // If the SU or SC would to search a product
-    $scope.searchProduct =  function() {
-       $window.location.href = '/searchAndBasketProduct.html';
-    }
+         // If the SU or SC would to search a product
+         $scope.searchProduct =  function() {
+            $window.location.href = '/searchAndBasketProduct.html';
+         }
 
-     // If the USer would to create a diary
-     $scope.createDiary = function() {
-         $window.location.href = '/createDiaryUser.html';
-     }
-     // If the User would to show his diary
-     $scope.myDiary = function(){
-         $window.location.href = '/myDiaryUser.html';
-     }
+          // If the USer would to create a diary
+          $scope.createDiary = function() {
+              $window.location.href = '/createDiaryUser.html';
+          }
+          // If the User would to show his diary
+          $scope.myDiary = function(){
+              $window.location.href = '/myDiaryUser.html';
+          }
 
-     $scope.myBasket = function() {
-        $window.location.href = '/myBasketUser.html'
-     }
+          $scope.myBasket = function() {
+             $window.location.href = '/myBasketUser.html'
+          }
 
-     // If a SU wants to show his objectives
-     $scope.myObjective = function(){
-     $window.location.href = '/myObjectivesSU.html';
-     }
+          // If a SU wants to show his objectives
+          $scope.myObjective = function(){
+          $window.location.href = '/myObjectivesSU.html';
+          }
 
-     // If a SU wants to create an objective
-     $scope.createObjective = function(){
-     window.location.href='/createObjectiveSU.html';
-     }
+          // If a SU wants to create an objective
+          $scope.createObjective = function(){
+          window.location.href='/createObjectiveSU.html';
+          }
+          // If a SU wants to show his comments
+          $scope.myComment = function(){
+          $window.location.href = '/myCommentUser.html';
+          }
+
+          // If a SU wants to create a comment
+          $scope.createComment = function(){
+          window.location.href='/createCommentUser.html';
+          }
 
      // When the user would to log out and it is redirect to '/'
      $scope.logOut = function() {
