@@ -116,6 +116,14 @@ public class Person extends Model {
     List<Diary> diaryUser = new ArrayList<Diary>();
 
     /**
+     * List of  comments for a SU
+     */
+    @OneToMany(mappedBy = "userC")
+    @JsonManagedReference
+    List<Comment> commentUser = new ArrayList<Comment>();
+
+
+    /**
      * List of all product in the basket of a SU
      */
     @OneToMany(mappedBy = "refPerson")
@@ -157,6 +165,7 @@ public class Person extends Model {
         this.productSell = productSell;
         this.objectiveSU = objectiveSU;
         this.diaryUser=diaryUser;
+        this.commentUser=commentUser;
         this.basket = basket;
         this.save();
     }
@@ -304,6 +313,14 @@ public class Person extends Model {
     }
 
     /**
+     * Get the list of the comment for an SU
+     * @return List of comment for a SU
+     */
+    public List<Comment> getCommentUser() {
+        return commentUser;
+    }
+
+    /**
      * Set the id of the person
      * @param id of the person
      */
@@ -420,6 +437,14 @@ public class Person extends Model {
         this.diaryUser =diaryUser;
     }
 
+    /**
+     * Set the list of the comment for a SU
+     * @param commentUser List of the comment
+     */
+    public void setCommentUser(List<Comment> commentUser) {
+        this.commentUser =commentUser;
+    }
+
     @Override
     public String toString() {
         return "Person{" +
@@ -439,6 +464,7 @@ public class Person extends Model {
                 ", objectiveSU=" + objectiveSU + '\''+
                 ", diaryUser=" + diaryUser +
                 ", basket=" + basket +
+                ", commentUser=" + commentUser +
                 '}';
     }
 }
