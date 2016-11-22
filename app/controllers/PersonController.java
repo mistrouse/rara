@@ -289,20 +289,6 @@ public class PersonController extends Controller {
             return ok(Json.toJson(Person.find.byId(id).getDiaryUser()));
         }
     }
-    /**
-     * Return all comment of user
-     * @param id The id of the user
-     * @return <b>Erreur 404 Not Found</b> if the user doesn't exist
-     * Else <b>200 Ok</b> with the lists of the comments
-     */
-    public Result getAllDiaryForUser(long id) {
-        if(Person.find.byId(id) == null) {
-            return notFound("Person not found.");
-        }
-        else {
-            return ok(Json.toJson(Person.find.byId(id).getCommentUser()));
-        }
-    }
 
     /**
      * Return id product, name, price, quantity and seller name of all products in basket for an user

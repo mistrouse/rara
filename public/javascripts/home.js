@@ -124,14 +124,5 @@ angular.module('AWIAPP', ['ngCookies'])
      $scope.createObjective = function(){
      window.location.href='/createObjectiveSU.html';
      }
-          // If a SU wants to show his comment
-          $scope.myComment = function(){
-          $window.location.href = '/myCommentUser.html';
-          }
-
-          // If a SU wants to create a comment
-          $scope.createComment = function(){
-          window.location.href='/createCommentUser.html';
-          }
 
 });

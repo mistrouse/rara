@@ -57,12 +57,6 @@ public class Diary extends Model {
     @ManyToOne
     @JsonBackReference
     Objective objective;
-    /**
-     * A diary describes the achievement of an objective
-     */
-    @ManyToOne
-    @JsonBackReference
-    Comment comment;
 
     /**
      * Constructor of the diary
@@ -72,7 +66,7 @@ public class Diary extends Model {
      * @param dateDiary The date of the diary publication
      * @param user The user who created the diary
      */
-    public Diary(Long id, String title, String description, String dateDiary, Person user, Objective objective,Comment comment){
+    public Diary(Long id, String title, String description, String dateDiary, Person user, Objective objective){
 
         this.id=id;
         this.title=title;
@@ -80,7 +74,6 @@ public class Diary extends Model {
         this.dateDiary=dateDiary;
         this.user=user;
         this.objective=objective;
-        this.comment=comment;
         this.save();
     }
 
@@ -125,12 +118,6 @@ public class Diary extends Model {
     public Objective getObjective(){return objective;}
 
     /**
-     * Get the comment that the diary describes
-     * @return The comment that the diary describes
-     */
-    public Comment getComment(){return comment;}
-
-    /**
      * Set the title of the diary
      * @param title2 of the diary
      */
@@ -166,14 +153,6 @@ public class Diary extends Model {
         this.objective = objective;
     }
 
-    /**
-     * Set the comment the diary describes
-     * @param comment that the diary describes
-     */
-    public void setComment(Comment comment) {
-        this.comment= comment;
-    }
-
     @Override
     public String toString() {
         return "Diary{" +
@@ -183,7 +162,6 @@ public class Diary extends Model {
                 ", user=" + user +
                 ", dateDiary=" + dateDiary +
                 ", objective='" + objective + '\'' +
-                ", comment='" + comment + '\'' +
                 '}';
     }
 }
