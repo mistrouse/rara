@@ -112,6 +112,7 @@ angular.module('AWIAPP', ['ngCookies'])
 
     // If the user want to cancel the update, the application hide the form and show the information again
     $scope.cancel = function() {
+        $scope.isFormShow = false;
         $scope.reverseChoiceOrForm();
     }
 
@@ -234,6 +235,7 @@ angular.module('AWIAPP', ['ngCookies'])
                  $window.location.href = '/';
              });
          };
-
-
+        $scope.back=function(){
+            $window.location.href='/home.html';
+        };
 });

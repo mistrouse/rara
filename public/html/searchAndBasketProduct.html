@@ -15,67 +15,101 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 </head>
 <body ng-app="AWIAPP" ng-controller="searchProduct" class="searchProduct" ng-init="getAllSeller(); getAllProduct()">
-    <div class="header">
-        <h1>Welcome {{pseudo}} ! ({{typeAccount}})</h1>
-        <div class="headerChoiceForm">
-            <form name="headerChoiceForm">
-                <div class="form-group">
-                    <button name="myAccount" class="btn btn-success" ng-click="myAccount()">My account</button>
-                    <button ng-show="isSimpleUser == 'isSimpleUser'" name="myObjective" class="btn btn-success" ng-click="myObjective()">My Objectives</button>
-                    <button ng-show="isSimpleUser == 'isSimpleUser'" name="createObjective" class="btn btn-success" ng-click="createObjective()">Create Objective</button>
-                    <button ng-show="isSimpleUser == 'isSimpleUser'" name="myDiary" class="btn btn-success" ng-click="myDiary()">My diary</button>
-                    <button ng-show="isSimpleUser == 'isSimpleUser'" name="createDiary" class="btn btn-success" ng-click="createDiary()">Create diary</button>
-                    <button ng-show="isSimpleUser == 'isSimpleUser'" name="myBasket" class="btn btn-success" ng-click="myBasket()">My basket</button>
-                    <button ng-show="isSeller == 'isSeller'" name="myProduct" class="btn btn-success" ng-click="myProduct()">My product</button>
-                    <button ng-show="isSeller == 'isSeller'" name="createProduct" class="btn btn-success" ng-click="createProduct()">Create product</button>
-                    <button ng-show="isSeller == 'isSeller' || isSimpleUser == 'isSimpleUser'" name="searchProduct" class="btn btn-success" ng-click="searchProductt()">Search product</button>
-                    <button ng-show="isAdmin == 'isAdmin'" name="manageAccount" class="btn btn-success" ng-click="manageAccount()">Manage account</button>
-                    <button ng-show="isAdmin == 'isAdmin'" name="manageProduct" class="btn btn-success" ng-click="manageProduct()">Manage product</button>
-                    <button name="logOut" class="btn btn-success" ng-click="logOut()">Log out</button>
-                </div>
-            </form>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a >
+                <img id="logo" align="top" src="/images/logo.png" alt="logo" />
+            </a>
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav navbar-right">
+                <li  ng-click="back()"><a href=""><span class="glyphicon glyphicon-home"></span> Home</a></li>
+
+                <li  ng-show="isSimpleUser == 'isSimpleUser'" ng-click="myBasket()"><a href=""><span class="glyphicon glyphicon-shopping-cart"></span> Basket</a></li>
+
+                <li  ng-click="myAccount()"><a href=""><span class="glyphicon glyphicon-user"></span> My account</a></li>
+                <li ng-click="logOut()"><a href=""><span class="glyphicon glyphicon-log-out"></span> Log out</a></li>
+            </ul>
         </div>
     </div>
-    <div class="all">
-        <div class="searchProduct">
-            <h1>Search Product</h1>
-            <div class="companyValue">
-                Choose your company :
-                <select ng-model="seller.name" ng-options="seller as seller.name for seller in allSeller" ng-change="hasChanged(seller)">
-                    <option value="" selected="selected">All</option>
-                </select>
-            </div>
-            <div ng-hide="hideErrorNoProduct" class="alert alert-danger"> <strong>Sorry! </strong>{{titleErrorNoProduct}} </div>
-            <div class="productValue">
-                Search your products in this company :
-                <input ng-model="searchProduct" id="search-product"/>
-            </div>
-        </div>
-        <div class="showProductInformation" ng-show="showProductInformation">
-            <h1>Information for the product: {{nameProduct}}</h1>
-            <div class="valueDescription">
-                Description : {{descriptionProduct}} <br>
-            </div>
-            <div class="valuePrice">
-                Price : {{priceProduct}} <br>
-            </div>
-            <div class="valueQuantity">
-                Quantity : {{quantityProduct}} <br>
-            </div><br>
-            <div class="showAddBasket" ng-show="showBasket">
-                <form name="addBasket" ng-submit="addToBasket(desiredQuantity)">
-                    <div class="form-group">
-                        <label class="control-label">What quantity would like buy ?</label>
-                        <div>
-                            <input type="number" class="form-control" ng-model="desiredQuantity" placeholder="Enter your quantity here" required>
+</nav>
+<br><br><br>
+
+<div class="container-fluid text-center">
+    <div class="row content">
+
+        <div class="col-sm-2 sidenav">
+            <div class="header">
+                <div class="headerChoiceForm">
+                    <form name="headerChoiceForm">
+                        <div class="form-group">
+                            <h4 ng-show="isSimpleUser == 'isSimpleUser'" name="myObjective" c ng-click="myObjective()">My objectives</h4>
+                            <h4 ng-show="isSimpleUser == 'isSimpleUser'" name="createObjective"  ng-click="createObjective()">Create Objective</h4>
+                            <h4 ng-show="isSimpleUser == 'isSimpleUser'" name="myDiary"  ng-click="myDiary()">My diaries</h4>
+                            <h4 ng-show="isSimpleUser == 'isSimpleUser'" name="createDiary"  ng-click="createDiary()">Create diaries</h4>
+                            <h4 ng-show="isSeller == 'isSeller'" name="myProduct"  ng-click="myProduct()">My products</h4>
+                            <h4 ng-show="isSeller == 'isSeller'" name="createProduct"  ng-click="createProduct()">Create product</h4>
+                            <h4 ng-show="isSeller == 'isSeller' || isSimpleUser == 'isSimpleUser'" name="searchProduct"  ng-click="searchProduct()">Search products</h4>
+                            <h4 ng-show="isAdmin == 'isAdmin'" name="manageAccount"  ng-click="manageAccount()">Manage accounts</h4>
+                            <h4 ng-show="isAdmin == 'isAdmin'" name="manageProduct"  ng-click="manageProduct()">Manage products</h4>
                         </div>
-                    </div>
-                    <button ng-disabled="addBasket.$invalid" class="btn btn-success">Add Basket</button>
-                </form>
-                <div ng-hide="hideErrorNotEnoughProduct" class="alert alert-danger"> <strong>Error! </strong>{{tittleErrorNotEnoughProduct}} </div>
-                <div ng-hide="hideSuccessAddBasketProduct" class="alert alert-success"> <strong>Success! </strong>{{tittleHideSuccessAddBasketProduct}} </div>
+                    </form>
+                </div>
             </div>
         </div>
+        <div class="col-sm-8 text-left">
+
+        <h1 class="alignCenter">Welcome {{pseudo}} ! ({{typeAccount}})</h1>
+        <div class="all">
+            <div class="searchProduct">
+                <h1 id="subTitle">Search Products</h1>
+                <div ng-hide="hideErrorNoProduct" class="alert alert-danger"> <strong>Sorry! </strong>{{titleErrorNoProduct}} </div>
+                <div class="companyValue">
+                    Choose your company :
+                    <select class="form-control" ng-model="seller.name" ng-options="seller as seller.name for seller in allSeller" ng-change="hasChanged(seller)">
+                        <option value="" selected="selected">All</option>
+                    </select>
+                </div>
+                <div class="productValue">
+                    Search your products in this company :
+                    <input ng-model="searchProduct" id="search-product"/>
+                </div>
+            </div>
+            <div class="showProductInformation" ng-show="showProductInformation">
+                <h1>Information for the product: {{nameProduct}}</h1>
+                <div class="valueDescription">
+                    Description : {{descriptionProduct}} <br>
+                </div>
+                <div class="valuePrice">
+                    Price : {{priceProduct}} <br>
+                </div>
+                <div class="valueQuantity">
+                    Quantity : {{quantityProduct}} <br>
+                </div><br>
+                <div class="showAddBasket" ng-show="showBasket">
+                    <form name="addBasket" ng-submit="addToBasket(desiredQuantity)">
+                        <div class="form-group">
+                            <label class="control-label">What quantity would like buy ?</label>
+                            <div>
+                                <input type="number" class="form-control" ng-model="desiredQuantity" placeholder="Enter your quantity here" required>
+                            </div>
+                        </div>
+                        <button ng-disabled="addBasket.$invalid" class="btn btn-success">Add Basket</button>
+                    </form>
+                    <div ng-hide="hideErrorNotEnoughProduct" class="alert alert-danger"> <strong>Error! </strong>{{tittleErrorNotEnoughProduct}} </div>
+                    <div ng-hide="hideSuccessAddBasketProduct" class="alert alert-success"> <strong>Success! </strong>{{tittleHideSuccessAddBasketProduct}} </div>
+                </div>
+            </div>
+        </div>
+        </div>
     </div>
+</div>
 </body>
 </html>

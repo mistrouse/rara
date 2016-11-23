@@ -11,7 +11,8 @@ font-size:12pt;
   -o-background-size: cover;
 
 }
-.login, .home, .createProductSeller, .myProductSeller, .myaccount, .searchProduct {
+.login, .home, .createProductSeller, .myProductSeller, .myaccount, .searchProduct, .myObjectivesSU, .createObjectiveSU,
+ .myDiaryUser, .createDiaryUser{
 background-color:#eeeeee;
 }
 
@@ -32,6 +33,7 @@ text-align:center;
 
 .buttonCenter{
 text-align:center;
+
 }
 
    /* Remove the navbar's default margin-bottom and rounded borders */
@@ -65,4 +67,13 @@ text-align:center;
         padding: 15px;
       }
       .row.content {height:auto;}
+    }
+    #subTitle{
+    color:#1b7dd3;
+    text-align:center;
+    }
+
+    .isChoice{
+    color:#1b7dd3;
+    text-align:left;
     }

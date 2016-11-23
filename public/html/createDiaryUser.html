@@ -1,58 +1,97 @@
 <!doctype html>
 <html>
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-cookies.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
+    <link rel="stylesheet" type="text/css" href="/stylesheets/main.css">
     <script src="/js/createDiary.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 </head>
 <body ng-app="AWIAPP" ng-controller="createDiaryUser" class="createDiaryUser" ng-init="getAllObjectives()">
-<div class="header">
-    <h1>Welcome {{pseudo}} ! ({{typeAccount}})</h1>
-    <div class="headerChoiceForm">
-        <form name="headerChoiceForm">
-            <div class="form-group">
-                <button name="myAccount" class="btn btn-success" ng-click="myAccount()">My account</button>
-                <button ng-show="isSimpleUser == 'isSimpleUser'" name="myObjective" class="btn btn-success" ng-click="myObjective()">My Objectives</button>
-                <button ng-show="isSimpleUser == 'isSimpleUser'" name="createObjective" class="btn btn-success" ng-click="createObjective()">Create Objective</button>
-                <button ng-show="isSimpleUser == 'isSimpleUser'" name="myDiary" class="btn btn-success" ng-click="myDiary()">My diary</button>
-                <button ng-show="isSimpleUser == 'isSimpleUser'" name="createDiary" class="btn btn-success" ng-click="createDiary()">Create diary</button>
-                <button ng-show="isSimpleUser == 'isSimpleUser'" name="myBasket" class="btn btn-success" ng-click="myBasket()">My basket</button>
-                <button ng-show="isSeller == 'isSeller'" name="myProduct" class="btn btn-success" ng-click="myProduct()">My product</button>
-                <button ng-show="isSeller == 'isSeller'" name="createProduct" class="btn btn-success" ng-click="createProduct()">Create product</button>
-                <button ng-show="isSeller == 'isSeller' || isSimpleUser == 'isSimpleUser'" name="searchProduct" class="btn btn-success" ng-click="searchProduct()">Search product</button>
-                <button ng-show="isAdmin == 'isAdmin'" name="manageAccount" class="btn btn-success" ng-click="manageAccount()">Manage account</button>
-                <button ng-show="isAdmin == 'isAdmin'" name="manageProduct" class="btn btn-success" ng-click="manageProduct()">Manage product</button>
-                <button name="logOut" class="btn btn-success" ng-click="logOut()">Log out</button>
-            </div>
-        </form>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a >
+                <img id="logo" align="top" src="/images/logo.png" alt="logo" />
+            </a>
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav navbar-right">
+                <li  ng-click="back()"><a href=""><span class="glyphicon glyphicon-home"></span> Home</a></li>
+
+                <li  ng-show="isSimpleUser == 'isSimpleUser'" ng-click="myBasket()"><a href=""><span class="glyphicon glyphicon-shopping-cart"></span> Basket</a></li>
+
+                <li  ng-click="myAccount()"><a href=""><span class="glyphicon glyphicon-user"></span> My account</a></li>
+                <li ng-click="logOut()"><a href=""><span class="glyphicon glyphicon-log-out"></span> Log out</a></li>
+            </ul>
+        </div>
     </div>
-</div>
-<div class="all">
-    <div class="createDiary">
-        <div ng-hide="hideSuccess" class="alert alert-success"> <strong>Success! </strong>{{titleSuccess}} </div>
-        <h1>Create Diary</h1>
-        <form name="createDiaryForm" ng-submit="createDiaryy(title, description, objective)">
-            <div class="form-group">
-                <label class="control-label">Title *</label>
-                <div>
-                    <input type="text" class="form-control" ng-model="title" placeholder="Enter title here" required>
+</nav>
+<br><br><br>
+<div class="container-fluid text-center">
+    <div class="row content">
+        <div class="col-sm-2 sidenav">
+            <div class="header">
+                <div class="headerChoiceForm">
+                    <form name="headerChoiceForm">
+                        <div class="form-group">
+                            <h4 ng-show="isSimpleUser == 'isSimpleUser'" name="myObjective" c ng-click="myObjective()">My objectives</h4>
+                            <h4 ng-show="isSimpleUser == 'isSimpleUser'" name="createObjective"  ng-click="createObjective()">Create Objective</h4>
+                            <h4 ng-show="isSimpleUser == 'isSimpleUser'" name="myDiary"  ng-click="myDiary()">My diaries</h4>
+                            <h4 ng-show="isSimpleUser == 'isSimpleUser'" name="createDiary"  ng-click="createDiary()">Create diaries</h4>
+                            <h4 ng-show="isSeller == 'isSeller'" name="myProduct"  ng-click="myProduct()">My products</h4>
+                            <h4 ng-show="isSeller == 'isSeller'" name="createProduct"  ng-click="createProduct()">Create product</h4>
+                            <h4 ng-show="isSeller == 'isSeller' || isSimpleUser == 'isSimpleUser'" name="searchProduct"  ng-click="searchProduct()">Search products</h4>
+                            <h4 ng-show="isAdmin == 'isAdmin'" name="manageAccount"  ng-click="manageAccount()">Manage accounts</h4>
+                            <h4 ng-show="isAdmin == 'isAdmin'" name="manageProduct"  ng-click="manageProduct()">Manage products</h4>
+
+                        </div>
+                    </form>
                 </div>
             </div>
-            <div class="form-group"> <label class="control-label">Description *</label>
-                <div>
-                    <input type="text" class="form-control" ng-model="description" placeholder="Enter your description here" required>
+        </div>
+        <div class="col-sm-8 text-left">
+            <h1 class="alignCenter">Welcome {{pseudo}} ! ({{typeAccount}})</h1>
+            <div class="all">
+                <div class="createDiary">
+                    <h1 id="subTitle">Create Diary</h1>
+                    <div ng-hide="hideSuccess" class="alert alert-success"> <strong>Success! </strong>{{titleSuccess}} </div>
+                    <form name="createDiaryForm" ng-submit="createDiaryy(title, description, objective)">
+                        <div class="form-group">
+                            <label class="control-label">Title *</label>
+                            <div>
+                                <input type="text" class="form-control" ng-model="title" placeholder="Enter title here" required>
+                            </div>
+                        </div>
+                        <div class="form-group"> <label class="control-label">Description *</label>
+                            <div>
+                                <input type="text" class="form-control" ng-model="description" placeholder="Enter your description here" required>
+                            </div>
+                        </div>
+                        <div class="form-group"><label class="control-label">Which Objective does this diary describe ?*</label>
+                            <select class="form-control" ng-model="objective.name" ng-options="objective as objective.name for objective in allObjectives" ng-change="hasChanged(objective)" required>
+                                <option value="" disabled selected>Select your objective</option>
+                            </select>
+                        </div>
+                        <div class="buttonCenter">
+                            <button ng-disabled="createDiaryForm.$invalid" class="btn btn-success btn-lg">Create Diary</button>
+                        </div>
+
+                    </form>
                 </div>
             </div>
-            <div class="form-group"><label class="control-label">Which Objective does this diary describe ?*</label>
-                <select ng-model="objective.name" ng-options="objective as objective.name for objective in allObjectives" ng-change="hasChanged(objective)" required>
-                    <option value="" disabled selected>Select your objective</option>
-                </select>
-            </div>
-            <button ng-disabled="createDiaryForm.$invalid" class="btn btn-success">Create Diary</button>
-        </form>
+        </div>
     </div>
-</div>
+    </div>
 </body>
 </html>

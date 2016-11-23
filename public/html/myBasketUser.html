@@ -1,76 +1,114 @@
 <!doctype html>
 <html>
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-cookies.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
+    <link rel="stylesheet" type="text/css" href="/stylesheets/main.css">
     <script src="/js/myBasketUser.js"></script>
     <script src="/lib/smart-table"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 </head>
 <body ng-app="AWIAPP" ng-controller="myBasketUser" class="myBasketUser" ng-init="getAllProductInBasket()">
-    <div class="header">
-        <h1>Welcome {{pseudo}} ! ({{typeAccount}})</h1>
-        <div class="headerChoiceForm">
-            <form name="headerChoiceForm">
-                <div class="form-group">
-                    <button name="myAccount" class="btn btn-success" ng-click="myAccount()">My account</button>
-                    <button ng-show="isSimpleUser == 'isSimpleUser'" name="myObjective" class="btn btn-success" ng-click="myObjective()">My Objectives</button>
-                    <button ng-show="isSimpleUser == 'isSimpleUser'" name="createObjective" class="btn btn-success" ng-click="createObjective()">Create Objective</button>
-                    <button ng-show="isSimpleUser == 'isSimpleUser'" name="myDiary" class="btn btn-success" ng-click="myDiary()">My diary</button>
-                    <button ng-show="isSimpleUser == 'isSimpleUser'" name="createDiary" class="btn btn-success" ng-click="createDiary()">Create diary</button>
-                    <button ng-show="isSimpleUser == 'isSimpleUser'" name="myBasket" class="btn btn-success" ng-click="myBasket()">My basket</button>
-                    <button ng-show="isSeller == 'isSeller'" name="myProduct" class="btn btn-success" ng-click="myProduct()">My product</button>
-                    <button ng-show="isSeller == 'isSeller'" name="createProduct" class="btn btn-success" ng-click="createProduct()">Create product</button>
-                    <button ng-show="isSeller == 'isSeller' || isSimpleUser == 'isSimpleUser'" name="searchProduct" class="btn btn-success" ng-click="searchProduct()">Search product</button>
-                    <button ng-show="isAdmin == 'isAdmin'" name="manageAccount" class="btn btn-success" ng-click="manageAccount()">Manage account</button>
-                    <button ng-show="isAdmin == 'isAdmin'" name="manageProduct" class="btn btn-success" ng-click="manageProduct()">Manage product</button>
-                    <button name="logOut" class="btn btn-success" ng-click="logOut()">Log out</button>
-                </div>
-            </form>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a >
+                <img id="logo" align="top" src="/images/logo.png" alt="logo" />
+            </a>
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav navbar-right">
+                <li  ng-click="back()"><a href=""><span class="glyphicon glyphicon-home"></span> Home</a></li>
+
+                <li  ng-show="isSimpleUser == 'isSimpleUser'" ng-click="myBasket()"><a href=""><span class="glyphicon glyphicon-shopping-cart"></span> Basket</a></li>
+
+                <li  ng-click="myAccount()"><a href=""><span class="glyphicon glyphicon-user"></span> My account</a></li>
+                <li ng-click="logOut()"><a href=""><span class="glyphicon glyphicon-log-out"></span> Log out</a></li>
+            </ul>
         </div>
     </div>
-    <div class="all">
-        <h1>My basket</h1>
-        <div ng-hide="hideSuccess" class="alert alert-success"> <strong>Success! </strong>{{titleSuccess}} </div>
-        <div ng-hide="hideError" class="alert alert-danger"> <strong>Error! </strong>{{titleError}} </div>
-        <div class="tableBasket">
-            <table st-table="allProductInBasket" class="table table-striped">
-                <thead>
-                <tr>
-                    <th st-sort="name">Name</th>
-                    <th st-sort="price">Price</th>
-                    <th st-sort="quantity">Quantity</th>
-                    <th>Seller</th>
-                    <th>Update</th>
-                    <th>Delete</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr ng-repeat="productBasket in allProductInBasket">
-                    <td>{{productBasket.name}}</td>
-                    <td>{{productBasket.price}}</td>
-                    <td>{{productBasket.quantity}}</td>
-                    <td>{{productBasket.seller}}</td>
-                    <td>
-                        <div class="col-sm-5">
-                            <label class="control-label">New quantity</label>
-                            <div>
-                                <input type="number" class="form-control" ng-model="newQuantity" ng-value="{{productBasket.quantity}}" placeholder="Enter your new quantity" required>
-                            </div>
-                            <button type="button" ng-click="showUpdateFormProductInBasket(newQuantity, productBasket)" class="btn btn-default">Update</button>
+</nav>
+<br><br><br>
+
+<div class="container-fluid text-center">
+    <div class="row content">
+        <div class="col-sm-2 sidenav">
+            <div class="header">
+                <div class="headerChoiceForm">
+                    <form name="headerChoiceForm">
+                        <div class="form-group">
+                            <h4 ng-show="isSimpleUser == 'isSimpleUser'" name="myObjective" c ng-click="myObjective()">My objectives</h4>
+                            <h4 ng-show="isSimpleUser == 'isSimpleUser'" name="createObjective"  ng-click="createObjective()">Create Objective</h4>
+                            <h4 ng-show="isSimpleUser == 'isSimpleUser'" name="myDiary"  ng-click="myDiary()">My diaries</h4>
+                            <h4 ng-show="isSimpleUser == 'isSimpleUser'" name="createDiary"  ng-click="createDiary()">Create diaries</h4>
+                            <h4 ng-show="isSeller == 'isSeller'" name="myProduct"  ng-click="myProduct()">My products</h4>
+                            <h4 ng-show="isSeller == 'isSeller'" name="createProduct"  ng-click="createProduct()">Create product</h4>
+                            <h4 ng-show="isSeller == 'isSeller' || isSimpleUser == 'isSimpleUser'" name="searchProduct"  ng-click="searchProduct()">Search products</h4>
+                            <h4 ng-show="isAdmin == 'isAdmin'" name="manageAccount"  ng-click="manageAccount()">Manage accounts</h4>
+                            <h4 ng-show="isAdmin == 'isAdmin'" name="manageProduct"  ng-click="manageProduct()">Manage products</h4>
+
                         </div>
-                    </td>
-                    <td> <button type="button" ng-click="deleteProductInBasket(productBasket)" class="btn btn-sm btn-danger">
-                        <i class="glyphicon glyphicon-remove-circle">
-                        </i>
-                    </button>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-            Total amount : {{sumPrice}} €
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-8 text-left">
+        <h1 class="alignCenter">Welcome {{pseudo}} ! ({{typeAccount}})</h1>
+
+        <div class="all">
+            <h1 id="subTitle">My basket</h1>
+            <div ng-hide="hideSuccess" class="alert alert-success"> <strong>Success! </strong>{{titleSuccess}} </div>
+            <div ng-hide="hideError" class="alert alert-danger"> <strong>Error! </strong>{{titleError}} </div>
+            <div class="tableBasket">
+                <table st-table="allProductInBasket" class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th st-sort="name">Name</th>
+                        <th st-sort="price">Price</th>
+                        <th st-sort="quantity">Quantity</th>
+                        <th>Seller</th>
+                        <th>Update</th>
+                        <th>Delete</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="productBasket in allProductInBasket">
+                        <td>{{productBasket.name}}</td>
+                        <td>{{productBasket.price}}</td>
+                        <td>{{productBasket.quantity}}</td>
+                        <td>{{productBasket.seller}}</td>
+                        <td>
+                            <div class="col-sm-5">
+                                <label class="control-label">New quantity</label>
+                                <div>
+                                    <input type="number" class="form-control" ng-model="newQuantity" ng-value="{{productBasket.quantity}}" placeholder="Enter your new quantity" required>
+                                </div>
+                                <button type="button" ng-click="showUpdateFormProductInBasket(newQuantity, productBasket)" class="btn btn-default">Update</button>
+                            </div>
+                        </td>
+                        <td> <button type="button" ng-click="deleteProductInBasket(productBasket)" class="btn btn-sm btn-danger">
+                            <i class="glyphicon glyphicon-remove-circle">
+                            </i>
+                        </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                Total amount : {{sumPrice}} €
+            </div>
+        </div>
         </div>
     </div>
+</div>
 </body>
 </html>

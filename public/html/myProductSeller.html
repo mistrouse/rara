@@ -17,129 +17,149 @@
           integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 </head>
 <body ng-app="AWIAPP" ng-controller="myProductSeller" class="myProductSeller" ng-init="getAllProductForSeller()">
-<div class="header">
-    <h1>Welcome {{pseudo}} ! ({{typeAccount}})</h1>
-    <div class="headerChoiceForm">
-        <form name="headerChoiceForm">
-            <div class="form-group">
-                <button name="myAccount" class="btn btn-success" ng-click="myAccount()">My account</button>
-                <button ng-show="isSimpleUser == 'isSimpleUser'" name="myObjective" class="btn btn-success"
-                        ng-click="myObjective()">My Objectives
-                </button>
-                <button ng-show="isSimpleUser == 'isSimpleUser'" name="createObjective" class="btn btn-success"
-                        ng-click="createObjective()">Create Objective
-                </button>
-                <button ng-show="isSimpleUser == 'isSimpleUser'" name="myDiary" class="btn btn-success"
-                        ng-click="myDiary()">My diary
-                </button>
-                <button ng-show="isSimpleUser == 'isSimpleUser'" name="createDiary" class="btn btn-success"
-                        ng-click="createDiary()">Create diary
-                </button>
-                <button ng-show="isSimpleUser == 'isSimpleUser'" name="myBasket" class="btn btn-success"
-                        ng-click="myBasket()">My basket
-                </button>
-                <button ng-show="isSeller == 'isSeller'" name="myProduct" class="btn btn-success"
-                        ng-click="myProduct()">My product
-                </button>
-                <button ng-show="isSeller == 'isSeller'" name="createProduct" class="btn btn-success"
-                        ng-click="createProduct()">Create product
-                </button>
-                <button ng-show="isSeller == 'isSeller' || isSimpleUser == 'isSimpleUser'" name="searchProduct"
-                        class="btn btn-success" ng-click="searchProduct()">Search product
-                </button>
-                <button ng-show="isAdmin == 'isAdmin'" name="manageAccount" class="btn btn-success"
-                        ng-click="manageAccount()">Manage account
-                </button>
-                <button ng-show="isAdmin == 'isAdmin'" name="manageProduct" class="btn btn-success"
-                        ng-click="manageProduct()">Manage product
-                </button>
-                <button name="logOut" class="btn btn-success" ng-click="logOut()">Log out</button>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a >
+                <img id="logo" align="top" src="/images/logo.png" alt="logo" />
+            </a>
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav navbar-right">
+                <li  ng-click="back()"><a href=""><span class="glyphicon glyphicon-home"></span> Home</a></li>
+
+                <li  ng-show="isSimpleUser == 'isSimpleUser'" ng-click="myBasket()"><a href=""><span class="glyphicon glyphicon-shopping-cart"></span> Basket</a></li>
+
+                <li  ng-click="myAccount()"><a href=""><span class="glyphicon glyphicon-user"></span> My account</a></li>
+                <li ng-click="logOut()"><a href=""><span class="glyphicon glyphicon-log-out"></span> Log out</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<br><br><br>
+
+<div class="container-fluid text-center">
+    <div class="row content">
+
+        <div class="col-sm-2 sidenav">
+
+            <div class="header">
+                <div class="headerChoiceForm">
+                    <form name="headerChoiceForm">
+                        <div class="form-group">
+                            <h4 ng-show="isSimpleUser == 'isSimpleUser'" name="myObjective" ng-click="myObjective()">My Objectives</h4>
+                            <h4 ng-show="isSimpleUser == 'isSimpleUser'" name="createObjective" ng-click="createObjective()">Create objective</h4>
+                            <h4 ng-show="isSimpleUser == 'isSimpleUser'" name="myDiary"  ng-click="myDiary()">My diary</h4>
+                            <h4 ng-show="isSimpleUser == 'isSimpleUser'" name="createDiary"  ng-click="createDiary()">Create diariers</h4>
+                            <h4 ng-show="isSimpleUser == 'isSimpleUser'" name="myBasket"  ng-click="myBasket()">My basket</h4>
+                            <h4 ng-show="isSeller == 'isSeller'" name="myProduct"  ng-click="myProduct()">My products</h4>
+                            <h4 ng-show="isSeller == 'isSeller'" name="createProduct"  ng-click="createProduct()">Create product</h4>
+                            <h4 ng-show="isSeller == 'isSeller' || isSimpleUser == 'isSimpleUser'" name="searchProduct"  ng-click="searchProduct()">Search products</h4>
+                            <h4 ng-show="isAdmin == 'isAdmin'" name="manageAccount"  ng-click="manageAccount()">Manage accounts</h4>
+                            <h4 ng-show="isAdmin == 'isAdmin'" name="manageProduct"  ng-click="manageProduct()">Manage products</h4>
+
+                        </div>
+                    </form>
+                </div>
             </div>
-        </form>
-    </div>
-</div>
-<div class="all">
-    <h1>My product</h1>
-    <div ng-hide="hideSuccess" class="alert alert-success"><strong>Success! </strong>{{titleSuccess}}</div>
-    <div class="tableProduct">
-        <table st-table="myTableProduct" st-safe-src="allProduct" class="table table-striped">
-            <thead>
-            <tr>
-                <th st-sort="name">Name</th>
-                <th st-sort="email">Description</th>
-                <th st-sort="pseudo">Price</th>
-                <th st-sort="role">Quantity</th>
-                <th>Update</th>
-                <th>Delete</th>
-            </tr>
-            <tr>
-                <th colspan="7"><input st-search="" class="form-control" placeholder="Search your product in the table"
-                                       type="text"/></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr ng-repeat="product in myTableProduct">
-                <td>{{product.name}}</td>
-                <td>{{product.description}}</td>
-                <td>{{product.price}}</td>
-                <td>{{product.quantity}}</td>
-                <td>
-                    <button type="button" ng-click="showUpdateFormProduct(product)" class="btn btn-default">Update
-                    </button>
-                </td>
-                <td>
-                    <button type="button" ng-click="deleteProduct(product)" class="btn btn-sm btn-danger">
-                        <i class="glyphicon glyphicon-remove-circle">
-                        </i>
-                    </button>
-                </td>
-            </tr>
-            </tbody>
-            <tfoot>
-            <tr>
-                <td colspan="5" class="text-center">
-                    <div st-pagination="" st-items-by-page="10" st-displayed-pages="5"></div>
-                </td>
-            </tr>
-            </tfoot>
-        </table>
-    </div>
-    <div class="isFormUpdate" ng-show="isFormUpdateShow">
-        <div class="updateForm">
-            <h3>Fill the field of what you would update...</h3>
-            <form name="updateForm"
-                  ng-submit="updateProduct(nameToUpdate, descriptionToUpdate, priceToUpdate, quantityToUpdate)">
-                <div class="form-group">
-                    <label class="control-label">Name</label>
-                    <div>
-                        <input type="text" class="form-control" ng-model="nameToUpdate"
-                               placeholder="Enter the new name here">
+        </div>
+        <div class="col-sm-8 text-left">
+            <h1 class="alignCenter">Welcome {{pseudo}} ! ({{typeAccount}})</h1>
+
+            <div class="all">
+                <h1 id="subTitle">My product</h1>
+                <div ng-hide="hideSuccess" class="alert alert-success"><strong>Success! </strong>{{titleSuccess}}</div>
+                <div class="tableProduct">
+                    <table st-table="myTableProduct" st-safe-src="allProduct" class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th st-sort="name">Name</th>
+                            <th st-sort="email">Description</th>
+                            <th st-sort="pseudo">Price</th>
+                            <th st-sort="role">Quantity</th>
+                            <th>Update</th>
+                            <th>Delete</th>
+                        </tr>
+                        <tr>
+                            <th colspan="7"><input st-search="" class="form-control" placeholder="Search your product in the table"
+                                                   type="text"/></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="product in myTableProduct">
+                            <td>{{product.name}}</td>
+                            <td>{{product.description}}</td>
+                            <td>{{product.price}}</td>
+                            <td>{{product.quantity}}</td>
+                            <td>
+                                <button type="button" ng-click="showUpdateFormProduct(product)" class="btn btn-default">Update
+                                </button>
+                            </td>
+                            <td>
+                                <button type="button" ng-click="deleteProduct(product)" class="btn btn-sm btn-danger">
+                                    <i class="glyphicon glyphicon-remove-circle">
+                                    </i>
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                            <td colspan="5" class="text-center">
+                                <div st-pagination="" st-items-by-page="10" st-displayed-pages="5"></div>
+                            </td>
+                        </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <div class="isFormUpdate" ng-show="isFormUpdateShow">
+                    <div class="updateForm">
+                        <h3>Fill the field of what you would update...</h3>
+                        <form name="updateForm"
+                              ng-submit="updateProduct(nameToUpdate, descriptionToUpdate, priceToUpdate, quantityToUpdate)">
+                            <div class="form-group">
+                                <label class="control-label">Name</label>
+                                <div>
+                                    <input type="text" class="form-control" ng-model="nameToUpdate"
+                                           placeholder="Enter the new name here">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Description</label>
+                                <div>
+                                    <input type="text" class="form-control" ng-model="descriptionToUpdate"
+                                           placeholder="Enter the new description here">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Price</label>
+                                <div>
+                                    <input type="number" step="0.001" class="form-control" ng-model="priceToUpdate"
+                                           placeholder="Enter the new price here">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Quantity</label>
+                                <div>
+                                    <input type="number" step="0.001" class="form-control" ng-model="quantityToUpdate"
+                                           placeholder="Enter the new quantity here" required>
+                                </div>
+                            </div>
+                            <div class="buttonCenter">
+                                <button class="btn btn-success">Update</button>
+                                <button class="btn btn-danger" ng-click="cancelFormUpdate()">Cancel</button>
+                            </div>
+
+                        </form>
+
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="control-label">Description</label>
-                    <div>
-                        <input type="text" class="form-control" ng-model="descriptionToUpdate"
-                               placeholder="Enter the new description here">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label">Price</label>
-                    <div>
-                        <input type="number" step="0.001" class="form-control" ng-model="priceToUpdate"
-                               placeholder="Enter the new price here">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label">Quantity</label>
-                    <div>
-                        <input type="number" step="0.001" class="form-control" ng-model="quantityToUpdate"
-                               placeholder="Enter the new quantity here" required>
-                    </div>
-                </div>
-                <button class="btn btn-success">Update</button>
-            </form>
-            <button class="btn btn-danger" ng-click="cancelFormUpdate()">Cancel</button>
+            </div>
         </div>
     </div>
 </div>

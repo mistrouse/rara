@@ -64,7 +64,8 @@ public class ProductController extends Controller {
         Person isSellerOrAdmin = Person.find.byId(Long.valueOf(id));
         if(isSellerOrAdmin.getRole() == 1 || isSellerOrAdmin.getRole() == 2){
             // Create the product in the database with the informations
-            Product product = new Product(null, name, description, Double.parseDouble(price), Integer.parseInt(quantity), Person.find.byId(Long.valueOf(id)), null);
+            Product product = new Product(null, name, description, Double.parseDouble(price),
+                    Integer.parseInt(quantity), Person.find.byId(Long.valueOf(id)), null);
             return created("The product has been created");
         }
         else {
@@ -104,9 +105,6 @@ public class ProductController extends Controller {
                 updateProduct.setPrice(Double.parseDouble(newPrice));
             if(!newQuantity.isEmpty())
                 updateProduct.setQuantity(Integer.parseInt(newQuantity));
-            /*if(!newImage.isEmpty())
-                updateProduct.setId(newImage);*/
-
             // Make change in the database
             updateProduct.save();
 //            System.out.println("personUpdate(id) from PersonController -- updatePerson="+updatePerson);

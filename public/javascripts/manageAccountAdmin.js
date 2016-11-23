@@ -82,10 +82,13 @@ angular.module('AWIAPP', ['ngCookies', 'smart-table'])
 
     // Hide the different choice and show the table with the person in the database
     $scope.showUpdateTable = function() {
-        $scope.isChoiceShow = false;
+     //   $scope.isChoiceShow = false;
+
         $scope.isTableShow = true;
+         $scope.isFormCreatePersonShow= false;
         $scope.hideErrorOrSuccessMessage();
         $scope.getAllPerson();
+
     };
 
     // Show the update form and initialize it for the person when the admin click on the update button
@@ -124,7 +127,8 @@ angular.module('AWIAPP', ['ngCookies', 'smart-table'])
 
     // Hide the choice and show the form to create a SU (whitout n° SIRET and Admin option)
     $scope.showFormCreateSU = function() {
-        $scope.isChoiceShow = false;
+        //$scope.isChoiceShow = false;
+        $scope.isTableShow = false;
         $scope.isFormCreatePersonShow = true;
         $scope.typeAccount = "Simple User";
         $scope.isAdminAccount = "";
@@ -134,7 +138,8 @@ angular.module('AWIAPP', ['ngCookies', 'smart-table'])
 
     // Hide the choice and show the form to create a SC (whitout Admin option)
     $scope.showFormCreateSC = function() {
-        $scope.isChoiceShow = false;
+       // $scope.isChoiceShow = false;
+       $scope.isTableShow = false;
         $scope.isFormCreatePersonShow = true;
         $scope.typeAccount = "Simple Seller";
         $scope.isNotNullSiret = " ";
@@ -144,7 +149,8 @@ angular.module('AWIAPP', ['ngCookies', 'smart-table'])
 
     // Hide the choice and show the form to create a Admin (whitout n° SIRET)
     $scope.showFormCreateAdmin = function() {
-        $scope.isChoiceShow = false;
+      //  $scope.isChoiceShow = false;
+      $scope.isTableShow = false;
         $scope.isFormCreatePersonShow = true;
         $scope.typeAccount = "Admin";
         $scope.isAdminAccount = " ";
@@ -266,4 +272,7 @@ angular.module('AWIAPP', ['ngCookies', 'smart-table'])
              $window.location.href = '/';
          });
      };
+        $scope.back=function(){
+            $window.location.href='/home.html';
+        };
 });

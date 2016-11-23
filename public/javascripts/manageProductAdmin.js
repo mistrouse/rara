@@ -70,7 +70,8 @@ angular.module('AWIAPP', ['ngCookies', 'smart-table'])
 
     // Hide the different choice and show the table with the product in the database
     $scope.showUpdateTable = function() {
-        $scope.isChoiceShow = false;
+       // $scope.isChoiceShow = false;
+        $scope.isFormCreateProductShow = false;
         $scope.isTableShow = true;
         $scope.hideErrorOrSuccessMessage();
         $scope.getAllProduct();
@@ -78,6 +79,7 @@ angular.module('AWIAPP', ['ngCookies', 'smart-table'])
 
     // Show the update form and initialize it for the product when the admin click on the update button
     $scope.showUpdateFormProduct = function(valueProduct) {
+        $scope.isFormCreateProductShow = false;
         $scope.isFormUpdateShow = true;
         $scope.product = valueProduct;
         $scope.nameToUpdate = valueProduct["name"];
@@ -102,7 +104,7 @@ angular.module('AWIAPP', ['ngCookies', 'smart-table'])
 
     // Hide the choice and show the form to create a product
     $scope.showFormCreateProduct = function() {
-        $scope.isChoiceShow = false;
+        $scope.isTableShow = false;
         $scope.isFormCreateProductShow = true;
         $scope.getAllSeller();
         $scope.hideErrorOrSuccessMessage();
@@ -243,4 +245,8 @@ angular.module('AWIAPP', ['ngCookies', 'smart-table'])
              $window.location.href = '/';
          });
      };
+
+     $scope.back=function(){
+          $window.location.href='/home.html';
+      };
 });

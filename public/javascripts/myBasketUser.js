@@ -48,7 +48,7 @@ angular.module('AWIAPP', ['ngCookies'])
             for(var i = 0; i < data.length; i++) {
                 $scope.sumPrice += data[i].price * data[i].quantity;
             }
-            console.log(data);
+
         });
     }
 
