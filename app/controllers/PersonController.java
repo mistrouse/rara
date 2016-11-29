@@ -179,22 +179,23 @@ public class PersonController extends Controller {
         String email = values.get("email")[0];
         String password = Codecs.sha1(values.get("password")[0]);
 
+        //System.out.println("EMAIL : "+email);
+        //System.out.println("PSWD : "+password);
         // Check if exist in the database
-        List<Person> isExist = Person.find.where().like("email", "%"+email+"%").like("password", "%"+password+"%").findList();
-        if(isExist.size() == 0) {
+        Person isExist = Person.find.where().like("email", "%"+email+"%").like("password", "%"+password+"%").findUnique();
+        if(isExist == null) {
             return notFound("Wrong email or password");
         }
         else {
             // Generate random token
             String token = UUID.randomUUID().toString();
             // Set his token in the database
-            isExist.get(0).setToken(token);
-            isExist.get(0).save();
-            return ok(Json.toJson(isExist.get(0)))
-                    .withCookies(new Http.Cookie("token", token, null, "/", "localhost", false, false))
-                    .withCookies(new Http.Cookie("id", isExist.get(0).getId().toString(), null, "/", "localhost", false, false));
+            isExist.setToken(token);
+            isExist.save();
+            return ok(Json.toJson(isExist))
+                    .withCookies(new Http.Cookie("token", token, 43200 , null, null, false, false))
+                    .withCookies(new Http.Cookie("id", isExist.getId().toString(), 43200 , null, null, false, false));
         }
-
     }
 
     /**
@@ -207,9 +208,9 @@ public class PersonController extends Controller {
         final Map<String, String[]> values = request().body().asFormUrlEncoded();
         String id = values.get("id")[0];
         String token = values.get("token")[0];
-
-        Person isExist = Person.find.where().like("id", "%"+id+"%").like("token", "%"+token+"%").findUnique();
-        if(isExist != null) {
+        Person isExist = Person.find.byId(Long.valueOf(id));
+        //Person isExist = Person.find.where().like("id", "%"+id+"%").like("token", "%"+token+"%").findUnique();
+        if(isExist.getToken().equals(token)) {
             response().discardCookie("token");
             response().discardCookie("id");
             return ok();
@@ -227,9 +228,10 @@ public class PersonController extends Controller {
      * Else return <b>404 Not Found</b>
      */
     public Result isConnected(int id, String token) {
-        Person isExist = Person.find.where().like("id", "%"+id+"%").like("token", "%"+token+"%").findUnique();
+        Person isExist = Person.find.byId(Long.valueOf(id));
+        //Person isExist = Person.find.where().like("id", "%"+id+"%").like("token", "%"+token+"%").findUnique();
 //        System.out.println("isConnected(id, token) FROM PersonController.java -- isExist="+isExist);
-        if(isExist != null) {
+        if(isExist.getToken().equals(token)) {
             return ok(Json.toJson(isExist));
         }
         else {
