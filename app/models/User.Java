@@ -93,25 +93,11 @@ public class User extends Model {
     String token;
 
     /**
-     * List of the Message posted by a prof
+     * List of the Message posted by a User
      */
-    @OneToMany(mappedBy = "prof")
+    @OneToMany(mappedBy = "User")
     @JsonManagedReference
-    List<Message> MessagePostedP = new ArrayList<Message>();
-	
-	    /**
-     * List of the Message posted by  eleve
-     */
-    @OneToMany(mappedBy = "eleve")
-    @JsonManagedReference
-    List<Message> MessagePostedE = new ArrayList<Message>();
-	
-		    /**
-     * List of the Message posted by  admin
-     */
-    @OneToMany(mappedBy = "admin")
-    @JsonManagedReference
-    List<Message> MessagePostedA = new ArrayList<Message>();
+    List<Message> MessagePostedList = new ArrayList<Message>();
 	
 	
 
@@ -147,9 +133,7 @@ public class User extends Model {
      * @param streetAddress The street adress
      * @param cityAddress The city adress
      * @param postCodeAddress The post code for the adress
-     * @param MessagePostedP List of the Message posted by prof
-	 * @param MessagePostedE List of the Message posted by eleve
-	 * @param MessagePostedA List of the Message posted by admin
+     * @param MessagePostedList List of the Message posted by USer
 	 * @param DocumentUser List of the document for user
 	 * @param EvenementUser List of event for User    
      */
@@ -157,7 +141,7 @@ public class User extends Model {
 
 	 
     public User(Long id, String name, String email, Date birthday, String phone, String password, int role, String numberAddress, String streetAddress, String cityAddress, String postCodeAddress,
-	String token, List<Message> MessagePostedP,  List<Message> MessagePostedE, List<Message> MessagePostedA, List<Document> DocumentUser, List<Evenement> EvenementUser) {
+	String token, List<Message> MessagePostedList, List<Document> DocumentUser, List<Evenement> EvenementUser) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -170,9 +154,7 @@ public class User extends Model {
         this.cityAddress = cityAddress;
         this.postCodeAddress = postCodeAddress;
         this.token = token;
-		this.MessagePostedP = MessagePostedP;
-		this.MessagePostedE = MessagePosteE;
-		this.MessagePostedA = MessagePostedA;
+		this.MessagePostedList = MessagePostedList;
         this.DocumentUser = DocumentUser;
         this.EvenementUser=EvenementUser;
         this.save();
@@ -279,31 +261,14 @@ public class User extends Model {
 	
 		
 	  /**
-     * Get the list of the Message posted by a prof
-     * @return List of Message posted by a prof
+     * Get the list of the Message posted by a USer
+     * @return List of Message posted by a User
      */
-    public List<Message> getMessagePostedP() {
-        return MessagePostedP;
+    public List<Message> getMessagePostedList() {
+        return MessagePostedList;
     }
 	
-	
-	  /**
-     * Get the list of the Message posted by a eleve
-     * @return List of Message posted by a eleve
-     */
-    public List<Message> getMessagePostedE() {
-        return MessagePostedE;
-    }
-	
-	  /**
-     * Get the list of the Message posted by a admin
-     * @return List of Message posted by a admin
-     */
-    public List<Message> getMessagePostedA() {
-        return MessagePostedA;
-    }
 
-	
 	  /**
      * Get the list of the document posted by User
      * @return List of document posted by a prof
@@ -436,33 +401,18 @@ public class User extends Model {
 
 	
     /**
-     * Set the list of the message posted by admin
-     * @param MessagePostedA List of the Message
+     * Set the list of the message posted by User
+     * @param MessagePostedList List of the Message
      */
-    public void setMessagePostedA(List<Message> MessagePostedA) {
-        this.MessagePostedA =MessagePostedA;
+    public void setMessagePostedList(List<Message> MessagePostedList) {
+        this.MessagePostedList = MessagePostedList;
     }
 
-	/**
-     * Set the list of the message posted by eleve
-     * @param MessagePostedA List of the Message
-     */
-    public void setMessagePostedE(List<Message> MessagePostedE) {
-        this.MessagePostedE =MessagePostedE;
-    }
-	
-	/**
-     * Set the list of the message posted by prof
-     * @param MessagePostedP List of the Message
-     */
-    public void setMessagePostedP(List<Message> MessagePostedP) {
-        this.MessagePostedP =MessagePostedP;
-    }
 	
 	
 	
 	public User(Long id, String name, String email, Date birthday, String phone, String password, int role, String numberAddress, String streetAddress, String cityAddress, String postCodeAddress,
-	String token, List<Message> MessagePostedP,  List<Message> MessagePostedE, List<Message> MessagePostedA, List<Document> DocumentUser, List<Evenement> EvenementUser) {
+	String token, List<Message> MessagePostedList, List<Document> DocumentUser, List<Evenement> EvenementUser) {
 		
 		
 	
@@ -481,9 +431,7 @@ public class User extends Model {
                 ", cityAddress='" + cityAddress + '\'' +
                 ", postCodeAddress='" + postCodeAddress + '\'' +
                 ", token='" + token + '\'' +
-                ", MessagePostedP=" + MessagePostedP + '\''+
-				", MessagePostedP=" + MessagePostedE + '\''+
-				", MessagePostedP=" + MessagePostedA + '\''+
+                ", MessagePostedList=" + MessagePostedList + '\''+
                 ", DocumentUser=" + DocumentUser + '\''+
                 ", EvenementUser=" + EvenementUser +
                 '}';
